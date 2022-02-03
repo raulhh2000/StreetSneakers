@@ -7,11 +7,22 @@
 		<title>StreetSneaker</title>
 	</head>
 	<body>
-		<h1>Zapatillas</h1>
+	<form action="/filterName" method="GET">
+		<p>
+			<b>Buscar por nombre de zapatilla:</b> <input type="text" name="nameFilter" required />
+		</p>
+		<input type="submit" value="Buscar Zapatilla" />
+	</form>
+	<h1>Zapatillas</h1>
+		{{#find}}
 		<ul>
 			{{#products}}
 			<li>{{.}}</li>
 			{{/products}}
 		</ul>
+		{{/find}}
+		{{^find}}
+		<p>No se ha encontrado la zapatilla.</p>
+		{{/find}}
 	</body>
 </html>
