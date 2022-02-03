@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+		<title>StreetSneaker</title>
+	</head>
+	<body>
+		<h1>Zapatillas</h1>
+		<ul>
+			{{#products}}
+			<li>{{.}}</li>
+			{{/products}}
+		</ul>
+	</body>
+</html>
