@@ -1,5 +1,8 @@
 package urjc.dad.models;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -17,8 +20,8 @@ public class Product {
 	private String description;
 	private double price;
 	private double size;
-	@OneToMany
-	private Set<Review> reviews;
+	@OneToMany(mappedBy="product")
+	private List<Review> reviews= new ArrayList<>();
 	
 	public Product() {
 		
@@ -70,4 +73,13 @@ public class Product {
 	public void setSize(double size) {
 		this.size = size;
 	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+	
 }

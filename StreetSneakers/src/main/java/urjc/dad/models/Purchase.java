@@ -1,6 +1,9 @@
 package urjc.dad.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -9,10 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
-public class Order {
+public class Purchase {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
@@ -21,14 +23,13 @@ public class Order {
 	private LocalDateTime date;
 	private double totalPrice;
 	@OneToMany
-	private Set<Product> products;
+	private List<Product> products= new ArrayList<>();
 	
-	public Order() {
+	public Purchase() {
 		
 	}
 
-	public Order(User user, LocalDateTime date, double totalPrice, Set<Product> products) {
-		super();
+	public Purchase(User user, LocalDateTime date, double totalPrice, List<Product> products) {
 		this.user = user;
 		this.date = date;
 		this.totalPrice = totalPrice;
@@ -67,11 +68,11 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	public Set<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 	

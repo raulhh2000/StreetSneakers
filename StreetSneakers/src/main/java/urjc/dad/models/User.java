@@ -1,6 +1,9 @@
 package urjc.dad.models;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +24,13 @@ public class User {
 	private String address;
 	private String bankAccount;
 	@OneToMany(mappedBy="user")
-	private Set<Order> orders;
+	private List<Purchase> purchases= new ArrayList<>();
+	
 	@OneToMany
-	private Set<Product> wishList;
+	private List<Product> wishList= new ArrayList<>();
 	
 	public User() {
+		
 	}
 	
 	public User(String name, String lastName, String email, String password) {
@@ -109,12 +114,20 @@ public class User {
 		this.bankAccount = bankAccount;
 	}
 
-	public Set<Order> getOrders() {
-		return orders;
+	public List<Purchase> getPurchases() {
+		return purchases;
 	}
 
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
+	public void setPurchases(List<Purchase> orders) {
+		this.purchases = orders;
 	}
 
+	public List<Product> getWishList() {
+		return wishList;
+	}
+
+	public void setWishList(List<Product> wishList) {
+		this.wishList = wishList;
+	}
+	
 }

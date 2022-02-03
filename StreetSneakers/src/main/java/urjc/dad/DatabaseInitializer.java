@@ -1,8 +1,9 @@
 package urjc.dad;
 
 import java.time.LocalDateTime;
-import java.util.Currency;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -11,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import urjc.dad.models.Admin;
-import urjc.dad.models.Order;
+import urjc.dad.models.Purchase;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
-import urjc.dad.repositories.OrderRepository;
+import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
 import urjc.dad.repositories.UserRepository;
@@ -32,7 +33,7 @@ public class DatabaseInitializer {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private OrderRepository orderRepository;
+	private PurchaseRepository purchaseRepository;
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -67,14 +68,21 @@ public class DatabaseInitializer {
 		productRepository.save(product2);
 		productRepository.save(product3);
 		
-		Set<Product> set= new HashSet<>();
-		set.add(product1);
-		set.add(product3);
-		set.add(product2);
-		LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
-		Order order1= new Order(user1,date,300.02,set);
+		user1.getWishList().add(product1);
+		userRepository.save(user1);
 		
-		//orderRepository.save(order1);
+		
+		List<Product> list= new ArrayList<>();
+		list.add(product1);
+		list.add(product3);
+		list.add(product2);
+		LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
+		Purchase purchase1= new Purchase(user1,date,300.02,list);
+		
+		purchaseRepository.save(purchase1);
+		
+		//user1.getPurchases().add(purchase1);
+		//userRepository.save(user1);
 		
 		Review review1= new Review(product1,"muy bonitas",user1,"perfectas",5);
 		Review review2= new Review(product2,"muy grandes",user2,"mala talla",2);
@@ -83,6 +91,15 @@ public class DatabaseInitializer {
 		reviewRepository.save(review1);	
 		reviewRepository.save(review2);	
 		reviewRepository.save(review3);	
+		
+
+//		product1.getReviews().add(review1);
+//		product2.getReviews().add(review2);
+//		product3.getReviews().add(review3);
+//		
+//		productRepository.save(product1);
+//		productRepository.save(product2);
+//		productRepository.save(product3);
 		
 	}	
 }

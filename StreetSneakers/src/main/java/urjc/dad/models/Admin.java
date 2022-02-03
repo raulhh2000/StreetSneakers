@@ -16,6 +16,10 @@ public class Admin {
 	private String email;
 	private String password;
 	
+	public Admin() {
+		
+	}
+	
 	public Admin(String name, String lateName, String email, String password) {
 		this.name = name;
 		this.lateName = lateName;
@@ -53,4 +57,5 @@ public class Admin {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 }
