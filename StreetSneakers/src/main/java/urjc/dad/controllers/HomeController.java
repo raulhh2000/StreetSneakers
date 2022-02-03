@@ -33,7 +33,7 @@ public class HomeController {
 		Optional<Product> product =productRepository.findByName(nameFilter);
 		boolean find=product.isPresent();
 		if(find) {
-			model.addAttribute("products", product);
+			model.addAttribute("products", product.get());
 		}
 		model.addAttribute("find", find);
 		return "home";
@@ -51,6 +51,24 @@ public class HomeController {
 		return "home";
 	}
 		
-	 
+	@GetMapping("/filterPrice")
+	public String showHomeByPrice(Double priceMin, Double priceMax, Model model) {
+		List<Product> products;
+		if (priceMin != null && priceMax != null) {
+			products =productRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(priceMin, priceMax);
+		} else if (priceMin != null) {
+			products =productRepository.findByPriceGreaterThanEqual(priceMin);
+		} else if (priceMax != null){
+			products =productRepository.findByPriceLessThanEqual(priceMax);
+		} else {
+			products =productRepository.findAll();
+		}
+		boolean find=!products.isEmpty();
+		if(find) {
+			model.addAttribute("products", products);
+		}
+		model.addAttribute("find", find);
+		return "home";
+	}
 	
 }
