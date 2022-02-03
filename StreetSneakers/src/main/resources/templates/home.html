@@ -13,6 +13,12 @@
 		</p>
 		<input type="submit" value="Buscar Zapatilla" />
 	</form>
+	<form action="/filterSize" method="GET">
+		<p>
+			<b>Buscar por tamaño de zapatilla:</b> <input type="number" name="size" required />
+		</p>
+		<input type="submit" value="Buscar Zapatilla" />
+	</form>
 	<h1>Zapatillas</h1>
 		{{#find}}
 		<ul>

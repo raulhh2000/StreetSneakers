@@ -38,6 +38,18 @@ public class HomeController {
 		model.addAttribute("find", find);
 		return "home";
 	}
+	
+	
+	@GetMapping("/filterSize")
+	public String showHomeBySize(@RequestParam(required=false) double size, Model model) {
+		List<Product> listProduct =productRepository.findBySize(size);
+		boolean find=!listProduct.isEmpty();
+		if(find) {
+			model.addAttribute("products", listProduct);
+		}
+		model.addAttribute("find", find);
+		return "home";
+	}
 		
 	 
 	
