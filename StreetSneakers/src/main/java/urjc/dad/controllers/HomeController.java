@@ -20,9 +20,9 @@ public class HomeController {
 	
 	@GetMapping("")
 	public String showHome(Model model) {
-		List<Product> list=productRepository.findAll()
+		List<Product> list=productRepository.findAll();
 		model.addAttribute("products", list);
-	    return "list_template";
+	    return "home";
 	}
 	 
 	
