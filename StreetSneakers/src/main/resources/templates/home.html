@@ -13,6 +13,14 @@
 		</p>
 		<input type="submit" value="Buscar Zapatilla" />
 	</form>
+	<form action="/filterPrice" method="GET">
+		<p>
+			<b>Buscar por precio:</b>
+			Min: <input type="number" name="priceMin" />
+			Max: <input type="number" name="priceMax" />
+		</p>
+		<input type="submit" value="Buscar Zapatilla" />
+	</form>
 	<h1>Zapatillas</h1>
 		{{#find}}
 		<ul>
