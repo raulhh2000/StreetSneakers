@@ -1,9 +1,7 @@
 package urjc.dad.models;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +18,7 @@ public class Product {
 	private String description;
 	private double price;
 	private double size;
+	private String brand;
 	@OneToMany(mappedBy="product")
 	private List<Review> reviews= new ArrayList<>();
 	
@@ -27,11 +26,12 @@ public class Product {
 		
 	}
 	
-	public Product(String name, String description, double price, double size) {
+	public Product(String name, String description, double price, double size, String brand) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.size = size;
+		this.brand = brand;
 	}
 
 	public long getId() {
@@ -74,6 +74,14 @@ public class Product {
 		this.size = size;
 	}
 
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
@@ -85,7 +93,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-				+ size + ", reviews=" + reviews + "]";
+				+ size + ", brand=" + brand + ", reviews=" + reviews + "]";
 	}
 	
 }

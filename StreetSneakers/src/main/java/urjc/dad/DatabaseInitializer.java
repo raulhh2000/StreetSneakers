@@ -2,9 +2,7 @@ package urjc.dad;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -60,9 +58,9 @@ public class DatabaseInitializer {
 		userRepository.save(user2);
 		userRepository.save(user3);
 		
-		Product product1 = new Product("AirForce1", "Zapatillas grandes", 123.4, 44);
-		Product product2 = new Product("Jordan", "Zapatillas de baloncesto", 99.99, 42);
-		Product product3 = new Product("Ultraboost", "Zapatillas comodas", 180, 41);
+		Product product1 = new Product("AirForce1", "Zapatillas grandes", 123.4, 44, "Nike");
+		Product product2 = new Product("Jordan", "Zapatillas de baloncesto", 99.99, 42, "Nike");
+		Product product3 = new Product("Ultraboost", "Zapatillas comodas", 180, 41, "Adidas");
 		
 		productRepository.save(product1);
 		productRepository.save(product2);

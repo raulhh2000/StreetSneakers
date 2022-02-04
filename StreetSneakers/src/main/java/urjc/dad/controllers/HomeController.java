@@ -21,9 +21,9 @@ public class HomeController {
 	@GetMapping("/")
 	public String showHome(Model model) {
 		List<Product> list=productRepository.findAll();
-		
 		model.addAttribute("products", list);
 		model.addAttribute("find", true);
+		model.addAttribute("brands", productRepository.findDistinctBrand());
 	    return "home";
 	}
 	
@@ -36,6 +36,7 @@ public class HomeController {
 			model.addAttribute("products", product.get());
 		}
 		model.addAttribute("find", find);
+		model.addAttribute("brands", productRepository.findDistinctBrand());
 		return "home";
 	}
 	
@@ -48,6 +49,7 @@ public class HomeController {
 			model.addAttribute("products", listProduct);
 		}
 		model.addAttribute("find", find);
+		model.addAttribute("brands", productRepository.findDistinctBrand());
 		return "home";
 	}
 		
@@ -68,6 +70,19 @@ public class HomeController {
 			model.addAttribute("products", products);
 		}
 		model.addAttribute("find", find);
+		model.addAttribute("brands", productRepository.findDistinctBrand());
+		return "home";
+	}
+	
+	@GetMapping("/filterBrand")
+	public String showHomeByBrand(@RequestParam(required=false) String brand, Model model) {
+		List<Product> products = productRepository.findByBrand(brand);
+		boolean find=!products.isEmpty();
+		if(find) {
+			model.addAttribute("products", products);
+		}
+		model.addAttribute("find", find);
+		model.addAttribute("brands", productRepository.findDistinctBrand());
 		return "home";
 	}
 	

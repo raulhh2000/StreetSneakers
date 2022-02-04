@@ -27,6 +27,17 @@
 		</p>
 		<input type="submit" value="Buscar Zapatilla" />
 	</form>
+	<form action="/filterBrand" method="GET">
+		<p>
+			<b>Buscar por marca de zapatilla:</b>
+			<select name="brand" required>
+				{{#brands}}
+					<option value="{{.}}">{{.}}</option>
+				{{/brands}}
+			</select>
+		</p>
+		<input type="submit" value="Buscar Zapatilla" />
+	</form>
 	<h1>Zapatillas</h1>
 		{{#find}}
 		<ul>
