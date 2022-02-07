@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import urjc.dad.models.Product;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.User;
 import urjc.dad.repositories.PurchaseRepository;
@@ -19,9 +20,6 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	PurchaseRepository purchaseRepository;
 	
 	@GetMapping("/user/{idUser}")
 	public String showUser(@PathVariable long idUser, Model model) {
@@ -38,12 +36,20 @@ public class UserController {
 			model.addAttribute("bankAccount", user.getBankAccount());
 		}
 		model.addAttribute("find", find);
-		List<Purchase> list=purchaseRepository.findByUser(user);
+		List<Purchase> list=user.getPurchases();
 		boolean findPurchases= !list.isEmpty();
 		if(findPurchases) {
 			model.addAttribute("purchases", list);
 		}
 		model.addAttribute("findPurchases", findPurchases);
+		
+		List<Product> wishList=user.getWishList();
+		boolean findWishList= !wishList.isEmpty();
+		if(findPurchases) {
+			model.addAttribute("wishList", wishList);
+		}
+		model.addAttribute("findWishList", findWishList);
+		
 	    return "user";
 	}
 	

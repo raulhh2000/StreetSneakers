@@ -33,5 +33,17 @@
 	{{^findPurchases}}
 		<p>Aún no se ha realizado ningún pedido.</p>
 	{{/findPurchases}}
+	
+	<h2>Mi lista de deseados</h2>
+	{{#findWishList}}
+		<ul>
+			{{#wishList}}
+				<li>{{.}}</li>
+			{{/wishList}}
+		</ul>
+	{{/findWishList}} 
+	{{^findWishList}}
+		<p>La lista de deseados está vacía.</p>
+	{{/findWishList}}
 </body>
 </html>
