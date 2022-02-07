@@ -1,5 +1,7 @@
 package urjc.dad.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import urjc.dad.models.Purchase;
 import urjc.dad.models.User;
+import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.UserRepository;
 
 @Controller
@@ -15,6 +19,9 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	PurchaseRepository purchaseRepository;
 	
 	@GetMapping("/user/{idUser}")
 	public String showUser(@PathVariable long idUser, Model model) {
@@ -31,6 +38,12 @@ public class UserController {
 			model.addAttribute("bankAccount", user.getBankAccount());
 		}
 		model.addAttribute("find", find);
+		List<Purchase> list=purchaseRepository.findByUser(user);
+		boolean findPurchases= !list.isEmpty();
+		if(findPurchases) {
+			model.addAttribute("purchases", list);
+		}
+		model.addAttribute("findPurchases", findPurchases);
 	    return "user";
 	}
 	

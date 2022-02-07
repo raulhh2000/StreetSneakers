@@ -22,5 +22,16 @@
 		</p>
 		<input type="submit" value="Actualizar datos" />
 	</form>
-	</body>
+	<h2>Mis pedidos realizados</h2>
+	{{#findPurchases}}
+		<ul>
+			{{#purchases}}
+				<li>{{.}}</li>
+			{{/purchases}}
+		</ul>
+	{{/findPurchases}} 
+	{{^findPurchases}}
+		<p>Aún no se ha realizado ningún pedido.</p>
+	{{/findPurchases}}
+</body>
 </html>
