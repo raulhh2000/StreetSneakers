@@ -1,5 +1,7 @@
 package urjc.dad.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,4 +46,12 @@ public class AdminController {
 		adminRepository.save(admin);
 		return "redirect:/admin/{idAdmin}";
 	}
+	
+	@PostMapping("/admin/{idAdmin}/addProduct")
+	public String addProduct(@PathVariable long idAdmin, Product product, Model model) {
+		productRepository.save(product);
+		return "redirect:/admin/{idAdmin}";
+	}
+	
+	
 }

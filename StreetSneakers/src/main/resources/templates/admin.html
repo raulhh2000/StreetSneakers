@@ -18,5 +18,16 @@
 		</p>
 		<input type="submit" value="Actualizar datos" />
 	</form>
+	
+	<h3>Añadir Producto</h3>
+	<form action="/admin/{{id}}/addProduct" method="POST">
+		<p>
+			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
+			<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" required />
+			<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
+			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
+		</p>
+		<input type="submit" value="Añadir pedido" />		
+	</form>
     </body>
 </html>
