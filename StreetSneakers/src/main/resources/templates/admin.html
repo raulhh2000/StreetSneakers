@@ -19,7 +19,7 @@
 		<input type="submit" value="Actualizar datos" />
 	</form>
 	
-	<h3>Añadir Producto</h3>
+	<h2>Añadir Producto</h2>
 	<form action="/admin/{{id}}/addProduct" method="POST">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
@@ -29,7 +29,7 @@
 		</p>
 		<input type="submit" value="Añadir producto" />		
 	</form>
-	<h4>Borrar Producto</h4>
+	<h2>Borrar Producto</h2>
 	<form action="/admin/{{id}}/removeProduct" method="POST">
 		<select name ="productId" required> 
 			<option value="">Seleccione un producto</option>
@@ -38,8 +38,31 @@
 			{{/products}} 	
 		</select>
 		<input type="submit" value="Borrar producto" />	
-	</form>		
-	<h5>Añadir Admin</h5>
+	</form>	
+	
+	<h2>Modificar Producto</h2>
+	<form action="/admin/{{id}}" method="POST">
+		<select name ="productId" required> 
+			<option value="">Seleccione un producto</option>
+			{{#products}} 
+				<option value="{{id}}">{{.}}</option>
+			{{/products}} 	
+		</select>
+		<input type="submit" value="Modificar producto" />	
+	</form>
+	{{#modifyProduct}}
+		<form action="/admin/{{idAdmin}}/modifyProduct/{{product.id}}/" method="POST">
+			<p>
+				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
+				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
+				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
+				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
+			</p>
+			<input type="submit" value="Modificar reseña" />
+		</form>
+	{{/modifyProduct}}	
+		
+	<h2>Añadir Admin</h2>
 	<form action="/admin/{{id}}/createAdmin" method="POST">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
@@ -48,13 +71,15 @@
 			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
 		</p>
 		<input type="submit" value="Añadir Admin" />
-	</form>		
-	<h5>Eliminar usuario</h5>
+	</form>	
+		
+	<h2>Eliminar usuario</h2>
 	<form action="/admin/{{id}}/removeUser" method="GET">
 		<p>
 			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 		</p>
 		<input type="submit" value="Eliminar usuario" />
 	</form>		
+	
 	</body>
 </html>
