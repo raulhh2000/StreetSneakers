@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+		<title>StreetSneaker</title>
+	</head>
+	<body>
+	<h1>Hola, {{name}}</h1>
+	<h2>Datos personales</h2>
+	<form action="/admin/update/{{id}}" method="POST">
+		<p>
+			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{name}}" required />
+			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{lastName}}" required />
+			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{email}}" required />
+			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{password}}" {{/find}} required />
+		</p>
+		<input type="submit" value="Actualizar datos" />
+	</form>
+    </body>
+</html>
