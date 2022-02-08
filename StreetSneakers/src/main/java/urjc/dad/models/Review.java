@@ -25,6 +25,12 @@ public class Review {
 		
 	}
 	
+	public Review(String comment, String title, int stars) {
+		this.comment = comment;
+		this.title = title;
+		this.stars = stars;
+	}
+	
 	public Review(Product product, String comment, User user, String title, int stars) {
 		this.product = product;
 		this.comment = comment;
@@ -73,12 +79,18 @@ public class Review {
 		this.title = title;
 	}
 
-	public int getStarts() {
+	public int getStars() {
 		return stars;
 	}
 
-	public void setStarts(int starts) {
+	public void setStars(int starts) {
 		this.stars = starts;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", comment=" + comment + ", user=" + user + ", title="
+				+ title + ", stars=" + stars + "]";
 	}
 	
 }
