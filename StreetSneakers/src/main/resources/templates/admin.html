@@ -38,6 +38,27 @@
 			{{/products}} 	
 		</select>
 		<input type="submit" value="Borrar producto" />	
-	</form>		
+	</form>
+	<h4>Modificar Producto</h4>
+	<form action="/admin/{{id}}" method="POST">
+		<select name ="productId" required> 
+			<option value="">Seleccione un producto</option>
+			{{#products}} 
+				<option value="{{id}}">{{.}}</option>
+			{{/products}} 	
+		</select>
+		<input type="submit" value="Modificar producto" />	
+	</form>
+	{{#modifyProduct}}
+		<form action="/admin/{{idAdmin}}/modifyProduct/{{product.id}}/" method="POST">
+			<p>
+				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
+				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
+				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
+				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
+			</p>
+			<input type="submit" value="Modificar reseña" />
+		</form>
+	{{/modifyProduct}}		
 	</body>
 </html>
