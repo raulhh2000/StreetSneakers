@@ -98,6 +98,12 @@ public class AdminController {
 			reviewRepository.deleteAll(list);
 			userRepository.delete(user.get());
 		}
+		else{
+			Optional<Admin> admin=adminRepository.findByEmail(email);
+			if(admin.isPresent()) {
+				adminRepository.delete(admin.get());
+			}
+		}
 		return "redirect:/admin/{idAdmin}";
 	}
 }
