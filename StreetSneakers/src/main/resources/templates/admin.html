@@ -39,5 +39,22 @@
 		</select>
 		<input type="submit" value="Borrar producto" />	
 	</form>		
+	<h5>Añadir Admin</h5>
+	<form action="/admin/{{id}}/createAdmin" method="POST">
+		<p>
+			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
+			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" required />
+			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
+			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
+		</p>
+		<input type="submit" value="Añadir Admin" />
+	</form>		
+	<h5>Eliminar usuario</h5>
+	<form action="/admin/{{id}}/removeUser" method="GET">
+		<p>
+			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
+		</p>
+		<input type="submit" value="Eliminar usuario" />
+	</form>		
 	</body>
 </html>

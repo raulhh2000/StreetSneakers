@@ -1,5 +1,6 @@
 package urjc.dad.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import urjc.dad.models.Admin;
 import urjc.dad.models.Product;
+import urjc.dad.models.Review;
+import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
+import urjc.dad.repositories.UserRepository;
 
 @Controller
 public class AdminController {
@@ -29,6 +32,9 @@ public class AdminController {
 
 	@Autowired
 	ReviewRepository reviewRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@GetMapping("/admin/{idAdmin}")
 	public String showAdmin(@PathVariable long idAdmin, Model model) {
@@ -64,4 +70,23 @@ public class AdminController {
 		productRepository.deleteById(productId);
 		return "redirect:/admin/{idAdmin}";
 	}
+	
+
+	@PostMapping("/admin/{idAdmin}/createAdmin")
+	public String createAdmin(@PathVariable long idAdmin,Admin admin, Model model) {
+		adminRepository.save(admin);
+		return "redirect:/admin/{idAdmin}";
+	}
+	
+	@GetMapping("/admin/{idAdmin}/removeUser")
+	public String removeUser(@PathVariable long idAdmin,String email, Model model) {
+		Optional<User> user=userRepository.findByEmail(email);
+		if(user.isPresent()) {
+			List<Review> list= reviewRepository.findByUser(user.get());
+			reviewRepository.deleteAll(list);
+			userRepository.delete(user.get());
+		}
+		return "redirect:/admin/{idAdmin}";
+	}
+	
 }
