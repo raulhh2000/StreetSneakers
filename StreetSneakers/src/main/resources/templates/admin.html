@@ -27,7 +27,17 @@
 			<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
 			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
 		</p>
-		<input type="submit" value="Añadir pedido" />		
+		<input type="submit" value="Añadir producto" />		
 	</form>
-    </body>
+	<h4>Borrar Producto</h4>
+	<form action="/admin/{{id}}/removeProduct" method="POST">
+		<select name ="productId" required> 
+			<option value="">Seleccione un producto</option>
+			{{#products}} 
+				<option value="{{id}}">{{.}}</option>
+			{{/products}} 	
+		</select>
+		<input type="submit" value="Borrar producto" />	
+	</form>		
+	</body>
 </html>

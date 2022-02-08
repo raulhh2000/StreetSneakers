@@ -14,6 +14,7 @@ import urjc.dad.models.Admin;
 import urjc.dad.models.Product;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.ProductRepository;
+import urjc.dad.repositories.ReviewRepository;
 
 @Controller
 public class AdminController {
@@ -24,6 +25,10 @@ public class AdminController {
 
 	@Autowired
 	ProductRepository productRepository;
+	
+
+	@Autowired
+	ReviewRepository reviewRepository;
 	
 	@GetMapping("/admin/{idAdmin}")
 	public String showAdmin(@PathVariable long idAdmin, Model model) {
@@ -37,6 +42,7 @@ public class AdminController {
 			model.addAttribute("password", admin.getPassword());
 		}
 		model.addAttribute("find", find);
+		model.addAttribute("products",productRepository.findAll());
 	    return "admin";
 	}
 
@@ -53,5 +59,9 @@ public class AdminController {
 		return "redirect:/admin/{idAdmin}";
 	}
 	
-	
+	@PostMapping("/admin/{idAdmin}/removeProduct")
+	public String removeProduct(@PathVariable long idAdmin,long productId, Model model) {
+		productRepository.deleteById(productId);
+		return "redirect:/admin/{idAdmin}";
+	}
 }
