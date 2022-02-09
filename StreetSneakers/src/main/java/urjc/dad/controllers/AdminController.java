@@ -87,7 +87,6 @@ public class AdminController {
 	@GetMapping("/admin/{idAdmin}/removeUser")
 	public String removeUser(@PathVariable long idAdmin,String email, Model model) {
 		Optional<User> user=userRepository.findByEmail(email);
-		boolean deleteAdmin=true;
 		if(user.isPresent()) {
 			List<Review> list= reviewRepository.findByUser(user.get());
 			reviewRepository.deleteAll(list);
