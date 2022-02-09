@@ -87,6 +87,7 @@ public class AdminController {
 	@GetMapping("/admin/{idAdmin}/removeUser")
 	public String removeUser(@PathVariable long idAdmin,String email, Model model) {
 		Optional<User> user=userRepository.findByEmail(email);
+		boolean deleteAdmin=true;
 		if(user.isPresent()) {
 			List<Review> list= reviewRepository.findByUser(user.get());
 			reviewRepository.deleteAll(list);
@@ -94,10 +95,11 @@ public class AdminController {
 		}
 		else{
 			Optional<Admin> admin=adminRepository.findByEmail(email);
-			if(admin.isPresent()) {
+			if(admin.isPresent() && admin.get().getId()!=idAdmin) {
 				adminRepository.delete(admin.get());
 			}
 		}
+		
 		return "redirect:/admin/{idAdmin}";
 	}
 }
