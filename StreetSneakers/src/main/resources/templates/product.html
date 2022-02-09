@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+		<title>StreetSneaker</title>
+	</head>
+	<body>
+		<h1>Detalles de la zapatilla</h1>
+		{{#findProduct}}
+		<p>{{product.name}}</p>
+		<p>Precio: {{product.price}} €</p>
+		<p>Talla: {{product.size}}</p>
+		<p>Descripción: {{product.description}}</p>
+		{{/findProduct}}
+		{{^findProduct}}
+		<p>No se ha encontrado la zapatilla.</p>
+		{{/findProduct}}
+		<h1>Reseñas de la zapatilla</h1>
+		{{^modifyReview}}
+		<form action="/product/{{product.id}}/review/" method="POST">
+			<p>
+				<b>Titulo:</b>
+				<input type="text" name="title" placeholder="Inserte un titulo" required>
+				<b>Estrellas:</b>
+				<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" required>
+			</p>
+			<b>Comentario:</b>
+				<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required></textarea>
+			<input type="submit" value="Hacer reseña" />
+		</form>
+		{{/modifyReview}}
+		{{#modifyReview}}
+		<form action="/product/{{product.id}}/review/{{review.id}}/" method="POST">
+			<p>
+				<b>Titulo:</b>
+				<input type="text" name="title" placeholder="Inserte un titulo" value="{{review.title}}" required>
+				<b>Estrellas:</b>
+				<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" value="{{review.stars}}" required>
+			</p>
+			<b>Comentario:</b>
+				<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required>{{review.comment}}</textarea>
+			<input type="submit" value="Modificar reseña" />
+		</form>
+		<form action="/product/{{product.id}}" method="GET">
+			<input type="submit" value="Nueva reseña" />
+		</form>
+		{{/modifyReview}}
+		{{#findReviews}}
+			{{#reviews}}
+			<li>
+				{{.}}
+				<form action="/product/{{product.id}}/review/{{id}}/" method="GET">
+					<input type="submit" value="Modificar reseña" />
+				</form>
+				<form action="/product/{{product.id}}/review/remove/{{id}}/" method="GET">
+					<input type="submit" value="Borrar reseña" />
+				</form>
+			</li>
+			{{/reviews}}
+		{{/findReviews}}
+		{{^findReviews}}
+		<p>No se ha encontrado ninguna reseña.</p>
+		{{/findReviews}}
+		
+	</body>
+</html>
