@@ -23,6 +23,7 @@
 	<form action="/admin/{{admin.id}}/addProduct" method="POST">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
+			<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" required />
 			<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" required />
 			<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
 			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
@@ -54,6 +55,7 @@
 		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST">
 			<p>
 				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
+				<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" value="{{product.brand}}" required />
 				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
 				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
 				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
