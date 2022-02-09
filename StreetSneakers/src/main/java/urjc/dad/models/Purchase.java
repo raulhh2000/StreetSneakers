@@ -2,9 +2,7 @@ package urjc.dad.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -74,6 +72,12 @@ public class Purchase {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	@Override
+	public String toString() {
+		return "Purchase [id=" + id + ", user=" + user + ", date=" + date + ", totalPrice=" + totalPrice + ", products="
+				+ products + "]";
 	}
 	
 }

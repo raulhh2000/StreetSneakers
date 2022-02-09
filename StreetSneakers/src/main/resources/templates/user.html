@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+		<title>StreetSneaker</title>
+	</head>
+	<body>
+	<h1>Hola, {{name}}</h1>
+	<h2>Datos personales</h2>
+	<form action="/user/update/{{id}}" method="POST">
+		<p>
+			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{name}}" required />
+			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{lastName}}" required />
+			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{email}}" required />
+			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{password}}" {{/find}} required />
+			<b>Teléfono:</b> <input type="tel" name="phone" placeholder="+34 000000000" {{#find}} value="{{phone}}" {{/find}} required pattern="\+[0-9]{2} [0-9]{9}"/>
+			<b>Dirección:</b> <input type="text" name="address" placeholder="Dirección" {{#find}} value="{{address}}" {{/find}} required />
+			<b>Cuenta bancaria:</b> <input type="text" name="bankAccount" placeholder="ESXX XXXX XXXX XX XXXXXXXXX" size="30" {{#find}} value="{{bankAccount}}" {{/find}} 7
+			required pattern="([A-Z]{2}[0-9]{2}) [0-9]{4} [0-9]{4} [0-9]{2} [0-9]{9}"/>
+		</p>
+		<input type="submit" value="Actualizar datos" />
+	</form>
+	<h2>Mis pedidos realizados</h2>
+	{{#findPurchases}}
+		<ul>
+			{{#purchases}}
+				<li>{{.}}</li>
+			{{/purchases}}
+		</ul>
+	{{/findPurchases}} 
+	{{^findPurchases}}
+		<p>Aún no se ha realizado ningún pedido.</p>
+	{{/findPurchases}}
+	
+	<h2>Mi lista de deseados</h2>
+	{{#findWishList}}
+		<ul>
+			{{#wishList}}
+				<li>{{.}}</li>
+			{{/wishList}}
+		</ul>
+	{{/findWishList}} 
+	{{^findWishList}}
+		<p>La lista de deseados está vacía.</p>
+	{{/findWishList}}
+</body>
+</html>
