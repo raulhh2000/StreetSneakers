@@ -7,20 +7,20 @@
 		<title>StreetSneaker</title>
 	</head>
 	<body>
-	<h1>Hola, {{name}}</h1>
+	<h1>Hola, {{admin.name}}</h1>
 	<h2>Datos personales</h2>
-	<form action="/admin/update/{{id}}" method="POST">
+	<form action="/admin/update/{{admin.id}}" method="POST">
 		<p>
-			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{name}}" required />
-			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{lastName}}" required />
-			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{email}}" required />
-			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{password}}" {{/find}} required />
+			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
+			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
+			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{admin.email}}" required />
+			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{admin.password}}" {{/find}} required />
 		</p>
 		<input type="submit" value="Actualizar datos" />
 	</form>
 	
 	<h2>Añadir Producto</h2>
-	<form action="/admin/{{id}}/addProduct" method="POST">
+	<form action="/admin/{{admin.id}}/addProduct" method="POST">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
 			<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" required />
@@ -30,7 +30,7 @@
 		<input type="submit" value="Añadir producto" />		
 	</form>
 	<h2>Borrar Producto</h2>
-	<form action="/admin/{{id}}/removeProduct" method="POST">
+	<form action="/admin/{{admin.id}}/removeProduct" method="POST">
 		<select name ="productId" required> 
 			<option value="">Seleccione un producto</option>
 			{{#products}} 
@@ -41,7 +41,7 @@
 	</form>	
 	
 	<h2>Modificar Producto</h2>
-	<form action="/admin/{{id}}" method="POST">
+	<form action="/admin/{{admin.id}}" method="POST">
 		<select name ="productId" required> 
 			<option value="">Seleccione un producto</option>
 			{{#products}} 
@@ -51,19 +51,19 @@
 		<input type="submit" value="Modificar producto" />	
 	</form>
 	{{#modifyProduct}}
-		<form action="/admin/{{idAdmin}}/modifyProduct/{{product.id}}/" method="POST">
+		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST">
 			<p>
 				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
 				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
 				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
 				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
 			</p>
-			<input type="submit" value="Modificar reseña" />
+			<input type="submit" value="Modificar producto" />
 		</form>
 	{{/modifyProduct}}	
 		
 	<h2>Añadir Admin</h2>
-	<form action="/admin/{{id}}/createAdmin" method="POST">
+	<form action="/admin/{{admin.id}}/createAdmin" method="POST">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
 			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" required />
@@ -74,7 +74,7 @@
 	</form>	
 		
 	<h2>Eliminar usuario</h2>
-	<form action="/admin/{{id}}/removeUser" method="GET">
+	<form action="/admin/{{admin.id}}/removeUser" method="GET">
 		<p>
 			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 		</p>

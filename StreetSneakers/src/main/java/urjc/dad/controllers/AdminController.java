@@ -39,14 +39,8 @@ public class AdminController {
 	@RequestMapping("/admin/{idAdmin}")
 	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model) {
 		Admin admin = adminRepository.findById(idAdmin).get();
-		model.addAttribute("id", admin.getId());
-		model.addAttribute("name", admin.getName());
-		model.addAttribute("lastName", admin.getLastName());
-		model.addAttribute("email", admin.getEmail());
+		model.addAttribute("admin", admin);
 		boolean find = admin.getPassword() != null;
-		if (find) {
-			model.addAttribute("password", admin.getPassword());
-		}
 		model.addAttribute("find", find);
 		model.addAttribute("products",productRepository.findAll());
 		if (productId != 0) {
