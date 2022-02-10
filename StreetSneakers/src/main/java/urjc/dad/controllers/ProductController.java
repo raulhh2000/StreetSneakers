@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
+import urjc.dad.models.User;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
 import urjc.dad.repositories.UserRepository;
@@ -31,6 +32,7 @@ public class ProductController {
 	@GetMapping("/product/{idProduct}")
 	public String showProduct(@PathVariable long idProduct,  Model model) {
 		Optional<Product> product=productRepository.findById(idProduct);
+		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
 		if(findProduct) {
 			model.addAttribute("product", product.get());
@@ -45,6 +47,30 @@ public class ProductController {
 	    return "product";
 	}
 	
+	@PostMapping("product/{idProduct}/addFavorite")
+	public String addFavorite(@PathVariable long idProduct, Model model) {
+		Optional<Product> product=productRepository.findById(idProduct);
+		boolean findProduct=product.isPresent();
+		User user=userRepository.findById((long)4).get();
+		if(findProduct) {
+			user.getWishList().add(product.get());
+			userRepository.save(user);
+		}
+		return "redirect:/product/{idProduct}";
+	}
+	@PostMapping("product/{idProduct}/removeFavorite")
+	public String removeFavorite(@PathVariable long idProduct, Model model) {
+		Optional<Product> product=productRepository.findById(idProduct);
+		boolean findProduct=product.isPresent();
+		User user=userRepository.findById((long)4).get();
+		if(findProduct) {
+			user.getWishList().remove(product.get());
+			userRepository.save(user);
+		}
+		return "redirect:/product/{idProduct}";
+	}
+	
+	
 	@PostMapping("product/{idProduct}/review")
 	public String insertReview(@PathVariable long idProduct, Review review, Model model) {
 		review.setUser(userRepository.findById((long)4).get());
@@ -56,6 +82,7 @@ public class ProductController {
 	@GetMapping("product/{idProduct}/review/{idReview}")
 	public String modifyReview(@PathVariable long idProduct, @PathVariable long idReview, Model model) {
 		Optional<Product> product=productRepository.findById(idProduct);
+		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
 		if(findProduct) {
 			model.addAttribute("product", product.get());

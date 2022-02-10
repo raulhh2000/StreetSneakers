@@ -13,6 +13,16 @@
 		<p>Precio: {{product.price}} €</p>
 		<p>Talla: {{product.size}}</p>
 		<p>Descripción: {{product.description}}</p>
+		{{^favorite}}
+		<form action="/product/{{product.id}}/addFavorite" method="POST">
+			<input type="submit" value="Añadir a favoritos" />
+		</form>
+		{{/favorite}}
+		{{#favorite}}
+		<form action="/product/{{product.id}}/removeFavorite" method="POST">
+			<input type="submit" value="Eliminar de favoritos" />
+		</form>
+		{{/favorite}}
 		{{/findProduct}}
 		{{^findProduct}}
 		<p>No se ha encontrado la zapatilla.</p>
