@@ -3,6 +3,7 @@ package urjc.dad.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Product {
 	private double price;
 	private double size;
 	private String brand;
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy="product", cascade=CascadeType.ALL)
 	private List<Review> reviews= new ArrayList<>();
 	
 	public Product() {
