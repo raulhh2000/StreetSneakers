@@ -24,6 +24,16 @@
 			<input type="submit" value="Eliminar de favoritos" />
 		</form>
 		{{/favorite}}
+		{{^shoppigncart}}
+        <form action="/product/{{product.id}}/addShoppingCart" method="POST">
+            <input type="submit" value="Añadir al carrito" />
+        </form>
+        {{/shoppigncart}}
+        {{#shoppigncart}}
+        <form action="/product/{{product.id}}/removeShoppingCart" method="POST">
+            <input type="submit" value="Eliminar del carrito" />
+        </form>
+        {{/shoppigncart}}
 		{{/findProduct}}
 		{{^findProduct}}
 		<p>No se ha encontrado la zapatilla.</p>

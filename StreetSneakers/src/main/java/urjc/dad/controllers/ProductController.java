@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
+import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
+import urjc.dad.repositories.ShoppingCartRepository;
 import urjc.dad.repositories.UserRepository;
 
 @Controller
@@ -29,11 +31,19 @@ public class ProductController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	ShoppingCartRepository shoppingCartRepository;
+	
 	@GetMapping("/product/{idProduct}")
 	public String showProduct(@PathVariable long idProduct,  Model model) {
 		Optional<Product> product=productRepository.findById(idProduct);
 		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
+		Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
+        if(shoppingCart.isPresent())
+            model.addAttribute("shoppigncart",shoppingCart.get().getListProducts().contains(product.get()));
+        else
+            model.addAttribute("shoppigncart",false);
 		if(findProduct) {
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
@@ -70,6 +80,31 @@ public class ProductController {
 		return "redirect:/product/{idProduct}";
 	}
 	
+	@PostMapping("product/{idProduct}/addShoppingCart")
+    public String addShoppingCart(@PathVariable long idProduct, Model model) {
+        Optional<Product> product=productRepository.findById(idProduct);
+        Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
+        if(shoppingCart.isPresent()) {
+            shoppingCart.get().getListProducts().add(product.get());
+            shoppingCartRepository.save(shoppingCart.get());
+        }
+        else {
+            ShoppingCart shoppingCartUser = new ShoppingCart(userRepository.getById((long)4));
+            shoppingCartUser.getListProducts().add(product.get());
+            shoppingCartRepository.save(shoppingCartUser);
+        }
+        return "redirect:/product/{idProduct}";
+    }
+    @PostMapping("product/{idProduct}/removeShoppingCart")
+    public String removeShoppingCart(@PathVariable long idProduct, Model model) {
+        Optional<Product> product=productRepository.findById(idProduct);
+        Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
+        if(shoppingCart.isPresent()) {
+            shoppingCart.get().getListProducts().remove(product.get());
+            shoppingCartRepository.save(shoppingCart.get());
+        }
+        return "redirect:/product/{idProduct}";
+    }
 	
 	@PostMapping("product/{idProduct}/review")
 	public String insertReview(@PathVariable long idProduct, Review review, Model model) {
