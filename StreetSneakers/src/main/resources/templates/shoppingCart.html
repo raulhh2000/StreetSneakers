@@ -11,7 +11,13 @@
         {{#findShoppingCart}}
         <ul>
             {{#products}}
-            <li><a href="/product/{{id}}">{{.}}</a></li>
+            <li>
+            <a href="/product/{{id}}">{{.}}
+                <form action="/shoppingcart/{{user.id}}remove/{{id}}/" method="GET">
+                        <input type="submit" value="QuitarProducto" />
+                </form>
+            </a>
+            </li>
             {{/products}}
             <p>Precio Total: {{totalPrice}} €</p>
 

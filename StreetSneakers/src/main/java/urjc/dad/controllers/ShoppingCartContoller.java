@@ -15,6 +15,7 @@ import urjc.dad.models.Product;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
+import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.ShoppingCartRepository;
 import urjc.dad.repositories.UserRepository;
@@ -30,6 +31,9 @@ public class ShoppingCartContoller {
 	    
 	    @Autowired
 	    PurchaseRepository purchaseRepository;
+	    
+	    @Autowired
+	    ProductRepository productRepository;
 
 	    @GetMapping("/shoppingcart/{idUser}")
 	    public String showShoppingCart(@PathVariable long idUser,  Model model) {
@@ -65,6 +69,19 @@ public class ShoppingCartContoller {
 	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now(),totalPrice,listProducts);
 	            purchaseRepository.save(purchase);
 	            shoppingCartRepository.delete(shoppingCart.get());
+	        }
+	        return "redirect:/shoppingcart/{idUser}";
+	    }
+	    
+	    @GetMapping("/shoppingcart/{idUser}remove/{idProduct}")
+	    public String removeProductInShoppingCart(@PathVariable long idUser,  Model model, @PathVariable long idProduct) {
+	        Optional<User> user = userRepository.findById(idUser);
+	        Optional<ShoppingCart> shoppingCart=shoppingCartRepository.findByUser(user.get());
+	        boolean findShoppingCart=shoppingCart.isPresent();
+	        if(findShoppingCart) {
+	            Product product = productRepository.getById(idProduct);
+	            shoppingCart.get().getListProducts().remove(product);
+	            shoppingCartRepository.save(shoppingCart.get());
 	        }
 	        return "redirect:/shoppingcart/{idUser}";
 	    }
