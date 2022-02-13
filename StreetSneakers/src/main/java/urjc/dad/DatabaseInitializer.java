@@ -13,11 +13,13 @@ import urjc.dad.models.Admin;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
+import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
+import urjc.dad.repositories.ShoppingCartRepository;
 import urjc.dad.repositories.UserRepository;
 
 @Component
@@ -38,6 +40,9 @@ public class DatabaseInitializer {
 	
 	@Autowired
 	private ReviewRepository reviewRepository;
+	
+	@Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
 
 	@PostConstruct
@@ -90,6 +95,11 @@ public class DatabaseInitializer {
 		reviewRepository.save(review2);	
 		reviewRepository.save(review3);	
 		
+		
+		ShoppingCart shoppingCart= new ShoppingCart(user1);
+        shoppingCart.setListProducts(list);
+
+        shoppingCartRepository.save(shoppingCart);
 
 //		product1.getReviews().add(review1);
 //		product2.getReviews().add(review2);
