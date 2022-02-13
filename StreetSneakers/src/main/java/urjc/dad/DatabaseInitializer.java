@@ -79,10 +79,10 @@ public class DatabaseInitializer {
 		list.add(product1);
 		list.add(product3);
 		list.add(product2);
-		LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
-		Purchase purchase1= new Purchase(user1,date,300.02,list);
+		//LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
+		//Purchase purchase1= new Purchase(user1,date,300.02,list);
 		
-		purchaseRepository.save(purchase1);
+		//purchaseRepository.save(purchase1);
 		
 		//user1.getPurchases().add(purchase1);
 		//userRepository.save(user1);

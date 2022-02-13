@@ -14,6 +14,10 @@
             <li><a href="/product/{{id}}">{{.}}</a></li>
             {{/products}}
             <p>Precio Total: {{totalPrice}} €</p>
+
+            <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
+                <input type="submit" value="RealizarCompra" />
+            </form>
         </ul>
         {{/findShoppingCart}}
         {{^findShoppingCart}}
