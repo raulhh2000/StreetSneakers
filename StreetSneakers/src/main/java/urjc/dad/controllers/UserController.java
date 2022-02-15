@@ -45,7 +45,7 @@ public class UserController {
 		
 		List<Product> wishList=user.getWishList();
 		boolean findWishList= !wishList.isEmpty();
-		if(findPurchases) {
+		if(findWishList) {
 			model.addAttribute("wishList", wishList);
 		}
 		model.addAttribute("findWishList", findWishList);

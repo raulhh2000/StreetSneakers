@@ -14,11 +14,13 @@ import urjc.dad.models.LineItem;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
+import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
+import urjc.dad.repositories.ShoppingCartRepository;
 import urjc.dad.repositories.UserRepository;
 
 @Component
@@ -39,6 +41,9 @@ public class DatabaseInitializer {
 	
 	@Autowired
 	private ReviewRepository reviewRepository;
+	
+	@Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
 
 	@PostConstruct
@@ -75,10 +80,10 @@ public class DatabaseInitializer {
 		list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),2));
 		list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),2));
 		list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),1));
-		LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
-		Purchase purchase1= new Purchase(user1,date,300.02,list);
-		
-		purchaseRepository.save(purchase1);
+
+		//LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
+		//Purchase purchase1= new Purchase(user1,date,300.02,list);
+		//purchaseRepository.save(purchase1);
 		
 		//user1.getPurchases().add(purchase1);
 		//userRepository.save(user1);
@@ -91,6 +96,11 @@ public class DatabaseInitializer {
 		reviewRepository.save(review2);	
 		reviewRepository.save(review3);	
 		
+		
+		ShoppingCart shoppingCart= new ShoppingCart(user1);
+        shoppingCart.setListProducts(list);
+
+        shoppingCartRepository.save(shoppingCart);
 
 //		product1.getReviews().add(review1);
 //		product2.getReviews().add(review2);

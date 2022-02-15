@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <!--<link rel="shortcut icon" href="img/icono.png"/>-->
+        <!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+        <title>StreetSneaker</title>
+    </head>
+    <body>
+    <h1>Productos en el carrito</h1>
+        {{#findShoppingCart}}
+        <ul>
+            {{#products}}
+            <li>
+            <a href="/product/{{id}}">{{.}}
+                <form action="/shoppingcart/{{user.id}}remove/{{id}}/" method="GET">
+                        <input type="submit" value="QuitarProducto" />
+                </form>
+            </a>
+            </li>
+            {{/products}}
+            <p>Precio Total: {{totalPrice}} €</p>
+
+            <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
+                <input type="submit" value="RealizarCompra" />
+            </form>
+        </ul>
+        {{/findShoppingCart}}
+        {{^findShoppingCart}}
+        <p>No hay productos en el carrito</p>
+        {{/findShoppingCart}}
+    </body>
+</html>
