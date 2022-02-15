@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import urjc.dad.models.Admin;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
+import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
+import urjc.dad.repositories.ShoppingCartRepository;
 import urjc.dad.repositories.UserRepository;
 
 @Controller
@@ -28,13 +30,15 @@ public class AdminController {
 
 	@Autowired
 	ProductRepository productRepository;
-	
 
 	@Autowired
 	ReviewRepository reviewRepository;
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ShoppingCartRepository shoppingCartRepository;
 	
 	@RequestMapping("/admin/{idAdmin}")
 	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model) {
@@ -65,10 +69,17 @@ public class AdminController {
 	
 	@PostMapping("/admin/{idAdmin}/removeProduct")
 	public String removeProduct(@PathVariable long idAdmin,long productId, Model model) {
+		Product product = productRepository.findById(productId).get();
 		List<User> users= userRepository.findAll();
 		for (User user: users) {
-			user.getWishList().remove(productRepository.findById(productId).get());
+			user.getWishList().remove(product);
 			userRepository.save(user);
+		}
+		
+		List<ShoppingCart> shoppingCarts= shoppingCartRepository.findAll();
+		for (ShoppingCart shoppingCart: shoppingCarts) {
+			shoppingCart.getListProducts().remove(product);
+			shoppingCartRepository.save(shoppingCart);
 		}
 		
 		productRepository.deleteById(productId);

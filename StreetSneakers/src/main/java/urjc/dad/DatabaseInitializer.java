@@ -1,6 +1,5 @@
 package urjc.dad;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +10,11 @@ import org.springframework.stereotype.Component;
 
 import urjc.dad.models.Admin;
 import urjc.dad.models.LineItem;
-import urjc.dad.models.Purchase;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
 import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
-import urjc.dad.repositories.PurchaseRepository;
 import urjc.dad.repositories.ProductRepository;
 import urjc.dad.repositories.ReviewRepository;
 import urjc.dad.repositories.ShoppingCartRepository;
@@ -32,9 +29,6 @@ public class DatabaseInitializer {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private PurchaseRepository purchaseRepository;
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -96,9 +90,13 @@ public class DatabaseInitializer {
 		reviewRepository.save(review2);	
 		reviewRepository.save(review3);	
 		
+		List<Product> listProducts= new ArrayList<>();
+		listProducts.add(product1);
+		listProducts.add(product2);
+		listProducts.add(product3);
 		
 		ShoppingCart shoppingCart= new ShoppingCart(user1);
-        shoppingCart.setListProducts(list);
+        shoppingCart.setListProducts(listProducts);
 
         shoppingCartRepository.save(shoppingCart);
 

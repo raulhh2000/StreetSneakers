@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import urjc.dad.models.LineItem;
 import urjc.dad.models.Product;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.ShoppingCart;
@@ -64,9 +65,11 @@ public class ShoppingCartContoller {
 	            for(Product product : shoppingCart.get().getListProducts()) {
 	                totalPrice+=product.getPrice();
 	            }
-	            List<Product> listProducts= new ArrayList<>();
-	            listProducts.addAll(shoppingCart.get().getListProducts());
-	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now(),totalPrice,listProducts);
+	            List<LineItem> listLineItems= new ArrayList<>();
+	            for (Product product: shoppingCart.get().getListProducts()) {
+	            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),1));
+	            }
+	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now(),totalPrice,listLineItems);
 	            purchaseRepository.save(purchase);
 	            shoppingCartRepository.delete(shoppingCart.get());
 	        }
