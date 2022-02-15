@@ -65,6 +65,12 @@ public class AdminController {
 	
 	@PostMapping("/admin/{idAdmin}/removeProduct")
 	public String removeProduct(@PathVariable long idAdmin,long productId, Model model) {
+		List<User> users= userRepository.findAll();
+		for (User user: users) {
+			user.getWishList().remove(productRepository.findById(productId).get());
+			userRepository.save(user);
+		}
+		
 		productRepository.deleteById(productId);
 		return "redirect:/admin/{idAdmin}";
 	}

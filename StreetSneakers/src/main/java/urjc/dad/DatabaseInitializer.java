@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import urjc.dad.models.Admin;
+import urjc.dad.models.LineItem;
 import urjc.dad.models.Purchase;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
@@ -75,13 +76,13 @@ public class DatabaseInitializer {
 		userRepository.save(user1);
 		
 		
-		List<Product> list= new ArrayList<>();
-		list.add(product1);
-		list.add(product3);
-		list.add(product2);
+		List<LineItem> list= new ArrayList<>();
+		list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),2));
+		list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),2));
+		list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),1));
+
 		//LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
 		//Purchase purchase1= new Purchase(user1,date,300.02,list);
-		
 		//purchaseRepository.save(purchase1);
 		
 		//user1.getPurchases().add(purchase1);

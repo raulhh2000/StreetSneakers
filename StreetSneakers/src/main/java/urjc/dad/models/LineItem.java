@@ -1,17 +1,13 @@
 package urjc.dad.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Product {
+public class LineItem {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
@@ -20,19 +16,20 @@ public class Product {
 	private double price;
 	private double size;
 	private String brand;
-	@OneToMany(mappedBy="product", cascade=CascadeType.ALL)
-	private List<Review> reviews= new ArrayList<>();
+	private int quantity;
 	
-	public Product() {
+	public LineItem() {
 		
 	}
-	
-	public Product(String name, String description, double price, double size, String brand) {
+
+	public LineItem(String name, String description, double price, double size, String brand, int quantity) {
+		super();
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.size = size;
 		this.brand = brand;
+		this.quantity = quantity;
 	}
 
 	public long getId() {
@@ -83,18 +80,18 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public List<Review> getReviews() {
-		return reviews;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-				+ size + ", brand=" + brand + ", reviews=" + reviews + "]";
+		return "LineItem [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
+				+ size + ", brand=" + brand + ", quantity=" + quantity + "]";
 	}
 	
 }

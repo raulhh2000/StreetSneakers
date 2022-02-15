@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,18 +21,18 @@ public class Purchase {
 	private User user;
 	private LocalDateTime date;
 	private double totalPrice;
-	@OneToMany
-	private List<Product> products= new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<LineItem> lineItems= new ArrayList<>();
 	
 	public Purchase() {
 		
 	}
 
-	public Purchase(User user, LocalDateTime date, double totalPrice, List<Product> products) {
+	public Purchase(User user, LocalDateTime date, double totalPrice, List<LineItem> lineItems) {
 		this.user = user;
 		this.date = date;
 		this.totalPrice = totalPrice;
-		this.products = products;
+		this.lineItems = lineItems;
 	}
 
 	public long getId() {
@@ -66,18 +67,18 @@ public class Purchase {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<LineItem> getProducts() {
+		return lineItems;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProducts(List<LineItem> lineItems) {
+		this.lineItems = lineItems;
 	}
 
 	@Override
 	public String toString() {
-		return "Purchase [id=" + id + ", user=" + user + ", date=" + date + ", totalPrice=" + totalPrice + ", products="
-				+ products + "]";
+		return "Purchase [id=" + id + ", user=" + user + ", date=" + date + ", totalPrice=" + totalPrice
+				+ ", lineItems=" + lineItems + "]";
 	}
 	
 }
