@@ -1,5 +1,8 @@
 package urjc.dad.controllers;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import urjc.dad.models.Admin;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
@@ -62,7 +67,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/{idAdmin}/addProduct")
-	public String addProduct(@PathVariable long idAdmin, Product product, Model model) {
+	public String addProduct(@PathVariable long idAdmin, @RequestParam MultipartFile file, Product product, Model model) throws IOException {
+		Path imagePath = Paths.get("src//main//resources//static//images").resolve(file.getOriginalFilename());
+		file.transferTo(imagePath);
+		product.setImage("images//"+file.getOriginalFilename());
 		productRepository.save(product);
 		return "redirect:/admin/{idAdmin}";
 	}
@@ -87,10 +95,17 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/{idAdmin}/modifyProduct/{idProduct}")
-	public String modifyProduct(@PathVariable long idAdmin, @PathVariable long idProduct, Product product, Model model) {
+	public String modifyProduct(@PathVariable long idAdmin, @PathVariable long idProduct, @RequestParam MultipartFile file, Product product, Model model) throws IOException {
 		Product oldProduct = productRepository.findById(idProduct).get();
 		product.setReviews(oldProduct.getReviews());
 		product.setId(idProduct);
+		if (!file.isEmpty()) {
+			Path imagePath = Paths.get("src//main//resources//static//images").resolve(file.getOriginalFilename());
+			file.transferTo(imagePath);
+			product.setImage("images//"+file.getOriginalFilename());
+		} else {
+			product.setImage(oldProduct.getImage());
+		}
 		productRepository.save(product);
 		return "redirect:/admin/{idAdmin}";
 	}

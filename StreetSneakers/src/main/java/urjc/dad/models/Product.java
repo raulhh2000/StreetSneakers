@@ -20,6 +20,7 @@ public class Product {
 	private double price;
 	private double size;
 	private String brand;
+	private String image;
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL)
 	private List<Review> reviews= new ArrayList<>();
 	
@@ -33,6 +34,18 @@ public class Product {
 		this.price = price;
 		this.size = size;
 		this.brand = brand;
+	}
+	
+	
+
+	public Product(String name, String description, double price, double size, String brand, String image) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.size = size;
+		this.brand = brand;
+		this.image = image;
 	}
 
 	public long getId() {
@@ -83,6 +96,14 @@ public class Product {
 		this.brand = brand;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
@@ -94,7 +115,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-				+ size + ", brand=" + brand + ", reviews=" + reviews + "]";
+				+ size + ", brand=" + brand + ", image=" + image + ", reviews=" + reviews + "]";
 	}
 	
 }

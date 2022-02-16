@@ -58,9 +58,9 @@ public class DatabaseInitializer {
 		userRepository.save(user2);
 		userRepository.save(user3);
 		
-		Product product1 = new Product("AirForce1", "Zapatillas grandes", 123.4, 44, "Nike");
-		Product product2 = new Product("Jordan", "Zapatillas de baloncesto", 99.99, 42, "Nike");
-		Product product3 = new Product("Ultraboost", "Zapatillas comodas", 180, 41, "Adidas");
+		Product product1 = new Product("AirForce1", "Zapatillas grandes", 123.4, 44, "Nike", "images//AirForce1.png");
+		Product product2 = new Product("Jordan", "Zapatillas de baloncesto", 99.99, 42, "Nike", "images//Jordan.png");
+		Product product3 = new Product("Ultraboost", "Zapatillas comodas", 180, 41, "Adidas", "images//Ultraboost.png");
 		
 		productRepository.save(product1);
 		productRepository.save(product2);

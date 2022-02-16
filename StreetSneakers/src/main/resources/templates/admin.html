@@ -20,13 +20,14 @@
 	</form>
 	
 	<h2>Añadir Producto</h2>
-	<form action="/admin/{{admin.id}}/addProduct" method="POST">
+	<form action="/admin/{{admin.id}}/addProduct" method="POST" enctype="multipart/form-data">
 		<p>
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
 			<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" required />
 			<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" required />
 			<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
 			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
+			<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" required />
 		</p>
 		<input type="submit" value="Añadir producto" />		
 	</form>
@@ -52,13 +53,14 @@
 		<input type="submit" value="Modificar producto" />	
 	</form>
 	{{#modifyProduct}}
-		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST">
+		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
 			<p>
 				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
 				<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" value="{{product.brand}}" required />
 				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
 				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
 				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
+				<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" />
 			</p>
 			<input type="submit" value="Modificar producto" />
 		</form>
