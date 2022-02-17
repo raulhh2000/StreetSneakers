@@ -17,6 +17,8 @@
 			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{admin.password}}" {{/find}} required />
 		</p>
 		<input type="submit" value="Actualizar datos" />
+		{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}
+		{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
 	</form>
 	
 	<h2>Añadir Producto</h2>
@@ -29,7 +31,9 @@
 			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
 			<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" required />
 		</p>
-		<input type="submit" value="Añadir producto" />		
+		<input type="submit" value="Añadir producto" />
+		{{#addedProductSuccess}}<spam class="success">Producto añadido correctamente</spam>{{/addedProductSuccess}}
+		{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
 	</form>
 	<h2>Borrar Producto</h2>
 	<form action="/admin/{{admin.id}}/removeProduct" method="POST">
@@ -39,7 +43,9 @@
 				<option value="{{id}}">{{.}}</option>
 			{{/products}} 	
 		</select>
-		<input type="submit" value="Borrar producto" />	
+		<input type="submit" value="Borrar producto" />
+		{{#removedProductSuccess}}<spam class="success">Producto borrado correctamente</spam>{{/removedProductSuccess}}
+		{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
 	</form>	
 	
 	<h2>Modificar Producto</h2>
@@ -50,7 +56,9 @@
 				<option value="{{id}}">{{.}}</option>
 			{{/products}} 	
 		</select>
-		<input type="submit" value="Modificar producto" />	
+		<input type="submit" value="Modificar producto" />
+		{{#modifiedProductSuccess}}<spam class="success">Producto modificado correctamente</spam>{{/modifiedProductSuccess}}
+		{{#modifiedProductFailure}}<spam class="failure">El producto no se ha podido modificar</spam>{{/modifiedProductFailure}}
 	</form>
 	{{#modifyProduct}}
 		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
@@ -60,7 +68,7 @@
 				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
 				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
 				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
-				<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" />
+				<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}" width="200" height="200">
 			</p>
 			<input type="submit" value="Modificar producto" />
 		</form>
@@ -75,6 +83,8 @@
 			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
 		</p>
 		<input type="submit" value="Añadir Admin" />
+		{{#addedAdminSuccess}}<spam class="success">Administrador añadido correctamente</spam>{{/addedAdminSuccess}}
+		{{#addedAdminFailure}}<spam class="failure">El administrador no se ha podido añadir</spam>{{/addedAdminFailure}}
 	</form>	
 		
 	<h2>Eliminar usuario</h2>
@@ -83,6 +93,8 @@
 			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 		</p>
 		<input type="submit" value="Eliminar usuario" />
+		{{#removedAdminSuccess}}<spam class="success">Usuario eliminado correctamente</spam>{{/removedAdminSuccess}}
+		{{#removedAdminFailure}}<spam class="failure">El usuario no se ha podido eliminar</spam>{{/removedAdminFailure}}
 	</form>		
 	
 	</body>
