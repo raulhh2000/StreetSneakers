@@ -88,9 +88,9 @@ public class AdminController {
 		Optional<Product> isProduct = productRepository.findByName(product.getName());
 		if (!isProduct.isPresent()) {
 			if (file.getOriginalFilename().contains(product.getName())) {
-				Path imagePath = Paths.get("src//main//resources//static//images").resolve(file.getOriginalFilename());
+				Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 				file.transferTo(imagePath);
-				product.setImage("images//"+file.getOriginalFilename());
+				product.setImage("/images/"+file.getOriginalFilename());
 				productRepository.save(product);
 				sesion.setAttribute("feedback", "addedProductSuccess");
 			} else {
@@ -135,9 +135,9 @@ public class AdminController {
 			product.setId(idProduct);
 			if (!file.isEmpty()) {
 				if (file.getOriginalFilename().contains(product.getName())) {
-					Path imagePath = Paths.get("src//main//resources//static//images").resolve(file.getOriginalFilename());
+					Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 					file.transferTo(imagePath);
-					product.setImage("images//"+file.getOriginalFilename());
+					product.setImage("/images/"+file.getOriginalFilename());
 					productRepository.save(product);
 					sesion.setAttribute("feedback", "modifiedProductSuccess");
 				} else {
@@ -145,13 +145,13 @@ public class AdminController {
 				}
 			} else {
 				if (!product.getName().equals(oldProduct.getName())) {
-					String oldImagePath="src//main//resources//static//"+oldProduct.getImage();
+					String oldImagePath=oldProduct.getImage();
 					String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
 					File oldImage = new File(oldImagePath);
-					String imagePath="src//main//resources//static//images//"+product.getName()+oldExtension;
+					String imagePath="src/main/resources/images/"+product.getName()+oldExtension;
 					File image = new File(imagePath);
 					oldImage.renameTo(image);
-					product.setImage("images//"+product.getName()+oldExtension);
+					product.setImage("/images/"+product.getName()+oldExtension);
 				} else {
 					product.setImage(oldProduct.getImage());
 				}
