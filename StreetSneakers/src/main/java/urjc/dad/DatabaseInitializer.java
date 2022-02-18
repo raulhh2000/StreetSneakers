@@ -58,13 +58,31 @@ public class DatabaseInitializer {
 		userRepository.save(user2);
 		userRepository.save(user3);
 		
-		Product product1 = new Product("AirForce1", "Zapatillas grandes", 123.4, 44, "Nike", "/images/AirForce1.png");
-		Product product2 = new Product("Jordan", "Zapatillas de baloncesto", 99.99, 42, "Nike", "/images/Jordan.png");
-		Product product3 = new Product("Ultraboost", "Zapatillas comodas", 180, 41, "Adidas", "/images/Ultraboost.png");
+		Product product1 = new Product("AirForce1", "Zapatilla grande", 123.4, 44, "Nike", "/images/AirForce1.png");
+		Product product2 = new Product("Jordan Verde", "Zapatilla de baloncesto", 99.99, 42, "Nike", "/images/JordanVerde.png");
+		Product product3 = new Product("Ultraboost", "Zapatilla comoda", 180, 41, "Adidas", "/images/Ultraboost.png");
+		Product product4 = new Product("Yeezy Oreo", "Zapatilla bonita", 300.25, 40, "Adidas", "/images/YeezyOreo.png");
+		Product product5 = new Product("Regreso al futuro", "Zapatilla futurista", 29000.99, 42, "Nike", "/images/Regresoalfuturo.png");
+		Product product6 = new Product("Triple S", "Zapatilla de lujo", 550, 41, "Balenciaga", "/images/TripleS.png");
+		Product product7 = new Product("VaporMax", "Zapatilla con suela de aire", 180.4, 39, "Nike", "/images/VaporMax.png");
+		Product product8 = new Product("Yeezy 700 Wave", "Zapatilla de moda", 250.5, 42, "Adidas", "/images/Yeezy700Wave.png");
+		Product product9 = new Product("Alexander Mcqueen", "Zapatillas de lujo", 525, 43, "Alexander Mcqueen", "/images/AlexanderMcqueen.png");
+		Product product10 = new Product("Stan Smith", "Zapatilla basica", 79.39, 40, "Nike", "/images/StanSmith.png");
+		Product product11 = new Product("Jordan X Off-White Roja", "Zapatilla de colaboracion", 3000.2, 42, "Nike", "/images/JordanXOff-WhiteRoja.png");
+		Product product12 = new Product("AirForce1 X Off-White", "Zapatillas de colaboracion", 1500, 41, "Nike", "/images/AirForce1XOff-White.png");
 		
 		productRepository.save(product1);
 		productRepository.save(product2);
 		productRepository.save(product3);
+		productRepository.save(product4);
+		productRepository.save(product5);
+		productRepository.save(product6);
+		productRepository.save(product7);
+		productRepository.save(product8);
+		productRepository.save(product9);
+		productRepository.save(product10);
+		productRepository.save(product11);
+		productRepository.save(product12);
 		
 		user1.getWishList().add(product1);
 		userRepository.save(user1);

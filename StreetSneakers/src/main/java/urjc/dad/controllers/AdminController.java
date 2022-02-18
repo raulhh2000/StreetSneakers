@@ -87,7 +87,7 @@ public class AdminController {
 	public String addProduct(@PathVariable long idAdmin, @RequestParam MultipartFile file, Product product, Model model, HttpSession sesion) throws IOException {
 		Optional<Product> isProduct = productRepository.findByName(product.getName());
 		if (!isProduct.isPresent()) {
-			if (file.getOriginalFilename().contains(product.getName())) {
+			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 				Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 				file.transferTo(imagePath);
 				product.setImage("/images/"+file.getOriginalFilename());
@@ -134,7 +134,7 @@ public class AdminController {
 			product.setReviews(oldProduct.getReviews());
 			product.setId(idProduct);
 			if (!file.isEmpty()) {
-				if (file.getOriginalFilename().contains(product.getName())) {
+				if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 					Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 					file.transferTo(imagePath);
 					product.setImage("/images/"+file.getOriginalFilename());
@@ -148,10 +148,10 @@ public class AdminController {
 					String oldImagePath=oldProduct.getImage();
 					String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
 					File oldImage = new File(oldImagePath);
-					String imagePath="src/main/resources/images/"+product.getName()+oldExtension;
+					String imagePath="src/main/resources/images/"+product.getName().replace(" ", "")+oldExtension;
 					File image = new File(imagePath);
 					oldImage.renameTo(image);
-					product.setImage("/images/"+product.getName()+oldExtension);
+					product.setImage("/images/"+product.getName().replace(" ", "")+oldExtension);
 				} else {
 					product.setImage(oldProduct.getImage());
 				}
