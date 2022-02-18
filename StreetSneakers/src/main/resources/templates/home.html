@@ -3,52 +3,76 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 		<title>StreetSneaker</title>
 	</head>
 	<body>
-	<form action="/filterName" method="GET">
-		<p>
-			<b>Buscar por nombre de zapatilla:</b> <input type="text" name="nameFilter" required />
-		</p>
-		<input type="submit" value="Buscar Zapatilla" />
-	</form>
-	<form action="/filterPrice" method="GET">
-		<p>
-			<b>Buscar por precio:</b>
-			Min: <input type="number" name="priceMin" />
-			Max: <input type="number" name="priceMax" />
-		</p>
-		<input type="submit" value="Buscar Zapatilla" />
-	</form>
-	<form action="/filterSize" method="GET">
-		<p>
-			<b>Buscar por tamaño de zapatilla:</b> <input type="number" name="size" required />
-		</p>
-		<input type="submit" value="Buscar Zapatilla" />
-	</form>
-	<form action="/filterBrand" method="GET">
-		<p>
-			<b>Buscar por marca de zapatilla:</b>
-			<select name="brand" required>
-				<option value="">Seleccione una marca</option>
-				{{#brands}}
-					<option value="{{.}}">{{.}}</option>
-				{{/brands}}
-			</select>
-		</p>
-		<input type="submit" value="Buscar Zapatilla" />
-	</form>
-	<h1>Zapatillas</h1>
-		{{#find}}
-		<ul>
-			{{#products}}
-			<li><a href="/product/{{id}}" style="text-decoration:none;color:black">{{name}}&nbsp;&nbsp;&nbsp;&nbsp;{{price}}€<br><img src="{{image}}" width="200" height="200"></img></a></li>
-			{{/products}}
-		</ul>
-		{{/find}}
-		{{^find}}
-		<p>No se ha encontrado la zapatilla.</p>
-		{{/find}}
+		<div class="wrap">
+			<h1>Zapatillas</h1>
+			<div class="store-wrapper">
+				<div class="filter_list">
+					<h2>Filtros</h2>
+					<div class="filter_item">
+						<form action="/filterName" method="GET">
+							<p>
+								<b>Buscar por nombre de zapatilla:</b> <input type="text" name="nameFilter" placeholder="Nombre" required />
+							</p>
+							<input type="submit" value="Aplicar filtro" />
+						</form>
+					</div>
+					<div class="filter_item">
+						<form action="/filterPrice" method="GET">
+							<p>
+								<b>Buscar por precio:</b>
+							</p>
+							<p>
+								<input type="number" name="priceMin" placeholder="Min"/>
+							</p>
+							<p>
+								<input type="number" name="priceMax" placeholder="Max"/>
+							</p>
+							<input type="submit" value="Aplicar filtro" />
+						</form>
+					</div>
+					<div class="filter_item">
+						<form action="/filterSize" method="GET">
+							<p>
+								<b>Buscar por tamaño de zapatilla:</b> <input type="number" name="size" placeholder="Talla"required />
+							</p>
+							<input type="submit" value="Aplicar filtro" />
+						</form>
+					</div>
+					<div class="filter_item">
+						<form action="/filterBrand" method="GET">
+							<p>
+								<b>Buscar por marca de zapatilla:</b>
+								<select name="brand" required>
+									<option value="">Seleccione una marca</option>
+									{{#brands}}
+									<option value="{{.}}">{{.}}</option>
+									{{/brands}}
+								</select>
+							</p>
+							<input type="submit" value="Aplicar filtro" />
+						</form>
+					</div>
+				</div>
+				<section class="products-list">
+					{{#find}}
+						{{#products}}
+							<div class="product-item">
+								<a href="/product/{{id}}">
+									<img src="{{image}}" alt="" width="200" height="200">
+									<span>{{name}} &nbsp;&nbsp;&nbsp;&nbsp;{{price}} €</span>
+								</a>
+							</div>
+						{{/products}}
+					{{/find}}
+					{{^find}}
+						<p>No se ha encontrado la zapatilla.</p>
+					{{/find}}
+				</section>
+			</div>
+		</div>
 	</body>
 </html>
