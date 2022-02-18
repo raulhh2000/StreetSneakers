@@ -37,6 +37,8 @@ public class HomeController {
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterName", true);
+		model.addAttribute("nameFilter", nameFilter);
 		return "home";
 	}
 	
@@ -50,6 +52,8 @@ public class HomeController {
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterSize", true);
+		model.addAttribute("sizeFilter", size);
 		return "home";
 	}
 		
@@ -58,10 +62,18 @@ public class HomeController {
 		List<Product> products;
 		if (priceMin != null && priceMax != null) {
 			products =productRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(priceMin, priceMax);
+			model.addAttribute("filterPriceMin", true);
+			model.addAttribute("priceMinFilter", priceMin);
+			model.addAttribute("filterPriceMax", true);
+			model.addAttribute("priceMaxFilter", priceMax);
 		} else if (priceMin != null) {
 			products =productRepository.findByPriceGreaterThanEqual(priceMin);
+			model.addAttribute("filterPriceMin", true);
+			model.addAttribute("priceMinFilter", priceMin);
 		} else if (priceMax != null){
 			products =productRepository.findByPriceLessThanEqual(priceMax);
+			model.addAttribute("filterPriceMax", true);
+			model.addAttribute("priceMaxFilter", priceMax);
 		} else {
 			products =productRepository.findAll();
 		}
@@ -83,6 +95,8 @@ public class HomeController {
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterBrand", true);
+		model.addAttribute("brandFilter", brand);
 		return "home";
 	}
 	
