@@ -51,13 +51,14 @@ public class ProductController {
 			if(findReviews) {
 				model.addAttribute("reviews", reviews);
 			}
-			model.addAttribute("findReviews", findReviews);	
+			model.addAttribute("findReviews", findReviews);
+			model.addAttribute("numReviews", reviews.size());
 		}
 		model.addAttribute("findProduct", findProduct);
 	    return "product";
 	}
 	
-	@PostMapping("product/{idProduct}/addFavorite")
+	@GetMapping("product/{idProduct}/addFavorite")
 	public String addFavorite(@PathVariable long idProduct, Model model) {
 		Optional<Product> product=productRepository.findById(idProduct);
 		boolean findProduct=product.isPresent();
@@ -68,7 +69,7 @@ public class ProductController {
 		}
 		return "redirect:/product/{idProduct}";
 	}
-	@PostMapping("product/{idProduct}/removeFavorite")
+	@GetMapping("product/{idProduct}/removeFavorite")
 	public String removeFavorite(@PathVariable long idProduct, Model model) {
 		Optional<Product> product=productRepository.findById(idProduct);
 		boolean findProduct=product.isPresent();
@@ -80,7 +81,7 @@ public class ProductController {
 		return "redirect:/product/{idProduct}";
 	}
 	
-	@PostMapping("product/{idProduct}/addShoppingCart")
+	@GetMapping("product/{idProduct}/addShoppingCart")
     public String addShoppingCart(@PathVariable long idProduct, Model model) {
         Optional<Product> product=productRepository.findById(idProduct);
         Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
@@ -95,7 +96,7 @@ public class ProductController {
         }
         return "redirect:/product/{idProduct}";
     }
-    @PostMapping("product/{idProduct}/removeShoppingCart")
+	@GetMapping("product/{idProduct}/removeShoppingCart")
     public String removeShoppingCart(@PathVariable long idProduct, Model model) {
         Optional<Product> product=productRepository.findById(idProduct);
         Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
@@ -127,6 +128,7 @@ public class ProductController {
 				model.addAttribute("reviews", reviews);
 			}
 			model.addAttribute("findReviews", findReviews);
+			model.addAttribute("numReviews", reviews.size());
 			model.addAttribute("review", reviewRepository.findById(idReview).get());
 			model.addAttribute("modifyReview", true);
 		}

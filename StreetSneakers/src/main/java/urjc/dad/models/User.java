@@ -128,5 +128,10 @@ public class User {
 	public void setWishList(List<Product> wishList) {
 		this.wishList = wishList;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }

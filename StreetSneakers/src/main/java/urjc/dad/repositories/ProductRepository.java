@@ -17,5 +17,5 @@ public interface ProductRepository  extends JpaRepository<Product, Long> {
 	List<Product> findByPriceLessThanEqual(double priceMax);
 	List<Product> findByBrand(String brand);
 	@Query("SELECT DISTINCT d.brand FROM Product d")
-	public List<String> findDistinctBrand();
+	List<String> findDistinctBrand();
 }
