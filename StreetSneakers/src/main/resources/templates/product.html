@@ -86,7 +86,7 @@
 					{{#findReviews}}
 						<h3>Numero de reseñas: {{numReviews}}</h3>
 						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
-						{{#removeNoComplete}}<spam class="success">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
+						{{#removeNoComplete}}<spam class="failure">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
 						{{#reviews}}
 							<li class="review">
 								<div class="bodyReview">

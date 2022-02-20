@@ -62,6 +62,14 @@ input[type=button]:hover, input[type=submit]:hover{
   background-color: #253342;
   color: white;
 }
+.success{
+  color: green;
+  font-weight: bold;
+}
+.failure{
+  color: red;
+  font-weight: bold;
+}
 /* WRAP ============*/
 .wrap{
 	max-width: 1200px;
