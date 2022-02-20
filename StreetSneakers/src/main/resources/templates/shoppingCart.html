@@ -18,6 +18,7 @@
                 </form>
             </li>
             {{/products}}
+            {{#removeProductSuccess}}<spam class="success">El producto se ha eliminado del carrito correctamente</spam>{{/removeProductSuccess}}
             <p>Precio Total: {{totalPrice}} €</p>
 
             <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
@@ -26,6 +27,7 @@
         </ul>
         {{/findShoppingCart}}
         {{^findShoppingCart}}
+        {{#removeProductSuccess}}<spam class="success">El producto se ha eliminado del carrito correctamente</spam>{{/removeProductSuccess}}
         <p>No hay productos en el carrito</p>
         {{/findShoppingCart}}
     </body>

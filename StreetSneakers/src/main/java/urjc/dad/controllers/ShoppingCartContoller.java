@@ -40,7 +40,7 @@ public class ShoppingCartContoller {
 	    ProductRepository productRepository;
 
 	    @GetMapping("/shoppingcart/{idUser}")
-	    public String showShoppingCart(@PathVariable long idUser,  Model model) {
+	    public String showShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
 	        Optional<User> user = userRepository.findById(idUser);
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        List<Product> listProducts = shoppingCart.getListProducts();
@@ -54,6 +54,11 @@ public class ShoppingCartContoller {
 		        }
 		        model.addAttribute("totalPrice", totalPrice);
 	        }
+	        String feedbackShoppingCart = (String)sesion.getAttribute("feedbackShoppingCart");
+			if (feedbackShoppingCart != null) {
+				model.addAttribute(feedbackShoppingCart,true);
+				sesion.setAttribute("feedbackShoppingCart", null);
+			}
 	        model.addAttribute("findShoppingCart", findShoppingCart);
 	        return "shoppingCart";
 	    }
@@ -91,6 +96,7 @@ public class ShoppingCartContoller {
 	        if (product.isPresent()) {
 	            shoppingCart.getListProducts().remove(product.get());
 	            shoppingCartRepository.save(shoppingCart);
+	            sesion.setAttribute("feedbackShoppingCart", "removeProductSuccess");
 	        }
 	        return "redirect:/shoppingcart/{idUser}";
 	    }
