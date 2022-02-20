@@ -83,7 +83,7 @@ public class AdminController {
 	
 	@PostMapping("/admin/{idAdmin}/addProduct")
 	public String addProduct(@PathVariable long idAdmin, @RequestParam MultipartFile file, Product product, Model model, HttpSession sesion) throws IOException {
-		Optional<Product> isProduct = productRepository.findByName(product.getName());
+		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		if (!isProduct.isPresent()) {
 			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 				Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
@@ -126,7 +126,7 @@ public class AdminController {
 	@PostMapping("/admin/{idAdmin}/modifyProduct/{idProduct}")
 	public String modifyProduct(@PathVariable long idAdmin, @PathVariable long idProduct, @RequestParam MultipartFile file,
 			Product product, Model model, HttpSession sesion) throws IOException {
-		Optional<Product> isProduct = productRepository.findByName(product.getName());
+		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		Product oldProduct = productRepository.findById(idProduct).get();
 		if (product.getName().equals(oldProduct.getName()) || !isProduct.isPresent()) {	
 			product.setReviews(oldProduct.getReviews());

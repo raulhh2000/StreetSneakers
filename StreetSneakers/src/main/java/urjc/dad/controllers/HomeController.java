@@ -1,7 +1,6 @@
 package urjc.dad.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +29,10 @@ public class HomeController {
 	
 	@GetMapping("/filterName")
 	public String showHomeByName(@RequestParam(required=false) String nameFilter, Model model) {
-		Optional<Product> product =productRepository.findByName(nameFilter);
-		boolean find=product.isPresent();
+		List<Product> listProduct =productRepository.findByNameContainsIgnoreCase(nameFilter);
+		boolean find=!listProduct.isEmpty();
 		if(find) {
-			model.addAttribute("products", product.get());
+			model.addAttribute("products", listProduct);
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
