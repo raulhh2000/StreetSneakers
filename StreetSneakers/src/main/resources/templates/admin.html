@@ -14,7 +14,7 @@
 			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
 			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
 			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{admin.email}}" required />
-			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{admin.password}}" {{/find}} required />
+			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{admin.password}}" required />
 		</p>
 		<input type="submit" value="Actualizar datos" />
 		{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}

@@ -31,7 +31,7 @@ public class UserController {
 	public String showUser(@PathVariable long idUser, Model model, HttpSession sesion) {
 		User user = userRepository.findById(idUser).get();
 		model.addAttribute("user", user);
-		model.addAttribute("find", user.getPassword() != null);
+		model.addAttribute("find", user.getPhone() != null);
 		List<Purchase> list=user.getPurchases();
 		boolean findPurchases= !list.isEmpty();
 		if(findPurchases) {

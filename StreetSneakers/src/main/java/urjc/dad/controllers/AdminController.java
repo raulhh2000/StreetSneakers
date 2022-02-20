@@ -53,8 +53,6 @@ public class AdminController {
 	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model, HttpSession sesion) {
 		Admin admin = adminRepository.findById(idAdmin).get();
 		model.addAttribute("admin", admin);
-		boolean find = admin.getPassword() != null;
-		model.addAttribute("find", find);
 		model.addAttribute("products",productRepository.findAll());
 		String feedback = (String)sesion.getAttribute("feedback");
 		if (feedback != null) {
