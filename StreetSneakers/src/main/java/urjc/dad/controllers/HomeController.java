@@ -46,6 +46,7 @@ public class HomeController {
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterName", true);
 		model.addAttribute("nameFilter", nameFilter);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	
@@ -63,6 +64,7 @@ public class HomeController {
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterSize", true);
 		model.addAttribute("sizeFilter", size);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 		
@@ -92,6 +94,7 @@ public class HomeController {
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	
@@ -108,6 +111,7 @@ public class HomeController {
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterBrand", true);
 		model.addAttribute("brandFilter", brand);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	

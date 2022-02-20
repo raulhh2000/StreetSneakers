@@ -59,6 +59,11 @@
 							<input type="submit" value="Aplicar filtro" />
 						</form>
 					</div>
+					{{#filtering}}
+					<form action="/" method="GET">
+						<input type="submit" value="Quitar filtro" />
+					</form>
+					{{/filtering}}
 				</div>
 				<section class="products-list">
 					{{#find}}
