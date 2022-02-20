@@ -62,6 +62,7 @@ public class UserController {
 			user.setId(idUser);
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
+			user.setShoppingCart(oldUser.getShoppingCart());
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "updatedUserSuccess");
 		} else {

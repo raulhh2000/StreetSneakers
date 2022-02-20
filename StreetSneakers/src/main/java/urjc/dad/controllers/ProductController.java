@@ -41,11 +41,8 @@ public class ProductController {
 		Optional<Product> product=productRepository.findById(idProduct);
 		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
-		Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
-        if(shoppingCart.isPresent())
-            model.addAttribute("shoppigncart",shoppingCart.get().getListProducts().contains(product.get()));
-        else
-            model.addAttribute("shoppigncart",false);
+		ShoppingCart shoppingCart= userRepository.getById((long)4).getShoppingCart();
+        model.addAttribute("shoppigncart",shoppingCart.getListProducts().contains(product.get()));
 		if(findProduct) {
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
@@ -91,26 +88,17 @@ public class ProductController {
 	@GetMapping("product/{idProduct}/addShoppingCart")
     public String addShoppingCart(@PathVariable long idProduct, Model model) {
         Optional<Product> product=productRepository.findById(idProduct);
-        Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
-        if(shoppingCart.isPresent()) {
-            shoppingCart.get().getListProducts().add(product.get());
-            shoppingCartRepository.save(shoppingCart.get());
-        }
-        else {
-            ShoppingCart shoppingCartUser = new ShoppingCart(userRepository.getById((long)4));
-            shoppingCartUser.getListProducts().add(product.get());
-            shoppingCartRepository.save(shoppingCartUser);
-        }
+        ShoppingCart shoppingCart= userRepository.getById((long)4).getShoppingCart();
+        shoppingCart.getListProducts().add(product.get());
+        shoppingCartRepository.save(shoppingCart);
         return "redirect:/product/{idProduct}";
     }
 	@GetMapping("product/{idProduct}/removeShoppingCart")
     public String removeShoppingCart(@PathVariable long idProduct, Model model) {
         Optional<Product> product=productRepository.findById(idProduct);
-        Optional<ShoppingCart> shoppingCart= shoppingCartRepository.findByUser(userRepository.getById((long)4));
-        if(shoppingCart.isPresent()) {
-            shoppingCart.get().getListProducts().remove(product.get());
-            shoppingCartRepository.save(shoppingCart.get());
-        }
+        ShoppingCart shoppingCart= userRepository.getById((long)4).getShoppingCart();
+        shoppingCart.getListProducts().remove(product.get());
+        shoppingCartRepository.save(shoppingCart);
         return "redirect:/product/{idProduct}";
     }
 	

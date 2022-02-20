@@ -42,17 +42,17 @@ public class ShoppingCartContoller {
 	    @GetMapping("/shoppingcart/{idUser}")
 	    public String showShoppingCart(@PathVariable long idUser,  Model model) {
 	        Optional<User> user = userRepository.findById(idUser);
-	        Optional<ShoppingCart> shoppingCart=shoppingCartRepository.findByUser(user.get());
-	        boolean findShoppingCart=shoppingCart.isPresent();
-	        if(findShoppingCart) {
-	            model.addAttribute("shoppingCart", shoppingCart.get());
-	            model.addAttribute("products", shoppingCart.get().getListProducts());
-	            model.addAttribute("user", user.get());
-	            double totalPrice=0;
-	            for(Product product : shoppingCart.get().getListProducts()) {
-	                totalPrice+=product.getPrice();
-	            }
-	            model.addAttribute("totalPrice", totalPrice);
+	        ShoppingCart shoppingCart = user.get().getShoppingCart();
+	        List<Product> listProducts = shoppingCart.getListProducts();
+	        boolean findShoppingCart = !listProducts.isEmpty();
+	        if (findShoppingCart) {
+	        	model.addAttribute("products", listProducts);
+		        model.addAttribute("user", user.get());
+		        double totalPrice=0;
+		        for(Product product : listProducts) {
+		        	totalPrice+=product.getPrice();
+		        }
+		        model.addAttribute("totalPrice", totalPrice);
 	        }
 	        model.addAttribute("findShoppingCart", findShoppingCart);
 	        return "shoppingCart";
@@ -61,40 +61,36 @@ public class ShoppingCartContoller {
 	    @PostMapping("/shoppingcart/{idUser}/buyShoppingCart")
 	    public String buyShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
 	        Optional<User> user = userRepository.findById(idUser);
-	        Optional<ShoppingCart> shoppingCart=shoppingCartRepository.findByUser(user.get());
-	        boolean findShoppingCart=shoppingCart.isPresent();
+	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        long idPurchase=-1;
 	        if(user.get().getPhone()==null) {
 	        	sesion.setAttribute("feedbackUser", "mustUpdate");
 	        	return "redirect:/user/"+idUser;
 	        }
-	        if(findShoppingCart) {
-	            double totalPrice=0;
-	            for(Product product : shoppingCart.get().getListProducts()) {
-	                totalPrice+=product.getPrice();
-	            }
-	            List<LineItem> listLineItems= new ArrayList<>();
-	            for (Product product: shoppingCart.get().getListProducts()) {
-	            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),product.getImage(),1));
-	            }
-	            
-	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),totalPrice,listLineItems);
-	            purchaseRepository.save(purchase);
-	            shoppingCartRepository.delete(shoppingCart.get());
-	            idPurchase=purchase.getId();
-	        }
+            double totalPrice=0;
+            for(Product product : shoppingCart.getListProducts()) {
+                totalPrice+=product.getPrice();
+            }
+            List<LineItem> listLineItems= new ArrayList<>();
+            for (Product product: shoppingCart.getListProducts()) {
+            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),product.getImage(),1));
+            }
+            shoppingCart.getListProducts().clear();
+            shoppingCartRepository.save(shoppingCart);
+            Purchase purchase= new Purchase(user.get(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),totalPrice,listLineItems);
+            purchaseRepository.save(purchase);
+            idPurchase=purchase.getId();
 	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    
 	    @GetMapping("/shoppingcart/{idUser}remove/{idProduct}")
-	    public String removeProductInShoppingCart(@PathVariable long idUser,  Model model, @PathVariable long idProduct) {
+	    public String removeProductInShoppingCart(@PathVariable long idUser, @PathVariable long idProduct,  Model model, HttpSession sesion) {
 	        Optional<User> user = userRepository.findById(idUser);
-	        Optional<ShoppingCart> shoppingCart=shoppingCartRepository.findByUser(user.get());
-	        boolean findShoppingCart=shoppingCart.isPresent();
-	        if(findShoppingCart) {
-	            Product product = productRepository.getById(idProduct);
-	            shoppingCart.get().getListProducts().remove(product);
-	            shoppingCartRepository.save(shoppingCart.get());
+	        ShoppingCart shoppingCart = user.get().getShoppingCart();
+	        Optional<Product> product = productRepository.findById(idProduct);
+	        if (product.isPresent()) {
+	            shoppingCart.getListProducts().remove(product.get());
+	            shoppingCartRepository.save(shoppingCart);
 	        }
 	        return "redirect:/shoppingcart/{idUser}";
 	    }

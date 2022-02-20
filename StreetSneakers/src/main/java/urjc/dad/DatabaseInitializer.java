@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import urjc.dad.models.Admin;
-import urjc.dad.models.LineItem;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
 import urjc.dad.models.ShoppingCart;
@@ -54,6 +53,11 @@ public class DatabaseInitializer {
 		User user2= new User("Martin","Alberto", "martinalberto@gmail.com", "4567");
 		User user3= new User("Smount","Fatima","Smountfatima@gmail.com", "8901");
 		
+		ShoppingCart shoppingCartUser1= new ShoppingCart(user1);
+		user1.setShoppingCart(shoppingCartUser1);
+		user2.setShoppingCart(new ShoppingCart(user2));
+		user3.setShoppingCart(new ShoppingCart(user3));
+		
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
@@ -87,11 +91,17 @@ public class DatabaseInitializer {
 		user1.getWishList().add(product1);
 		userRepository.save(user1);
 		
+		List<Product> listProducts= new ArrayList<>();
+		listProducts.add(product1);
+		listProducts.add(product2);
+		listProducts.add(product3);
+		shoppingCartUser1.setListProducts(listProducts);
+        shoppingCartRepository.save(shoppingCartUser1);
 		
-		List<LineItem> list= new ArrayList<>();
-		list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),product1.getImage(),2));
-		list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),product2.getImage(),2));
-		list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),product3.getImage(),1));
+		//List<LineItem> list= new ArrayList<>();
+		//list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),product1.getImage(),2));
+		//list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),product2.getImage(),2));
+		//list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),product3.getImage(),1));
 
 		//LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
 		//Purchase purchase1= new Purchase(user1,date,300.02,list);
@@ -106,17 +116,7 @@ public class DatabaseInitializer {
 		
 		reviewRepository.save(review1);	
 		reviewRepository.save(review2);	
-		reviewRepository.save(review3);	
-		
-		List<Product> listProducts= new ArrayList<>();
-		listProducts.add(product1);
-		listProducts.add(product2);
-		listProducts.add(product3);
-		
-		ShoppingCart shoppingCart= new ShoppingCart(user1);
-        shoppingCart.setListProducts(listProducts);
-
-        shoppingCartRepository.save(shoppingCart);
+		reviewRepository.save(review3);
 
 //		product1.getReviews().add(review1);
 //		product2.getReviews().add(review2);
