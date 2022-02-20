@@ -19,9 +19,14 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String showHome(Model model) {
-		List<Product> list=productRepository.findAll();
-		model.addAttribute("products", list);
-		model.addAttribute("find", true);
+		List<Product> listProduct=productRepository.findAll();
+		boolean find=!listProduct.isEmpty();
+		if(find) {
+			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFind", true);
+		}
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 	    return "home";
 	}
@@ -33,8 +38,11 @@ public class HomeController {
 		boolean find=!listProduct.isEmpty();
 		if(find) {
 			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterName", true);
 		}
-		model.addAttribute("find", find);
+		
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterName", true);
 		model.addAttribute("nameFilter", nameFilter);
@@ -48,8 +56,10 @@ public class HomeController {
 		boolean find=!listProduct.isEmpty();
 		if(find) {
 			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterSize", true);
 		}
-		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterSize", true);
 		model.addAttribute("sizeFilter", size);
@@ -91,8 +101,10 @@ public class HomeController {
 		boolean find=!products.isEmpty();
 		if(find) {
 			model.addAttribute("products", products);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterBrand", true);
 		}
-		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 		model.addAttribute("filterBrand", true);
 		model.addAttribute("brandFilter", brand);

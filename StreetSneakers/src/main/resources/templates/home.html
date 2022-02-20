@@ -38,7 +38,7 @@
 					<div class="filter_item">
 						<form action="/filterSize" method="GET">
 							<p>
-								<b>Buscar por tamaño de zapatilla:</b>
+								<b>Buscar por talla de zapatilla:</b>
 								<input type="number" name="size" placeholder="Talla" {{#filterSize}}value="{{sizeFilter}}"{{/filterSize}} required />
 							</p>
 							<input type="submit" value="Aplicar filtro" />
@@ -71,9 +71,10 @@
 							</div>
 						{{/products}}
 					{{/find}}
-					{{^find}}
-						<p>No se ha encontrado la zapatilla.</p>
-					{{/find}}
+					{{#notFind}}<p>No hay ninguna zapatilla en venta</p>{{/notFind}}
+					{{#notFindFilterName}}<p>No se ha encontrado ninguna zapatilla que contenga <strong>"{{nameFilter}}"</strong> en el nombre</p>{{/notFindFilterName}}
+					{{#notFindFilterSize}}<p>No se ha encontrado ninguna zapatilla con la talla <strong>{{sizeFilter}}</strong></p>{{/notFindFilterSize}}
+					{{#notFindFilterBrand}}<p>No se ha encontrado ninguna zapatilla de la marca <strong>"{{brandFilter}}"</strong></p>{{/notFindFilterBrand}}
 				</section>
 			</div>
 		</div>
