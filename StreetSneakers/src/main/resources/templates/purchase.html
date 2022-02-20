@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<link rel="stylesheet" type="text/css" href="/css/product.css" />
+		<script src="https://kit.fontawesome.com/3a850d17c8.js" crossorigin="anonymous"></script>
+		<title>StreetSneaker</title>
+	</head>
+	<body>
+	<h1>Detalles del pedido</h1>
+		<p>Fecha del pedido: {{date}}</p>
+		<p>Nombre: {{user.name}} Apellidos: {{user.lastName}}</p>
+		<p>Email: {{user.email}} Phone: {{user.phone}}</p>
+		<p>Dirección:  {{user.address}} Cuenta bancaria: {{user.bankAccount}}</p>
+		<ul>
+			{{#products}}
+				<li class="product-item">
+						<img src="{{image}}" alt="" width="200" height="200">
+						<p>Producto: {{name}}&nbsp;&nbsp;&nbsp;&nbsp; Precio del articulo:{{price}} €</p>
+						<p>Talla: {{size}}&nbsp;&nbsp;&nbsp;&nbsp; Marca:{{brand}}</p>			
+				</li>
+			{{/products}}
+		</ul>
+		<p>Precio total del pedido: {{priceTotal}}</p>
+</body>
+</html>

@@ -1,8 +1,11 @@
 package urjc.dad.controllers;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,10 +59,15 @@ public class ShoppingCartContoller {
 	    }
 	    
 	    @PostMapping("/shoppingcart/{idUser}/buyShoppingCart")
-	    public String buyShoppingCart(@PathVariable long idUser,  Model model) {
+	    public String buyShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
 	        Optional<User> user = userRepository.findById(idUser);
 	        Optional<ShoppingCart> shoppingCart=shoppingCartRepository.findByUser(user.get());
 	        boolean findShoppingCart=shoppingCart.isPresent();
+	        long idPurchase=-1;
+	        if(user.get().getPhone()==null) {
+	        	sesion.setAttribute("feedback", "mustUpdate");
+	        	return "redirect:/user/"+idUser;
+	        }
 	        if(findShoppingCart) {
 	            double totalPrice=0;
 	            for(Product product : shoppingCart.get().getListProducts()) {
@@ -67,13 +75,15 @@ public class ShoppingCartContoller {
 	            }
 	            List<LineItem> listLineItems= new ArrayList<>();
 	            for (Product product: shoppingCart.get().getListProducts()) {
-	            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),1));
+	            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),product.getImage(),1));
 	            }
-	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now(),totalPrice,listLineItems);
+	            
+	            Purchase purchase= new Purchase(user.get(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),totalPrice,listLineItems);
 	            purchaseRepository.save(purchase);
 	            shoppingCartRepository.delete(shoppingCart.get());
+	            idPurchase=purchase.getId();
 	        }
-	        return "redirect:/shoppingcart/{idUser}";
+	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    
 	    @GetMapping("/shoppingcart/{idUser}remove/{idProduct}")

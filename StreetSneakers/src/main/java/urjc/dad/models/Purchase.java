@@ -19,7 +19,7 @@ public class Purchase {
 	private long id;
 	@ManyToOne
 	private User user;
-	private LocalDateTime date;
+	private String date;
 	private double totalPrice;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<LineItem> lineItems= new ArrayList<>();
@@ -28,7 +28,7 @@ public class Purchase {
 		
 	}
 
-	public Purchase(User user, LocalDateTime date, double totalPrice, List<LineItem> lineItems) {
+	public Purchase(User user, String date, double totalPrice, List<LineItem> lineItems) {
 		this.user = user;
 		this.date = date;
 		this.totalPrice = totalPrice;
@@ -51,11 +51,11 @@ public class Purchase {
 		this.user = user;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

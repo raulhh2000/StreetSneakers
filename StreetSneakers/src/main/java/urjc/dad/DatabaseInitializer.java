@@ -89,9 +89,9 @@ public class DatabaseInitializer {
 		
 		
 		List<LineItem> list= new ArrayList<>();
-		list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),2));
-		list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),2));
-		list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),1));
+		list.add(new LineItem(product1.getName(),product1.getDescription(),product1.getPrice(),product1.getSize(),product1.getBrand(),product1.getImage(),2));
+		list.add(new LineItem(product2.getName(),product2.getDescription(),product2.getPrice(),product2.getSize(),product2.getBrand(),product2.getImage(),2));
+		list.add(new LineItem(product3.getName(),product3.getDescription(),product3.getPrice(),product3.getSize(),product3.getBrand(),product3.getImage(),1));
 
 		//LocalDateTime date =  LocalDateTime.of(2022,02,02,10,00,00);
 		//Purchase purchase1= new Purchase(user1,date,300.02,list);

@@ -23,12 +23,13 @@
 		<input type="submit" value="Actualizar datos" />
 		{{#updatedUserSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedUserSuccess}}
 		{{#updatedUserFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedUserFailure}}
+		{{#mustUpdate}}<spam class="failure">El usuario debe completar todos los datos para realizar su primer pedido</spam>{{/mustUpdate}}
 	</form>
 	<h2>Mis pedidos realizados</h2>
 	{{#findPurchases}}
 		<ul>
 			{{#purchases}}
-				<li>{{.}}</li>
+				<li><a href="/purchase/{{id}}">{{.}}</a></li>
 			{{/purchases}}
 		</ul>
 	{{/findPurchases}} 
