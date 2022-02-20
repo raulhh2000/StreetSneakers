@@ -45,10 +45,10 @@ public class UserController {
 			model.addAttribute("wishList", wishList);
 		}
 		model.addAttribute("findWishList", findWishList);
-		String feedback = (String)sesion.getAttribute("feedback");
-		if (feedback != null) {
-			model.addAttribute(feedback,true);
-			sesion.setAttribute("feedback", null);
+		String feedbackUser = (String)sesion.getAttribute("feedbackUser");
+		if (feedbackUser != null) {
+			model.addAttribute(feedbackUser,true);
+			sesion.setAttribute("feedbackUser", null);
 		}
 	    return "user";
 	}
@@ -63,9 +63,9 @@ public class UserController {
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
 			userRepository.save(user);
-			sesion.setAttribute("feedback", "updatedUserSuccess");
+			sesion.setAttribute("feedbackUser", "updatedUserSuccess");
 		} else {
-			sesion.setAttribute("feedback", "updatedUserFailure");
+			sesion.setAttribute("feedbackUser", "updatedUserFailure");
 		}
 	    return "redirect:/user/{idUser}";
 	}

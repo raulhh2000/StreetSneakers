@@ -3,6 +3,8 @@ package urjc.dad.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +37,7 @@ public class ProductController {
 	ShoppingCartRepository shoppingCartRepository;
 	
 	@GetMapping("/product/{idProduct}")
-	public String showProduct(@PathVariable long idProduct,  Model model) {
+	public String showProduct(@PathVariable long idProduct,  Model model,HttpSession sesion) {
 		Optional<Product> product=productRepository.findById(idProduct);
 		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
@@ -53,6 +55,11 @@ public class ProductController {
 			}
 			model.addAttribute("findReviews", findReviews);
 			model.addAttribute("numReviews", reviews.size());
+		}
+		String feedbackProduct = (String)sesion.getAttribute("feedbackProduct");
+		if (feedbackProduct != null) {
+			model.addAttribute(feedbackProduct,true);
+			sesion.setAttribute("feedbackProduct", null);
 		}
 		model.addAttribute("findProduct", findProduct);
 	    return "product";
@@ -108,19 +115,20 @@ public class ProductController {
     }
 	
 	@PostMapping("product/{idProduct}/review")
-	public String insertReview(@PathVariable long idProduct, Review review, Model model) {
+	public String insertReview(@PathVariable long idProduct, Review review, Model model,HttpSession sesion) {
 		review.setUser(userRepository.findById((long)4).get());
 		review.setProduct(productRepository.getById(idProduct));
+		sesion.setAttribute("feedbackProduct","reviewComplete" );
 		reviewRepository.save(review);
 	    return "redirect:/product/{idProduct}";
 	}
 	
 	@GetMapping("product/{idProduct}/review/{idReview}")
-	public String modifyReview(@PathVariable long idProduct, @PathVariable long idReview, Model model) {
+	public String modifyReview(@PathVariable long idProduct, @PathVariable long idReview, Model model,HttpSession sesion) {
 		Optional<Product> product=productRepository.findById(idProduct);
-		model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
 		if(findProduct) {
+			model.addAttribute("favorite",userRepository.findById((long)4).get().getWishList().contains(product.get()));
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
 			boolean findReviews = !reviews.isEmpty();
@@ -129,27 +137,42 @@ public class ProductController {
 			}
 			model.addAttribute("findReviews", findReviews);
 			model.addAttribute("numReviews", reviews.size());
-			model.addAttribute("review", reviewRepository.findById(idReview).get());
-			model.addAttribute("modifyReview", true);
+			Optional<Review> review =reviewRepository.findById(idReview);
+			if(review.isPresent()) {
+				model.addAttribute("review", review.get());
+				model.addAttribute("modifyReview", true);
+			}
+			else {
+				sesion.setAttribute("feedbackProduct","modifyNoComplete" );
+			}
+		}
+		String feedbackProduct = (String)sesion.getAttribute("feedbackProduct");
+		if (feedbackProduct != null) {
+			model.addAttribute(feedbackProduct,true);
+			sesion.setAttribute("feedbackProduct", null);
 		}
 		model.addAttribute("findProduct", findProduct);
 	    return "product";
 	}
 	
 	@PostMapping("product/{idProduct}/review/{idReview}")
-	public String modifyReview(@PathVariable long idProduct, @PathVariable long idReview, Review review, Model model) {
+	public String modifyReview(@PathVariable long idProduct, @PathVariable long idReview, Review review, Model model,HttpSession sesion) {
 		review.setUser(userRepository.findById((long)4).get());
 		review.setProduct(productRepository.getById(idProduct));
 		review.setId(idReview);
+		sesion.setAttribute("feedbackProduct","modifyComplete" );
 		reviewRepository.save(review);
 	    return "redirect:/product/{idProduct}";
 	}
 	
 	@GetMapping("product/{idProduct}/review/remove/{idReview}")
-	public String removeReview(@PathVariable long idProduct, @PathVariable long idReview, Model model) {
+	public String removeReview(@PathVariable long idProduct, @PathVariable long idReview, Model model,HttpSession sesion) {
 		Optional<Review> review = reviewRepository.findById(idReview);
 		if (review.isPresent()) {
 			reviewRepository.deleteById(idReview);
+			sesion.setAttribute("feedbackProduct","removeComplete" );
+		}else {
+			sesion.setAttribute("feedbackProduct","removeNoComplete" );
 		}
 	    return "redirect:/product/{idProduct}";
 	}

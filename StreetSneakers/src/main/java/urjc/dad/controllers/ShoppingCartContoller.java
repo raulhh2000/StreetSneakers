@@ -65,7 +65,7 @@ public class ShoppingCartContoller {
 	        boolean findShoppingCart=shoppingCart.isPresent();
 	        long idPurchase=-1;
 	        if(user.get().getPhone()==null) {
-	        	sesion.setAttribute("feedback", "mustUpdate");
+	        	sesion.setAttribute("feedbackUser", "mustUpdate");
 	        	return "redirect:/user/"+idUser;
 	        }
 	        if(findShoppingCart) {

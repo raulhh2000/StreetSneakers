@@ -59,6 +59,9 @@
 							<input type="submit" value="Hacer reseña" />
 						</div>
 					</form>
+					{{#reviewComplete}}<spam class="success">Se ha añadido correctamente la reseña</spam>{{/reviewComplete}}
+					{{#modifyComplete}}<spam class="success">Se ha modificado correctamente la reseña</spam>{{/modifyComplete}}
+					{{#modifyNoComplete}}<spam class="failure">No se ha podido modificar la reseña</spam>{{/modifyNoComplete}}
 				{{/modifyReview}}
 				{{#modifyReview}}
 					<form class="modifyReview"action="/product/{{product.id}}/review/{{review.id}}/" method="POST">
@@ -82,6 +85,8 @@
 				<div class="listReview">
 					{{#findReviews}}
 						<h3>Numero de reseñas: {{numReviews}}</h3>
+						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
+						{{#removeNoComplete}}<spam class="success">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
 						{{#reviews}}
 							<li class="review">
 								<div class="bodyReview">
@@ -99,6 +104,8 @@
 						{{/reviews}}
 					{{/findReviews}}
 					{{^findReviews}}
+						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
+						{{#removeNoComplete}}<spam class="failure">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
 						<p>No se ha encontrado ninguna reseña.</p>
 					{{/findReviews}}
 				</div>
