@@ -161,7 +161,7 @@ input[type=button]:hover, input[type=submit]:hover{
 	margin-bottom: 1.5em;
 }
 .favorite{
-  color: #2D3E50;	
+  color: red;	
   text-decoration: none;
 }
 .favorite:active{
