@@ -1,6 +1,5 @@
 package urjc.dad.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class Purchase {
 	private User user;
 	private String date;
 	private double totalPrice;
+	private int numProducts;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<LineItem> lineItems= new ArrayList<>();
 	
@@ -33,6 +33,7 @@ public class Purchase {
 		this.date = date;
 		this.totalPrice = totalPrice;
 		this.lineItems = lineItems;
+		this.numProducts = lineItems.size();
 	}
 
 	public long getId() {
@@ -66,12 +67,20 @@ public class Purchase {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+	public int getNumProducts() {
+		return numProducts;
+	}
 
-	public List<LineItem> getProducts() {
+	public void setNumProducts(int numProducts) {
+		this.numProducts = numProducts;
+	}
+
+	public List<LineItem> getLineItems() {
 		return lineItems;
 	}
 
-	public void setProducts(List<LineItem> lineItems) {
+	public void setLineItems(List<LineItem> lineItems) {
 		this.lineItems = lineItems;
 	}
 

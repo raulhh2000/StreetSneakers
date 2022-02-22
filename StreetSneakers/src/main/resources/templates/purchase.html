@@ -11,10 +11,10 @@
 			<h1>Detalles del pedido</h1>
 			<div class="client-data">
 				<h2>Datos del comprador</h2>
-				<p><strong>Fecha del pedido:</strong> {{date}}</p>
-				<p><strong>Nombre:</strong> {{user.name}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Apellido:</strong> {{user.lastName}}</p>
-				<p><strong>Email:</strong> {{user.email}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone:</strong> {{user.phone}}</p>
-				<p><strong>Dirección:</strong> {{user.address}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cuenta bancaria:</strong> {{user.bankAccount}}</p>
+				<p><strong>Fecha del pedido:</strong> {{purchase.date}}</p>
+				<p><strong>Nombre:</strong> {{purchase.user.name}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Apellido:</strong> {{purchase.user.lastName}}</p>
+				<p><strong>Email:</strong> {{purchase.user.email}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone:</strong> {{purchase.user.phone}}</p>
+				<p><strong>Dirección:</strong> {{purchase.user.address}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cuenta bancaria:</strong> {{purchase.user.bankAccount}}</p>
 			</div>
 			<div class="products">
 				<h2>Productos del pedido</h2>
@@ -29,7 +29,7 @@
 						</div>
 					</li>
 				{{/products}}
-				<p class="total-price">Precio total del pedido: {{priceTotal}} €</p>
+				<p class="total-price">Precio total del pedido: {{purchase.totalPrice}} €</p>
 			</div>
 		</div>
 	</body>
