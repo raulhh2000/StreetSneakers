@@ -3,25 +3,34 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<link rel="stylesheet" type="text/css" href="/css/product.css" />
-		<script src="https://kit.fontawesome.com/3a850d17c8.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="/css/purchase.css" />
 		<title>StreetSneaker</title>
 	</head>
 	<body>
-	<h1>Detalles del pedido</h1>
-		<p>Fecha del pedido: {{date}}</p>
-		<p>Nombre: {{user.name}} Apellidos: {{user.lastName}}</p>
-		<p>Email: {{user.email}} Phone: {{user.phone}}</p>
-		<p>Dirección:  {{user.address}} Cuenta bancaria: {{user.bankAccount}}</p>
-		<ul>
-			{{#products}}
-				<li class="product-item">
-						<img src="{{image}}" alt="" width="200" height="200">
-						<p>Producto: {{name}}&nbsp;&nbsp;&nbsp;&nbsp; Precio del articulo:{{price}} €</p>
-						<p>Talla: {{size}}&nbsp;&nbsp;&nbsp;&nbsp; Marca:{{brand}}</p>			
-				</li>
-			{{/products}}
-		</ul>
-		<p>Precio total del pedido: {{priceTotal}}</p>
-</body>
+		<div class="wrap">
+			<h1>Detalles del pedido</h1>
+			<div class="client-data">
+				<h2>Datos del comprador</h2>
+				<p><strong>Fecha del pedido:</strong> {{date}}</p>
+				<p><strong>Nombre:</strong> {{user.name}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Apellido:</strong> {{user.lastName}}</p>
+				<p><strong>Email:</strong> {{user.email}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone:</strong> {{user.phone}}</p>
+				<p><strong>Dirección:</strong> {{user.address}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cuenta bancaria:</strong> {{user.bankAccount}}</p>
+			</div>
+			<div class="products">
+				<h2>Productos del pedido</h2>
+				{{#products}}
+					<li class="product-item">
+						<div class="product-image">
+							<img src="{{image}}" alt="">
+						</div>
+						<div class="product-body">
+							<p><strong>Producto:</strong> {{name}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Marca:</strong> {{brand}}</p>
+							<p><strong>Talla:</strong> {{size}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Precio:</strong> {{price}} €</p>
+						</div>
+					</li>
+				{{/products}}
+				<p class="total-price">Precio total del pedido: {{priceTotal}} €</p>
+			</div>
+		</div>
+	</body>
 </html>
