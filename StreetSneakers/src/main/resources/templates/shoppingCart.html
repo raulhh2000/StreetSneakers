@@ -3,32 +3,75 @@
     <head>
         <meta charset="UTF-8"/>
         <!--<link rel="shortcut icon" href="img/icono.png"/>-->
-        <!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
+        <link rel="stylesheet" type="text/css" href="/css/shoppingCart.css" />
+	<script src="https://kit.fontawesome.com/3a850d17c8.js" crossorigin="anonymous"></script>
         <title>StreetSneaker</title>
     </head>
     <body>
-    <h1>Productos en el carrito</h1>
-        {{#findShoppingCart}}
-        <ul>
-            {{#products}}
-            <li>
-            	<a href="/product/{{id}}">{{.}}</a>
-                <form action="/shoppingcart/{{user.id}}remove/{{id}}/" method="GET">
-                        <input type="submit" value="QuitarProducto" />
-                </form>
-            </li>
-            {{/products}}
-            {{#removeProductSuccess}}<spam class="success">El producto se ha eliminado del carrito correctamente</spam>{{/removeProductSuccess}}
-            <p>Precio Total: {{totalPrice}} €</p>
-
-            <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
-                <input type="submit" value="RealizarCompra" />
-            </form>
-        </ul>
-        {{/findShoppingCart}}
-        {{^findShoppingCart}}
-        {{#removeProductSuccess}}<spam class="success">El producto se ha eliminado del carrito correctamente</spam>{{/removeProductSuccess}}
-        <p>No hay productos en el carrito</p>
-        {{/findShoppingCart}}
+    	<div class="wrap">
+	    	<h1>Carrito de la compra</h1>
+	        {{#findShoppingCart}}
+        		<table class="table">
+					<thead>
+						<tr>
+							<th>Imágenes</th>
+							<th>Nombre del producto</th>
+							<th>Precio</th>
+							<th>Borrar</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#products}}
+							<tr>
+								<td class="image">
+									<a href="/product/{{id}}">
+										<img src="{{image}}" alt="" />
+									</a>
+								</td>
+								<td class="name">
+									<a href="/product/{{id}}">{{name}}</a>
+								</td>
+								<td class="price"><p>{{price}} €</p></td>
+								<td class="remove">
+									<a href="/shoppingcart/{{user.id}}remove/{{id}}"><i class="fa-solid fa-xmark fa-xl"></i></a>
+								</td>
+							</tr>
+						{{/products}}
+		 				{{#removeProductSuccess}}
+		 					<p class="success">El producto se ha eliminado del carrito correctamente</p>
+		 				{{/removeProductSuccess}}
+					</tbody>
+				</table>
+				<div class="summary-left"></div>
+				<div class="summary">
+					<h3>Resumen del carrito</h3>
+					<div class="d-flex">
+						<h4>Sub Total</h4>
+						{{totalPrice}} €
+					</div>
+					<div class="d-flex">
+						<h4>Tasas</h4>
+						<span class="free">Gratis</span>
+					</div>
+					<div class="d-flex">
+						<h4>Coste de envío</h4>
+						<span class="free">Gratis</span>
+					</div>
+					<hr>
+					<div class="d-flex gr-total">
+						<h5>Total</h5>
+						{{totalPrice}} €
+					</div>
+					<hr>
+				</div>
+		        <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
+		        	<input type="submit" value="RealizarCompra" />
+		        </form>
+	        {{/findShoppingCart}}
+	        {{^findShoppingCart}}
+	        {{#removeProductSuccess}}<spam class="success">El producto se ha eliminado del carrito correctamente</spam>{{/removeProductSuccess}}
+	        	<p>No hay productos en el carrito</p>
+	        {{/findShoppingCart}}
+    	</div>
     </body>
 </html>
