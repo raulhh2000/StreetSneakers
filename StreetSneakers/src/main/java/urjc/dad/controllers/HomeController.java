@@ -91,6 +91,8 @@ public class HomeController {
 		boolean find=!products.isEmpty();
 		if(find) {
 			model.addAttribute("products", products);
+		} else {
+			model.addAttribute("notFindFilterPrice", true);
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
