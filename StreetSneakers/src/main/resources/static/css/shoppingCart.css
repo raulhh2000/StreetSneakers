@@ -1,96 +1,3 @@
-/* GENERAL ============*/
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Open Sans', sans-serif;
-}
-body{
-	background: #E0E4E5;
-}
-input[type=text] {
-  width: 60%;
-  border: 2px solid #ccc;
-  outline: none;
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: white;
-  padding: 6px 10px 6px 10px;
-  margin: 2px 2px;
-}
-input[type=text]:focus {
-  border: 3px solid #555;
-}
-input[type=number] {
-  width: 20%;
-  border: 2px solid #ccc;
-  outline: none;
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: white;
-  padding: 6px 10px 6px 10px;
-  margin: 2px 2px;
-}
-input[type=number]:focus {
-  border: 3px solid #555;
-}
-textarea {
-  width: 96%;
-  height: 150px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  font-size: 14px;
-  outline: none;
-  resize: none;
-}
-textarea:focus {
-  border: 3px solid #555;
-}
-input[type=button], input[type=submit]{
-  background-color: #2D3E50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-input[type=button]:hover, input[type=submit]:hover{
-  background-color: #253342;
-  color: white;
-}
-.success{
-  color: green;
-  font-weight: bold;
-}
-.failure{
-  color: red;
-  font-weight: bold;
-}
-/* WRAP ============*/
-.wrap{
-	max-width: 1200px;
-	width: 100%;
-	margin: auto;
-}
-.wrap > h1{
-	color: #494B4D;
-	font-weight: 400;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	margin: 15px 0px;
-}
-.wrap > h1:after{
-	content: '';
-	width: 100%;
-	height: 1px;
-	background: #C7C7C7;
-	margin: 20px 0;
-}
 /* TABLE ============*/
 table{
 	border-collapse: collapse;
@@ -124,40 +31,40 @@ table{
      padding: 0.75rem;
      border-top: 1px solid #C7C7C7;
 }
-.image{
+.table .image{
 	text-align: center;
 }
-.name {
+.table .name {
 	text-align: center;
 }
-.name a{
+.table .name a{
      font-weight: 700;
      font-size: 18px;
      color: #010101;
      text-decoration: none;
 }
-.price {
+.table .price {
 	font-weight: 600;
 	text-align: center;
 }
-.remove{
+.table .remove{
 	text-align: center;
 }
-.remove a{
+.table .remove a{
 	color: #2D3E50;
     text-decoration: none;
 }
-.remove a:hover{
+.table .remove a:hover{
      color: red;
 }
-.remove a:active{
+.table .remove a:active{
      color: red;
 }
-/* SUMMARY ============*/
-.summary{
+/* SUMMARY-CART ============*/
+.summary-cart{
     max-width: 25%;
 }
-.summary > h2{
+.summary-cart > h2{
 	color: #494B4D;
 	font-weight: 400;
 	display: flex;
@@ -165,19 +72,19 @@ table{
 	text-align: center;
 	margin: 15px 0px;
 }
-.summary > h2:after{
+.summary-cart > h2:after{
 	content: '';
 	width: 100%;
 	height: 1px;
 	background: #C7C7C7;
 	margin: 20px 0px 5px 0px;
 }
-.summary .title-summary {
+.summary-cart .title-summary {
     font-size: 18px;
     padding-top: 5px;
     font-weight: 700;
 }
-.summary > h3{
+.summary-cart > h3{
 	color: #494B4D;
 	font-weight: 400;
 	display: flex;
@@ -185,14 +92,14 @@ table{
 	text-align: center;
 	margin: 0px;
 }
-.summary > h3:after{
+.summary-cart > h3:after{
 	content: '';
 	width: 100%;
 	height: 1px;
 	background: #C7C7C7;
 	margin: 5px;
 }
-.summary .total-summary {
+.summary-cart .total-summary {
     font-weight: 700;
     color: #E84C3D;
     font-size: 18px;
@@ -200,16 +107,7 @@ table{
     padding: 0px;
     line-height: 35px;
 }
-.free{
+.summary-cart .free{
 	color: green;
 	font-weight: 700;
-}
-.summary > input[type=submit]{
-  background-color: #2D3E50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  margin: 4px 0px;
-  cursor: pointer;
 }

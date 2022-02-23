@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<link rel="stylesheet" type="text/css" href="/css/product.css" />
-		<script src="https://kit.fontawesome.com/3a850d17c8.js" crossorigin="anonymous"></script>
-		<title>StreetSneaker</title>
-	</head>
-	<body>
+{{>header}}
 		<div class="wrap">
-			<h1>Detalles de la zapatilla</h1>
+			<h1 class="normal">Detalles de la zapatilla</h1>
 			{{#findProduct}}
-				<div class="summary">
+				<div class="summary-product">
 					<div class="imageProduct">
 						<img src="{{product.image}}" alt="">
 					</div>
@@ -111,5 +102,4 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>
+{{>footer}}

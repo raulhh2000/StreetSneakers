@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<link rel="stylesheet" type="text/css" href="/css/admin.css" />
-		<title>StreetSneaker</title>
-	</head>
-	<body>
+{{>header}}
 		<div class="wrap">
-			<h1>Hola, {{admin.name}}</h1>
-			<h2>Datos personales</h2>
+			<h1 class="welcome">Hola, {{admin.name}}</h1>
+			<h2 class="normal">Datos personales</h2>
 			<form action="/admin/update/{{admin.id}}" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
@@ -23,7 +15,7 @@
 				{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}
 				{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
 			</form>
-			<h2>Añadir Producto</h2>
+			<h2 class="normal">Añadir Producto</h2>
 			<form action="/admin/{{admin.id}}/addProduct" method="POST" enctype="multipart/form-data">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
@@ -41,7 +33,7 @@
 				{{#addedProductSuccess}}<spam class="success">Producto añadido correctamente</spam>{{/addedProductSuccess}}
 				{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
 			</form>
-			<h2>Borrar Producto</h2>
+			<h2 class="normal">Borrar Producto</h2>
 			<form action="/admin/{{admin.id}}/removeProduct" method="POST">
 				<div class="content-select">
 					<select name ="productId" required> 
@@ -55,7 +47,7 @@
 				{{#removedProductSuccess}}<spam class="success">Producto borrado correctamente</spam>{{/removedProductSuccess}}
 				{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
 			</form>	
-			<h2>Modificar Producto</h2>
+			<h2 class="normal">Modificar Producto</h2>
 			<form action="/admin/{{admin.id}}" method="POST">
 				<div class="content-select">
 					<select name ="productId" required> 
@@ -80,7 +72,7 @@
 						<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
 					</p>
 					<div class="image-modify">
-						<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}" width="200" height="200">
+						<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}">
 					</div>
 					<p>
 						<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required>{{product.description}}</textarea>
@@ -89,7 +81,7 @@
 				</form>
 			{{/modifyProduct}}	
 				
-			<h2>Añadir Admin</h2>
+			<h2 class="normal">Añadir Admin</h2>
 			<form action="/admin/{{admin.id}}/createAdmin" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
@@ -104,7 +96,7 @@
 				{{#addedAdminFailure}}<spam class="failure">El administrador no se ha podido añadir</spam>{{/addedAdminFailure}}
 			</form>	
 				
-			<h2>Eliminar usuario</h2>
+			<h2 class="normal">Eliminar usuario</h2>
 			<form action="/admin/{{admin.id}}/removeUser" method="GET">
 				<p>
 					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
@@ -114,5 +106,4 @@
 				{{#removedAdminFailure}}<spam class="failure">El usuario no se ha podido eliminar</spam>{{/removedAdminFailure}}
 			</form>
 		</div>	
-	</body>
-</html>
+{{>footer}}

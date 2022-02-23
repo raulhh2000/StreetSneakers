@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<link rel="stylesheet" type="text/css" href="/css/user.css" />
-		<title>StreetSneaker</title>
-	</head>
-	<body>
+{{>header}}
 		<div class="wrap">
-			<h1>Hola, {{user.name}}</h1>
-			<h2>Datos personales</h2>
+			<h1 class="welcome">Hola, {{user.name}}</h1>
+			<h2 class="normal">Datos personales</h2>
 			<form action="/user/update/{{user.id}}" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{user.name}}" required />
@@ -33,7 +25,7 @@
 				{{#mustUpdate}}<spam class="failure">El usuario debe completar todos los datos para realizar su primer pedido</spam>{{/mustUpdate}}
 			</form>
 			<div class="purchases">
-				<h2>Mis pedidos realizados</h2>
+				<h2 class="normal">Mis pedidos realizados</h2>
 				{{#findPurchases}}
 						{{#purchases}}
 							<li class="purchase">
@@ -50,8 +42,8 @@
 					<p>Aún no se ha realizado ningún pedido.</p>
 				{{/findPurchases}}
 			</div>
-			<div class="products">
-				<h2>Mi lista de deseados</h2>
+			<div class="products-user">
+				<h2 class="normal">Mi lista de deseados</h2>
 				{{#findWishList}}
 					{{#wishList}}
 						<li class="product-item">
@@ -72,5 +64,4 @@
 				{{/findWishList}}
 			</div>
 		</div>
-	</body>
-</html>
+{{>footer}}

@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8"/>
-        <!--<link rel="shortcut icon" href="img/icono.png"/>-->
-        <link rel="stylesheet" type="text/css" href="/css/shoppingCart.css" />
-		<script src="https://kit.fontawesome.com/3a850d17c8.js" crossorigin="anonymous"></script>
-        <title>StreetSneaker</title>
-    </head>
-    <body>
+{{>header}}
     	<div class="wrap">
-	    	<h1>Carrito de la compra</h1>
+	    	<h1 class="normal">Carrito de la compra</h1>
 	        {{#findShoppingCart}}
         		<table class="table">
 					<thead>
@@ -42,7 +33,7 @@
 		 				{{/removeProductSuccess}}
 					</tbody>
 				</table>
-				<div class="summary">
+				<div class="summary-cart">
 					<h2>Resumen del carrito</h2>
 					<p class ="title-summary">Sub Total</p>
 					{{totalPrice}} €
@@ -63,5 +54,4 @@
 	        	<p>No hay productos en el carrito</p>
 	        {{/findShoppingCart}}
     	</div>
-    </body>
-</html>
+{{>footer}}
