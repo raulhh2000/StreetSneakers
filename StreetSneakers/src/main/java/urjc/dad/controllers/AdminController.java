@@ -53,13 +53,11 @@ public class AdminController {
 	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model, HttpSession sesion) {
 		Admin admin = adminRepository.findById(idAdmin).get();
 		model.addAttribute("admin", admin);
-		boolean find = admin.getPassword() != null;
-		model.addAttribute("find", find);
 		model.addAttribute("products",productRepository.findAll());
-		String feedback = (String)sesion.getAttribute("feedback");
-		if (feedback != null) {
-			model.addAttribute(feedback,true);
-			sesion.setAttribute("feedback", null);
+		String feedbackAdmin = (String)sesion.getAttribute("feedbackAdmin");
+		if (feedbackAdmin != null) {
+			model.addAttribute(feedbackAdmin,true);
+			sesion.setAttribute("feedbackAdmin", null);
 		}
 		if (productId != 0) {
 			model.addAttribute("modifyProduct", true);
@@ -76,28 +74,28 @@ public class AdminController {
 		if(admin.getEmail().equals(oldAdmin.getEmail()) || (!isUser.isPresent() && !isAdmin.isPresent())) {
 			admin.setId(idAdmin);
 			adminRepository.save(admin);
-			sesion.setAttribute("feedback", "updatedAdminSuccess");
+			sesion.setAttribute("feedbackAdmin", "updatedAdminSuccess");
 		} else {
-			sesion.setAttribute("feedback", "updatedAdminFailure");
+			sesion.setAttribute("feedbackAdmin", "updatedAdminFailure");
 		}
 		return "redirect:/admin/{idAdmin}";
 	}
 	
 	@PostMapping("/admin/{idAdmin}/addProduct")
 	public String addProduct(@PathVariable long idAdmin, @RequestParam MultipartFile file, Product product, Model model, HttpSession sesion) throws IOException {
-		Optional<Product> isProduct = productRepository.findByName(product.getName());
+		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		if (!isProduct.isPresent()) {
-			if (file.getOriginalFilename().contains(product.getName())) {
+			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 				Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 				file.transferTo(imagePath);
 				product.setImage("/images/"+file.getOriginalFilename());
 				productRepository.save(product);
-				sesion.setAttribute("feedback", "addedProductSuccess");
+				sesion.setAttribute("feedbackAdmin", "addedProductSuccess");
 			} else {
-				sesion.setAttribute("feedback", "addedProductFailure");
+				sesion.setAttribute("feedbackAdmin", "addedProductFailure");
 			}
 		} else {
-			sesion.setAttribute("feedback", "addedProductFailure");
+			sesion.setAttribute("feedbackAdmin", "addedProductFailure");
 		}
 		return "redirect:/admin/{idAdmin}";
 	}
@@ -117,10 +115,10 @@ public class AdminController {
 				shoppingCart.getListProducts().remove(product.get());
 				shoppingCartRepository.save(shoppingCart);
 			}
-			sesion.setAttribute("feedback", "removedProductSuccess");
+			sesion.setAttribute("feedbackAdmin", "removedProductSuccess");
 			productRepository.deleteById(productId);
 		} else {
-			sesion.setAttribute("feedback", "removedProductFailure");
+			sesion.setAttribute("feedbackAdmin", "removedProductFailure");
 		}
 		return "redirect:/admin/{idAdmin}";
 	}
@@ -128,38 +126,38 @@ public class AdminController {
 	@PostMapping("/admin/{idAdmin}/modifyProduct/{idProduct}")
 	public String modifyProduct(@PathVariable long idAdmin, @PathVariable long idProduct, @RequestParam MultipartFile file,
 			Product product, Model model, HttpSession sesion) throws IOException {
-		Optional<Product> isProduct = productRepository.findByName(product.getName());
+		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		Product oldProduct = productRepository.findById(idProduct).get();
 		if (product.getName().equals(oldProduct.getName()) || !isProduct.isPresent()) {	
 			product.setReviews(oldProduct.getReviews());
 			product.setId(idProduct);
 			if (!file.isEmpty()) {
-				if (file.getOriginalFilename().contains(product.getName())) {
+				if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 					Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
 					file.transferTo(imagePath);
 					product.setImage("/images/"+file.getOriginalFilename());
 					productRepository.save(product);
-					sesion.setAttribute("feedback", "modifiedProductSuccess");
+					sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
 				} else {
-					sesion.setAttribute("feedback", "modifiedProductFailure");
+					sesion.setAttribute("feedbackAdmin", "modifiedProductFailure");
 				}
 			} else {
 				if (!product.getName().equals(oldProduct.getName())) {
 					String oldImagePath=oldProduct.getImage();
 					String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
 					File oldImage = new File(oldImagePath);
-					String imagePath="src/main/resources/images/"+product.getName()+oldExtension;
+					String imagePath="src/main/resources/images/"+product.getName().replace(" ", "")+oldExtension;
 					File image = new File(imagePath);
 					oldImage.renameTo(image);
-					product.setImage("/images/"+product.getName()+oldExtension);
+					product.setImage("/images/"+product.getName().replace(" ", "")+oldExtension);
 				} else {
 					product.setImage(oldProduct.getImage());
 				}
 				productRepository.save(product);
-				sesion.setAttribute("feedback", "modifiedProductSuccess");
+				sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
 			}		
 		} else {
-			sesion.setAttribute("feedback", "modifiedProductFailure");
+			sesion.setAttribute("feedbackAdmin", "modifiedProductFailure");
 		}
 		return "redirect:/admin/{idAdmin}";
 	}
@@ -170,9 +168,9 @@ public class AdminController {
 		Optional<Admin> isAdmin=adminRepository.findByEmail(admin.getEmail());
 		if(!isUser.isPresent() && !isAdmin.isPresent()) {
 			adminRepository.save(admin);
-			sesion.setAttribute("feedback", "addedAdminSuccess");
+			sesion.setAttribute("feedbackAdmin", "addedAdminSuccess");
 		} else {
-			sesion.setAttribute("feedback", "addedAdminFailure");
+			sesion.setAttribute("feedbackAdmin", "addedAdminFailure");
 		}
 		return "redirect:/admin/{idAdmin}";
 	}
@@ -184,15 +182,15 @@ public class AdminController {
 			List<Review> list= reviewRepository.findByUser(user.get());
 			reviewRepository.deleteAll(list);
 			userRepository.delete(user.get());
-			sesion.setAttribute("feedback", "removedAdminSuccess");
+			sesion.setAttribute("feedbackAdmin", "removedAdminSuccess");
 		}
 		else{
 			Optional<Admin> admin=adminRepository.findByEmail(email);
 			if(admin.isPresent() && admin.get().getId()!=idAdmin) {
 				adminRepository.delete(admin.get());
-				sesion.setAttribute("feedback", "removedAdminSuccess");
+				sesion.setAttribute("feedbackAdmin", "removedAdminSuccess");
 			} else {
-				sesion.setAttribute("feedback", "removedAdminFailure");
+				sesion.setAttribute("feedbackAdmin", "removedAdminFailure");
 			}
 		}
 		

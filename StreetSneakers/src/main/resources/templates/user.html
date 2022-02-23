@@ -1,51 +1,67 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
-		<title>StreetSneaker</title>
-	</head>
-	<body>
-	<h1>Hola, {{user.name}}</h1>
-	<h2>Datos personales</h2>
-	<form action="/user/update/{{user.id}}" method="POST">
-		<p>
-			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{user.name}}" required />
-			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{user.lastName}}" required />
-			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{user.email}}" required />
-			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{user.password}}" {{/find}} required />
-			<b>Teléfono:</b> <input type="tel" name="phone" placeholder="+34 000000000" {{#find}} value="{{user.phone}}" {{/find}} required pattern="\+[0-9]{2} [0-9]{9}"/>
-			<b>Dirección:</b> <input type="text" name="address" placeholder="Dirección" {{#find}} value="{{user.address}}" {{/find}} required />
-			<b>Cuenta bancaria:</b> <input type="text" name="bankAccount" placeholder="ESXX XXXX XXXX XX XXXXXXXXX" size="30" {{#find}} value="{{user.bankAccount}}" {{/find}} 7
-			required pattern="([A-Z]{2}[0-9]{2}) [0-9]{4} [0-9]{4} [0-9]{2} [0-9]{9}"/>
-		</p>
-		<input type="submit" value="Actualizar datos" />
-		{{#updatedUserSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedUserSuccess}}
-		{{#updatedUserFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedUserFailure}}
-	</form>
-	<h2>Mis pedidos realizados</h2>
-	{{#findPurchases}}
-		<ul>
-			{{#purchases}}
-				<li>{{.}}</li>
-			{{/purchases}}
-		</ul>
-	{{/findPurchases}} 
-	{{^findPurchases}}
-		<p>Aún no se ha realizado ningún pedido.</p>
-	{{/findPurchases}}
-	
-	<h2>Mi lista de deseados</h2>
-	{{#findWishList}}
-		<ul>
-			{{#wishList}}
-				<li><a href="/product/{{id}}">{{.}}</a></li>
-			{{/wishList}}
-		</ul>
-	{{/findWishList}} 
-	{{^findWishList}}
-		<p>La lista de deseados está vacía.</p>
-	{{/findWishList}}
-</body>
-</html>
+{{>header}}
+		<div class="wrap">
+			<h1 class="welcome">Hola, {{user.name}}</h1>
+			<h2 class="normal">Datos personales</h2>
+			<form action="/user/update/{{user.id}}" method="POST">
+				<p>
+					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{user.name}}" required />
+					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{user.lastName}}" required />
+				</p>
+				<p>
+					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{user.email}}" required />
+					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{user.password}}" required />
+				</p>
+				<p>
+					<b>Teléfono:</b> <input type="tel" name="phone" placeholder="+34 000000000" {{#find}} value="{{user.phone}}" {{/find}} required pattern="\+[0-9]{2} [0-9]{9}"/>
+					<b>Dirección:</b> <input type="text" name="address" placeholder="Dirección" {{#find}} value="{{user.address}}" {{/find}} required />
+				</p>
+				<p>
+					<b>Cuenta bancaria:</b> <input type="text" name="bankAccount" placeholder="ESXX XXXX XXXX XX XXXXXXXXX" size="30" {{#find}} value="{{user.bankAccount}}" {{/find}} 7
+					required pattern="([A-Z]{2}[0-9]{2}) [0-9]{4} [0-9]{4} [0-9]{2} [0-9]{9}"/>
+				</p>
+				<input type="submit" value="Actualizar datos" />
+				{{#updatedUserSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedUserSuccess}}
+				{{#updatedUserFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedUserFailure}}
+				{{#mustUpdate}}<spam class="failure">El usuario debe completar todos los datos para realizar su primer pedido</spam>{{/mustUpdate}}
+			</form>
+			<div class="purchases">
+				<h2 class="normal">Mis pedidos realizados</h2>
+				{{#findPurchases}}
+						{{#purchases}}
+							<li class="purchase">
+								<a href="/purchase/{{id}}">
+									<div class="product-item">
+										<p><strong>Pedido Nª</strong> {{-index}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Fecha:</strong> {{date}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+										<p><strong>Número de productos:</strong> {{numProducts}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Precio total:</strong> {{totalPrice}} €</p>
+									</div>
+								</a>
+							</li>
+						{{/purchases}}
+				{{/findPurchases}} 
+				{{^findPurchases}}
+					<p>Aún no se ha realizado ningún pedido.</p>
+				{{/findPurchases}}
+			</div>
+			<div class="products-user">
+				<h2 class="normal">Mi lista de deseados</h2>
+				{{#findWishList}}
+					{{#wishList}}
+						<li class="product-item">
+							<div class="product-image">
+								<a href="/product/{{id}}">
+									<img src="{{image}}" alt="">
+								</a>
+							</div>
+							<a class="product-body" href="/product/{{id}}">
+								<p><strong>Producto:</strong> {{name}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Marca:</strong> {{brand}}</p>
+								<p><strong>Talla:</strong> {{size}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Precio:</strong> {{price}} €</p>
+							</a>
+						</li>
+					{{/wishList}}
+				{{/findWishList}} 
+				{{^findWishList}}
+					<p>La lista de deseados está vacía.</p>
+				{{/findWishList}}
+			</div>
+		</div>
+{{>footer}}

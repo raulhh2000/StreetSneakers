@@ -9,13 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import urjc.dad.models.Product;
 
 public interface ProductRepository  extends JpaRepository<Product, Long> {
-
-	Optional<Product> findByName(String name);
+	Optional<Product> findByNameIgnoreCase(String name);
+	List<Product> findByNameContainsIgnoreCase(String name);
 	List<Product> findBySize(double size);
 	List<Product> findByPriceGreaterThanEqualAndPriceLessThanEqual(double priceMin, double priceMax);
 	List<Product> findByPriceGreaterThanEqual(double priceMin);
 	List<Product> findByPriceLessThanEqual(double priceMax);
 	List<Product> findByBrand(String brand);
 	@Query("SELECT DISTINCT d.brand FROM Product d")
-	public List<String> findDistinctBrand();
+	List<String> findDistinctBrand();
 }

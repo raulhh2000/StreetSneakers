@@ -1,89 +1,105 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
-		<title>StreetSneaker</title>
-	</head>
-	<body>
-		<h1>Detalles de la zapatilla</h1>
-		{{#findProduct}}
-		<p>{{product.name}}</p>
-		<p>Marca: {{product.brand}}</p>
-		<p>Precio: {{product.price}} €</p>
-		<p>Talla: {{product.size}}</p>
-		<p>Descripción: {{product.description}}</p>
-		{{^favorite}}
-		<form action="/product/{{product.id}}/addFavorite" method="POST">
-			<input type="submit" value="Añadir a favoritos" />
-		</form>
-		{{/favorite}}
-		{{#favorite}}
-		<form action="/product/{{product.id}}/removeFavorite" method="POST">
-			<input type="submit" value="Eliminar de favoritos" />
-		</form>
-		{{/favorite}}
-		{{^shoppigncart}}
-        <form action="/product/{{product.id}}/addShoppingCart" method="POST">
-            <input type="submit" value="Añadir al carrito" />
-        </form>
-        {{/shoppigncart}}
-        {{#shoppigncart}}
-        <form action="/product/{{product.id}}/removeShoppingCart" method="POST">
-            <input type="submit" value="Eliminar del carrito" />
-        </form>
-        {{/shoppigncart}}
-		{{/findProduct}}
-		{{^findProduct}}
-		<p>No se ha encontrado la zapatilla.</p>
-		{{/findProduct}}
-		<h1>Reseñas de la zapatilla</h1>
-		{{^modifyReview}}
-		<form action="/product/{{product.id}}/review/" method="POST">
-			<p>
-				<b>Titulo:</b>
-				<input type="text" name="title" placeholder="Inserte un titulo" required>
-				<b>Estrellas:</b>
-				<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" required>
-			</p>
-			<b>Comentario:</b>
-				<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required></textarea>
-			<input type="submit" value="Hacer reseña" />
-		</form>
-		{{/modifyReview}}
-		{{#modifyReview}}
-		<form action="/product/{{product.id}}/review/{{review.id}}/" method="POST">
-			<p>
-				<b>Titulo:</b>
-				<input type="text" name="title" placeholder="Inserte un titulo" value="{{review.title}}" required>
-				<b>Estrellas:</b>
-				<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" value="{{review.stars}}" required>
-			</p>
-			<b>Comentario:</b>
-				<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required>{{review.comment}}</textarea>
-			<input type="submit" value="Modificar reseña" />
-		</form>
-		<form action="/product/{{product.id}}" method="GET">
-			<input type="submit" value="Nueva reseña" />
-		</form>
-		{{/modifyReview}}
-		{{#findReviews}}
-			{{#reviews}}
-			<li>
-				{{.}}
-				<form action="/product/{{product.id}}/review/{{id}}/" method="GET">
-					<input type="submit" value="Modificar reseña" />
-				</form>
-				<form action="/product/{{product.id}}/review/remove/{{id}}/" method="GET">
-					<input type="submit" value="Borrar reseña" />
-				</form>
-			</li>
-			{{/reviews}}
-		{{/findReviews}}
-		{{^findReviews}}
-		<p>No se ha encontrado ninguna reseña.</p>
-		{{/findReviews}}
-		
-	</body>
-</html>
+{{>header}}
+		<div class="wrap">
+			<h1 class="normal">Detalles de la zapatilla</h1>
+			{{#findProduct}}
+				<div class="summary-product">
+					<div class="imageProduct">
+						<img src="{{product.image}}" alt="">
+					</div>
+					<div class="productData">
+						<p class="name">{{product.name}}</p>
+						<p class="brand"><strong>Marca:</strong> {{product.brand}}</p>
+						<p class="price">{{product.price}} €</p>
+						<p class="size"><strong>Talla:</strong> {{product.size}}</p>
+						<p class="description"><strong>Descripción:</strong> {{product.description}}</p>
+						<p>
+							{{^favorite}}
+								<a class="favorite" href="/product/{{product.id}}/addFavorite"><i class="fa-regular fa-heart fa-2xl"></i></a>
+							{{/favorite}}
+							{{#favorite}}
+								<a class="favorite" href="/product/{{product.id}}/removeFavorite"><i class="fa-solid fa-heart fa-2xl"></i></a>
+							{{/favorite}}
+							{{^shoppigncart}}
+						        <a class="shoppigncart" href="/product/{{product.id}}/addShoppingCart">Añadir al carrito</a>
+					        {{/shoppigncart}}
+					        {{#shoppigncart}}
+						        <a class="shoppigncart" href="/product/{{product.id}}/removeShoppingCart">Eliminar del carrito</a>
+					    	{{/shoppigncart}}
+						</p>
+					</div>
+				</div>
+			{{/findProduct}}
+			{{^findProduct}}
+			<p>No se ha encontrado la zapatilla.</p>
+			{{/findProduct}}
+			<div class="reviews">
+				<h1>Reseñas de la zapatilla</h1>
+				{{^modifyReview}}
+					<form class="modifyReview" action="/product/{{product.id}}/review/" method="POST">
+						<div class="bodyReview">
+							<p>
+								<b>Titulo:</b>
+								<input type="text" name="title" placeholder="Inserte un titulo" required>
+								<b>Estrellas:</b>
+								<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" required>
+							</p>
+							<b class="labelComment">Comentario:</b>
+							<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required></textarea>
+						</div>
+						<div class="summitReview">
+							<input type="submit" value="Hacer reseña" />
+						</div>
+					</form>
+					{{#reviewComplete}}<spam class="success">Se ha añadido correctamente la reseña</spam>{{/reviewComplete}}
+					{{#modifyComplete}}<spam class="success">Se ha modificado correctamente la reseña</spam>{{/modifyComplete}}
+					{{#modifyNoComplete}}<spam class="failure">No se ha podido modificar la reseña</spam>{{/modifyNoComplete}}
+				{{/modifyReview}}
+				{{#modifyReview}}
+					<form class="modifyReview"action="/product/{{product.id}}/review/{{review.id}}/" method="POST">
+						<div class="bodyReview">
+							<p>
+								<b>Titulo:</b>
+								<input type="text" name="title" placeholder="Inserte un titulo" value="{{review.title}}" required>
+								<b>Estrellas:</b>
+								<input type="number" name="stars" min="0" max="5" step="1" placeholder="0-5" value="{{review.stars}}" required>
+							</p>
+							<b class="labelComment">Comentario:</b>
+							<textarea name="comment" placeholder="Inserte el comentario" maxlength="150" rows="5" required>{{review.comment}}</textarea>
+						</div>
+						<div class="summitReview">
+							<input type="submit" value="Modificar reseña" />
+							<br>
+							<a href="/product/{{product.id}}">Nueva reseña</a>
+						</div>
+					</form>
+				{{/modifyReview}}
+				<div class="listReview">
+					{{#findReviews}}
+						<h3>Numero de reseñas: {{numReviews}}</h3>
+						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
+						{{#removeNoComplete}}<spam class="failure">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
+						{{#reviews}}
+							<li class="review">
+								<div class="bodyReview">
+									<p>
+										<strong>{{title}}</strong> (Publicado por <strong>{{user}}</strong>)
+									</p>
+									<p><img src="/images/star/{{stars}}.png" alt=""></p>
+									<p class="comment">{{comment}}</p>
+								</div>
+								<div class="summitReview">
+									<a href="/product/{{product.id}}/review/{{id}}/">Modificar reseña</a>
+									<a href="/product/{{product.id}}/review/remove/{{id}}/">Borrar reseña</a>
+								</div>
+							</li>
+						{{/reviews}}
+					{{/findReviews}}
+					{{^findReviews}}
+						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
+						{{#removeNoComplete}}<spam class="failure">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
+						<p>No se ha encontrado ninguna reseña.</p>
+					{{/findReviews}}
+				</div>
+			</div>
+		</div>
+{{>footer}}

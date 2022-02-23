@@ -1,0 +1,17 @@
+/* WRAP ============*/
+.wrap h1.welcome{
+	color: #494B4D;
+	font-weight: 400;
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0px;
+}
+.image-modify {
+	display: flex;
+    align-items: center;
+}
+.image-modify img {
+	width: 150px;
+	height: 150px;
+	object-fit: contain;
+}

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -28,6 +29,10 @@ public class User {
 	@OneToMany
 	private List<Product> wishList= new ArrayList<>();
 	
+	@OneToOne(cascade=CascadeType.ALL)
+	ShoppingCart shoppingCart;
+
+	
 	public User() {
 		
 	}
@@ -36,6 +41,7 @@ public class User {
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
+		this.password = password;
 	}
 	
 	public User(String name, String lastName, String email, String password, String phone, String address,
@@ -113,6 +119,14 @@ public class User {
 		this.bankAccount = bankAccount;
 	}
 
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+
 	public List<Purchase> getPurchases() {
 		return purchases;
 	}
@@ -127,6 +141,11 @@ public class User {
 
 	public void setWishList(List<Product> wishList) {
 		this.wishList = wishList;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }

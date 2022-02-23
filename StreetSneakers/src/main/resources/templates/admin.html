@@ -1,101 +1,109 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
-		<!--<link rel="stylesheet" type="text/css" href="../static/css/estilos.css" th:href="@{/css/estilos.css}"/>-->
-		<title>StreetSneaker</title>
-	</head>
-	<body>
-	<h1>Hola, {{admin.name}}</h1>
-	<h2>Datos personales</h2>
-	<form action="/admin/update/{{admin.id}}" method="POST">
-		<p>
-			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
-			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
-			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{admin.email}}" required />
-			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" {{#find}} value="{{admin.password}}" {{/find}} required />
-		</p>
-		<input type="submit" value="Actualizar datos" />
-		{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}
-		{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
-	</form>
-	
-	<h2>Añadir Producto</h2>
-	<form action="/admin/{{admin.id}}/addProduct" method="POST" enctype="multipart/form-data">
-		<p>
-			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
-			<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" required />
-			<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" required />
-			<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
-			<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
-			<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" required />
-		</p>
-		<input type="submit" value="Añadir producto" />
-		{{#addedProductSuccess}}<spam class="success">Producto añadido correctamente</spam>{{/addedProductSuccess}}
-		{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
-	</form>
-	<h2>Borrar Producto</h2>
-	<form action="/admin/{{admin.id}}/removeProduct" method="POST">
-		<select name ="productId" required> 
-			<option value="">Seleccione un producto</option>
-			{{#products}} 
-				<option value="{{id}}">{{.}}</option>
-			{{/products}} 	
-		</select>
-		<input type="submit" value="Borrar producto" />
-		{{#removedProductSuccess}}<spam class="success">Producto borrado correctamente</spam>{{/removedProductSuccess}}
-		{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
-	</form>	
-	
-	<h2>Modificar Producto</h2>
-	<form action="/admin/{{admin.id}}" method="POST">
-		<select name ="productId" required> 
-			<option value="">Seleccione un producto</option>
-			{{#products}} 
-				<option value="{{id}}">{{.}}</option>
-			{{/products}} 	
-		</select>
-		<input type="submit" value="Modificar producto" />
-		{{#modifiedProductSuccess}}<spam class="success">Producto modificado correctamente</spam>{{/modifiedProductSuccess}}
-		{{#modifiedProductFailure}}<spam class="failure">El producto no se ha podido modificar</spam>{{/modifiedProductFailure}}
-	</form>
-	{{#modifyProduct}}
-		<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
-			<p>
-				<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
-				<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" value="{{product.brand}}" required />
-				<b>Descripción:</b> <input type="text" name="description" placeholder="Descripción" value="{{product.description}}" required />
-				<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
-				<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
-				<b>Imágen:</b><input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}" width="200" height="200">
-			</p>
-			<input type="submit" value="Modificar producto" />
-		</form>
-	{{/modifyProduct}}	
-		
-	<h2>Añadir Admin</h2>
-	<form action="/admin/{{admin.id}}/createAdmin" method="POST">
-		<p>
-			<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
-			<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" required />
-			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
-			<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
-		</p>
-		<input type="submit" value="Añadir Admin" />
-		{{#addedAdminSuccess}}<spam class="success">Administrador añadido correctamente</spam>{{/addedAdminSuccess}}
-		{{#addedAdminFailure}}<spam class="failure">El administrador no se ha podido añadir</spam>{{/addedAdminFailure}}
-	</form>	
-		
-	<h2>Eliminar usuario</h2>
-	<form action="/admin/{{admin.id}}/removeUser" method="GET">
-		<p>
-			<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
-		</p>
-		<input type="submit" value="Eliminar usuario" />
-		{{#removedAdminSuccess}}<spam class="success">Usuario eliminado correctamente</spam>{{/removedAdminSuccess}}
-		{{#removedAdminFailure}}<spam class="failure">El usuario no se ha podido eliminar</spam>{{/removedAdminFailure}}
-	</form>		
-	
-	</body>
-</html>
+{{>header}}
+		<div class="wrap">
+			<h1 class="welcome">Hola, {{admin.name}}</h1>
+			<h2 class="normal">Datos personales</h2>
+			<form action="/admin/update/{{admin.id}}" method="POST">
+				<p>
+					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
+					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
+				</p>
+				<p>
+					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{admin.email}}" required />
+					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{admin.password}}" required />
+				</p>
+				<input type="submit" value="Actualizar datos" />
+				{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}
+				{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
+			</form>
+			<h2 class="normal">Añadir Producto</h2>
+			<form action="/admin/{{admin.id}}/addProduct" method="POST" enctype="multipart/form-data">
+				<p>
+					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
+					<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" required />
+				</p>
+				<p>
+					<b>Precio:</b> <input type="number" name="price" placeholder="Precio" required />
+					<b>Talla:</b> <input type="number" name="size" placeholder="Talla" required />
+					<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" required />
+				</p>
+				<p>
+					<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required></textarea>
+				</p>
+				<input type="submit" value="Añadir producto" />
+				{{#addedProductSuccess}}<spam class="success">Producto añadido correctamente</spam>{{/addedProductSuccess}}
+				{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
+			</form>
+			<h2 class="normal">Borrar Producto</h2>
+			<form action="/admin/{{admin.id}}/removeProduct" method="POST">
+				<div class="content-select">
+					<select name ="productId" required> 
+						<option value="">Seleccione un producto</option>
+						{{#products}} 
+							<option value="{{id}}">{{name}}</option>
+						{{/products}} 	
+					</select>
+				</div>
+				<input type="submit" value="Borrar producto" />
+				{{#removedProductSuccess}}<spam class="success">Producto borrado correctamente</spam>{{/removedProductSuccess}}
+				{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
+			</form>	
+			<h2 class="normal">Modificar Producto</h2>
+			<form action="/admin/{{admin.id}}" method="POST">
+				<div class="content-select">
+					<select name ="productId" required> 
+						<option value="">Seleccione un producto</option>
+						{{#products}} 
+							<option value="{{id}}">{{name}}</option>
+						{{/products}} 	
+					</select>
+				</div>
+				<input type="submit" value="Modificar producto" />
+				{{#modifiedProductSuccess}}<spam class="success">Producto modificado correctamente</spam>{{/modifiedProductSuccess}}
+				{{#modifiedProductFailure}}<spam class="failure">El producto no se ha podido modificar</spam>{{/modifiedProductFailure}}
+			</form>
+			{{#modifyProduct}}
+				<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
+					<p>
+						<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
+						<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" value="{{product.brand}}" required />
+					</p>
+					<p>
+						<b>Precio:</b> <input type="number" name="price" placeholder="Precio" value="{{product.price}}" required />
+						<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
+					</p>
+					<div class="image-modify">
+						<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}">
+					</div>
+					<p>
+						<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required>{{product.description}}</textarea>
+					</p>
+					<input type="submit" value="Modificar producto" />
+				</form>
+			{{/modifyProduct}}	
+				
+			<h2 class="normal">Añadir Admin</h2>
+			<form action="/admin/{{admin.id}}/createAdmin" method="POST">
+				<p>
+					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
+					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" required />
+				</p>
+				<p>	
+					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
+					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
+				</p>
+				<input type="submit" value="Añadir Admin" />
+				{{#addedAdminSuccess}}<spam class="success">Administrador añadido correctamente</spam>{{/addedAdminSuccess}}
+				{{#addedAdminFailure}}<spam class="failure">El administrador no se ha podido añadir</spam>{{/addedAdminFailure}}
+			</form>	
+				
+			<h2 class="normal">Eliminar usuario</h2>
+			<form action="/admin/{{admin.id}}/removeUser" method="GET">
+				<p>
+					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
+				</p>
+				<input type="submit" value="Eliminar usuario" />
+				{{#removedAdminSuccess}}<spam class="success">Usuario eliminado correctamente</spam>{{/removedAdminSuccess}}
+				{{#removedAdminFailure}}<spam class="failure">El usuario no se ha podido eliminar</spam>{{/removedAdminFailure}}
+			</form>
+		</div>	
+{{>footer}}

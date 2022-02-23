@@ -1,7 +1,6 @@
 package urjc.dad.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +19,14 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String showHome(Model model) {
-		List<Product> list=productRepository.findAll();
-		model.addAttribute("products", list);
-		model.addAttribute("find", true);
+		List<Product> listProduct=productRepository.findAll();
+		boolean find=!listProduct.isEmpty();
+		if(find) {
+			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFind", true);
+		}
 		model.addAttribute("brands", productRepository.findDistinctBrand());
 	    return "home";
 	}
@@ -30,13 +34,19 @@ public class HomeController {
 	
 	@GetMapping("/filterName")
 	public String showHomeByName(@RequestParam(required=false) String nameFilter, Model model) {
-		Optional<Product> product =productRepository.findByName(nameFilter);
-		boolean find=product.isPresent();
+		List<Product> listProduct =productRepository.findByNameContainsIgnoreCase(nameFilter);
+		boolean find=!listProduct.isEmpty();
 		if(find) {
-			model.addAttribute("products", product.get());
+			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterName", true);
 		}
-		model.addAttribute("find", find);
+		
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterName", true);
+		model.addAttribute("nameFilter", nameFilter);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	
@@ -47,9 +57,14 @@ public class HomeController {
 		boolean find=!listProduct.isEmpty();
 		if(find) {
 			model.addAttribute("products", listProduct);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterSize", true);
 		}
-		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterSize", true);
+		model.addAttribute("sizeFilter", size);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 		
@@ -58,10 +73,18 @@ public class HomeController {
 		List<Product> products;
 		if (priceMin != null && priceMax != null) {
 			products =productRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(priceMin, priceMax);
+			model.addAttribute("filterPriceMin", true);
+			model.addAttribute("priceMinFilter", priceMin);
+			model.addAttribute("filterPriceMax", true);
+			model.addAttribute("priceMaxFilter", priceMax);
 		} else if (priceMin != null) {
 			products =productRepository.findByPriceGreaterThanEqual(priceMin);
+			model.addAttribute("filterPriceMin", true);
+			model.addAttribute("priceMinFilter", priceMin);
 		} else if (priceMax != null){
 			products =productRepository.findByPriceLessThanEqual(priceMax);
+			model.addAttribute("filterPriceMax", true);
+			model.addAttribute("priceMaxFilter", priceMax);
 		} else {
 			products =productRepository.findAll();
 		}
@@ -71,6 +94,7 @@ public class HomeController {
 		}
 		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	
@@ -80,9 +104,14 @@ public class HomeController {
 		boolean find=!products.isEmpty();
 		if(find) {
 			model.addAttribute("products", products);
+			model.addAttribute("find", find);
+		} else {
+			model.addAttribute("notFindFilterBrand", true);
 		}
-		model.addAttribute("find", find);
 		model.addAttribute("brands", productRepository.findDistinctBrand());
+		model.addAttribute("filterBrand", true);
+		model.addAttribute("brandFilter", brand);
+		model.addAttribute("filtering", true);
 		return "home";
 	}
 	

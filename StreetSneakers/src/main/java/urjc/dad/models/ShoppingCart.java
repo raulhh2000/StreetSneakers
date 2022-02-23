@@ -15,7 +15,7 @@ public class ShoppingCart {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    @OneToOne
+    @OneToOne(mappedBy="shoppingCart")
     User user;
     @OneToMany
     List<Product> listProducts = new ArrayList<>();

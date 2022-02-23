@@ -1,6 +1,5 @@
 package urjc.dad.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,9 @@ public class Purchase {
 	private long id;
 	@ManyToOne
 	private User user;
-	private LocalDateTime date;
+	private String date;
 	private double totalPrice;
+	private int numProducts;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<LineItem> lineItems= new ArrayList<>();
 	
@@ -28,11 +28,12 @@ public class Purchase {
 		
 	}
 
-	public Purchase(User user, LocalDateTime date, double totalPrice, List<LineItem> lineItems) {
+	public Purchase(User user, String date, double totalPrice, List<LineItem> lineItems) {
 		this.user = user;
 		this.date = date;
 		this.totalPrice = totalPrice;
 		this.lineItems = lineItems;
+		this.numProducts = lineItems.size();
 	}
 
 	public long getId() {
@@ -51,11 +52,11 @@ public class Purchase {
 		this.user = user;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -66,12 +67,20 @@ public class Purchase {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+	public int getNumProducts() {
+		return numProducts;
+	}
 
-	public List<LineItem> getProducts() {
+	public void setNumProducts(int numProducts) {
+		this.numProducts = numProducts;
+	}
+
+	public List<LineItem> getLineItems() {
 		return lineItems;
 	}
 
-	public void setProducts(List<LineItem> lineItems) {
+	public void setLineItems(List<LineItem> lineItems) {
 		this.lineItems = lineItems;
 	}
 

@@ -1,0 +1,49 @@
+/* CLIENT-DATA ============*/
+.client-data {
+    margin-bottom: 20px;
+}
+.client-data h2{
+	margin-bottom: 10px;
+	text-decoration: underline;
+	font-weight: 400;
+}
+.client-data p{
+	margin-bottom: 10px;
+}
+/* PRODUCTS ============*/
+.products-pruchase h2{
+	text-decoration: underline;
+	font-weight: 400;
+}
+.products-pruchase .product-item{
+	border: 2px solid black;
+	list-style:none;
+	display: flex;
+	padding: 0px 10px;
+    margin: 10px 0px;
+}
+.products-pruchase .product-image{
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+}
+.products-pruchase .product-image img{
+	width: 200px;
+  	height: 200px;
+  	object-fit: contain;
+}
+.products-pruchase .product-body{
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	justify-content: center;
+	padding-left: 10px;
+	font-size: 20px;
+}
+.products-pruchase p.total-price{
+	font-weight: 700;
+    color: #E84C3D;
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
