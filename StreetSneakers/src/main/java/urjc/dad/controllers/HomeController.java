@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import urjc.dad.models.Product;
@@ -32,7 +33,7 @@ public class HomeController {
 	}
 	
 	
-	@GetMapping("/filterName")
+	@PostMapping("/filterName")
 	public String showHomeByName(@RequestParam(required=false) String nameFilter, Model model) {
 		List<Product> listProduct =productRepository.findByNameContainsIgnoreCase(nameFilter);
 		boolean find=!listProduct.isEmpty();
@@ -51,7 +52,7 @@ public class HomeController {
 	}
 	
 	
-	@GetMapping("/filterSize")
+	@PostMapping("/filterSize")
 	public String showHomeBySize(@RequestParam(required=false) double size, Model model) {
 		List<Product> listProduct =productRepository.findBySize(size);
 		boolean find=!listProduct.isEmpty();
@@ -68,7 +69,7 @@ public class HomeController {
 		return "home";
 	}
 		
-	@GetMapping("/filterPrice")
+	@PostMapping("/filterPrice")
 	public String showHomeByPrice(Double priceMin, Double priceMax, Model model) {
 		List<Product> products;
 		if (priceMin != null && priceMax != null) {
@@ -100,7 +101,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("/filterBrand")
+	@PostMapping("/filterBrand")
 	public String showHomeByBrand(@RequestParam(required=false) String brand, Model model) {
 		List<Product> products = productRepository.findByBrand(brand);
 		boolean find=!products.isEmpty();

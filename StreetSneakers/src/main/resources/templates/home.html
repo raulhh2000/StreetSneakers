@@ -5,7 +5,7 @@
 				<div class="filter_list">
 					<h2>Filtros</h2>
 					<div class="filter_item">
-						<form action="/filterName" method="GET">
+						<form action="/filterName" method="POST">
 							<p>
 								<b>Buscar por nombre de zapatilla:</b>
 								<input type="text" name="nameFilter" placeholder="Nombre" {{#filterName}}value="{{nameFilter}}"{{/filterName}} required />
@@ -14,7 +14,7 @@
 						</form>
 					</div>
 					<div class="filter_item">
-						<form action="/filterPrice" method="GET">
+						<form action="/filterPrice" method="POST">
 							<p>
 								<b>Buscar por precio:</b>
 							</p>
@@ -28,7 +28,7 @@
 						</form>
 					</div>
 					<div class="filter_item">
-						<form action="/filterSize" method="GET">
+						<form action="/filterSize" method="POST">
 							<p>
 								<b>Buscar por talla de zapatilla:</b>
 								<input type="number" name="size" placeholder="Talla" {{#filterSize}}value="{{sizeFilter}}"{{/filterSize}} required />
@@ -37,7 +37,7 @@
 						</form>
 					</div>
 					<div class="filter_item">
-						<form action="/filterBrand" method="GET">
+						<form action="/filterBrand" method="POST">
 							<p>
 								<b>Buscar por marca de zapatilla:</b>
 								<select name="brand" required>
