@@ -20,9 +20,10 @@ Raúl Heredia Horcajo:
     - [Funcionalidades](#funcionalidades)
     - [Entidades](#entidades)
     - [Funcionalidades del servicio interno](#funcionalidades-del-servicio-interno)
-- [Licencia](#licencia)
 - [FASE 2](#fase-2)
     - [Capturas de pantalla](#capturas-de-pantalla)
+    - [Diagrama de navegación](#diagrama-de-navegación)
+- [Licencia](#licencia)
 
 ## FASE 1
 
@@ -63,9 +64,6 @@ como de las cuentas del sistema.
 
 -Chat entre todos los usuarios del sistema.
 ```
-## Licencia
-Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
-
 ## FASE 2
 ### Capturas de pantalla
 
@@ -98,3 +96,9 @@ En ella un usuario puede comprobar todos los productos que se han añadido al ca
 <img src="static/screenshots/purchase.png" width="500" height="300" />
 En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 <br /><br />
+
+### Diagrama de navegación
+<img src="static/diagrams/navigation.png" width="800" height="400" />
+
+## Licencia
+Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
