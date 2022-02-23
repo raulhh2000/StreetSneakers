@@ -21,6 +21,8 @@ Raúl Heredia Horcajo:
     - [Entidades](#entidades)
     - [Funcionalidades del servicio interno](#funcionalidades-del-servicio-interno)
 - [Licencia](#licencia)
+- [FASE 2](#fase-2)
+    - [Capturas de pantalla](#capturas-de-pantalla)
 
 ## FASE 1
 
@@ -63,3 +65,36 @@ como de las cuentas del sistema.
 ```
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
+
+## FASE 2
+### Capturas de pantalla
+
+#### -Pantalla principal:
+<img src="static/screenshots/home.png" width="500" height="300" />
+En esta pantalla puedes buscar cualquier zapatilla mediante filtros de búsqueda, y acceder a las otras pantallas.
+<br /><br />
+
+#### -Pantalla de producto:
+<img src="static/screenshots/product1.png" width="500" height="300" />&nbsp;&nbsp;<img src="static/screenshots/product2.png" width="500" height="300" />  
+Se puede ver en detalle todos los datos de un producto en específico, y un usuario podrá añadir el producto tanto a una lista de deseados como al carrito. También podrá realizar, modificar y eliminar una reseña del producto.  
+<br />
+
+#### -Pantalla de usuario:
+<img src="static/screenshots/user.png" width="500" height="300" />
+
+Esta pantalla accederán únicamente los usuarios registrados. En ella se puede modificar los datos del usuario, acceder a la lista de deseados y ver todos los productos que el usuario ha comprado.<br /><br />
+  
+#### -Pantalla de admin:
+<img src="static/screenshots/admin1.png" width="500" height="300" />&nbsp;&nbsp;<img src="static/screenshots/admin2.png" width="500" height="300" />
+Esta pantalla accederán únicamente los administradores. En ella un administrador puede modificar sus datos, añadir, modificar y eliminar un producto de la tienda, crear un nuevo administrador y eliminar cualquier usuario de la aplicación.
+<br /><br />
+
+#### -Pantalla de carrito:
+<img src="static/screenshots/shoppingcart.png" width="500" height="300" />
+En ella un usuario puede comprobar todos los productos que se han añadido al carrito, quitarlos del mismo y realizar la compra de todos los productos.
+<br /><br />
+
+#### -Pantalla del pedido:
+<img src="static/screenshots/purchase.png" width="500" height="300" />
+En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
+<br /><br />
