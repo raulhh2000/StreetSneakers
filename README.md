@@ -3,11 +3,14 @@ Repositorio para la práctica de Desarrollo de Aplicaciones Distribuida (DAD) de
 
 ## Integrantes
 Alberto Martín Amengual:  
+:octocat: [Albertomartin21](https://github.com/Albertomartin21)  
 :envelope: a.martinam.2017@alumnos.urjc.es  
 Fátima Ezahra Smounat Mahidar:  
-    :envelope: fe.smounat.2018@alumnos.urjc.es  
+:octocat: [ezi2000](https://github.com/ezi2000)  
+:envelope: fe.smounat.2018@alumnos.urjc.es  
 Raúl Heredia Horcajo:  
-    :envelope: r.heredia.2018@alumnos.urjc.es
+:octocat: [raulhh2000](https://github.com/raulhh2000)  
+:envelope: r.heredia.2018@alumnos.urjc.es
 
 
 ## :open_book:Tabla de contenido
@@ -17,6 +20,12 @@ Raúl Heredia Horcajo:
     - [Funcionalidades](#funcionalidades)
     - [Entidades](#entidades)
     - [Funcionalidades del servicio interno](#funcionalidades-del-servicio-interno)
+- [FASE 2](#fase-2)
+    - [Capturas de pantalla](#capturas-de-pantalla)
+    - [Diagrama de navegación](#diagrama-de-navegación)
+    - [Diagrama UML](#diagrama-uml)
+    - [Diagrama de clases](#diagrama-de-clases)
+    - [Diagrama de Entidad Relación](#diagrama-de-entidad-relacion)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -26,16 +35,17 @@ Raúl Heredia Horcajo:
 
 ### Funcionalidades
 ```
--Funcionalidades públicas: El usuario al acceder a la página sin registrarse va a poder ver todas las zapatillas
-en venta y además consultar las últimas novedades del mundo de las Sneakers.
+-Funcionalidades públicas: El usuario al acceder a la página sin registrarse va a poder ver todas las
+zapatillas en venta y además consultar las últimas novedades del mundo de las Sneakers.
 
--Funcionalidades privadas: El usuario una vez registrado tendrá acceso a realizar pedidos, consultar sus últimos pedidos,
-tener una lista de deseados, hacer reseñas de zapatillas y hablar por un chat compartido entre usuarios de la web.
+-Funcionalidades privadas: El usuario una vez registrado tendrá acceso a realizar pedidos, consultar sus
+últimos pedidos, tener una lista de deseados, hacer reseñas de zapatillas y hablar por un chat compartido
+entre usuarios de la web.
 ```
 ### Entidades
 ```
--Administrador: Representa a los administradores del sistema. Realizarán la gestión tanto de los productos como de las
-cuentas del sistema.
+-Administrador: Representa a los administradores del sistema. Realizarán la gestión tanto de los productos
+como de las cuentas del sistema.
 
 -Usuario: Representa a los clientes del sistema.
 
@@ -57,5 +67,50 @@ cuentas del sistema.
 
 -Chat entre todos los usuarios del sistema.
 ```
+## FASE 2
+### Capturas de pantalla
+
+#### -Pantalla principal:
+<img src="static/screenshots/home.png" width="500" height="300" />
+En esta pantalla puedes buscar cualquier zapatilla mediante filtros de búsqueda, y acceder a las otras pantallas.
+<br /><br />
+
+#### -Pantalla de producto:
+<img src="static/screenshots/product1.png" width="500" height="300" />&nbsp;&nbsp;<img src="static/screenshots/product2.png" width="500" height="300" />  
+Se puede ver en detalle todos los datos de un producto en específico, y un usuario podrá añadir el producto tanto a una lista de deseados como al carrito. También podrá realizar, modificar y eliminar una reseña del producto.  
+<br />
+
+#### -Pantalla de usuario:
+<img src="static/screenshots/user.png" width="500" height="300" />
+
+Esta pantalla accederán únicamente los usuarios registrados. En ella se puede modificar los datos del usuario, acceder a la lista de deseados y ver todos los productos que el usuario ha comprado.<br /><br />
+  
+#### -Pantalla de admin:
+<img src="static/screenshots/admin1.png" width="500" height="300" />&nbsp;&nbsp;<img src="static/screenshots/admin2.png" width="500" height="300" />
+Esta pantalla accederán únicamente los administradores. En ella un administrador puede modificar sus datos, añadir, modificar y eliminar un producto de la tienda, crear un nuevo administrador y eliminar cualquier usuario de la aplicación.
+<br /><br />
+
+#### -Pantalla de carrito:
+<img src="static/screenshots/shoppingcart.png" width="500" height="300" />
+En ella un usuario puede comprobar todos los productos que se han añadido al carrito, quitarlos del mismo y realizar la compra de todos los productos.
+<br /><br />
+
+#### -Pantalla del pedido:
+<img src="static/screenshots/purchase.png" width="500" height="300" />
+En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
+<br /><br />
+
+### Diagrama de navegación
+<img src="static/diagrams/navigation.png" width="800" height="400" />
+
+### Diagrama UML
+<img src="static/diagrams/UMLDiagram.png" width="300" height="400" />
+
+### Diagrama de clases
+<img src="static/diagrams/classesDiagram.png" width="800" height="400" />
+
+### Diagrama de Entidad Relación
+<img src="static/diagrams/ERDiagram.png" width="800" height="400" />
+
 ## Licencia
-Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE.md](LICENSE.md) para más detalles.
+Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
