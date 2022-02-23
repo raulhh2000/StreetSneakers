@@ -87,7 +87,7 @@ public class AdminController {
 		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		if (!isProduct.isPresent()) {
 			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
-				Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
+				Path imagePath = Paths.get("src/main/resources/images/sneakers").resolve(file.getOriginalFilename());
 				file.transferTo(imagePath);
 				product.setImage("/images/"+file.getOriginalFilename());
 				productRepository.save(product);
@@ -134,9 +134,9 @@ public class AdminController {
 			product.setId(idProduct);
 			if (!file.isEmpty()) {
 				if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
-					Path imagePath = Paths.get("src/main/resources/images").resolve(file.getOriginalFilename());
+					Path imagePath = Paths.get("src/main/resources/images/sneakers").resolve(file.getOriginalFilename());
 					file.transferTo(imagePath);
-					product.setImage("/images/"+file.getOriginalFilename());
+					product.setImage("/images/sneakers/"+file.getOriginalFilename());
 					productRepository.save(product);
 					sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
 				} else {
@@ -147,9 +147,9 @@ public class AdminController {
 					String oldImagePath=oldProduct.getImage();
                     String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
                     File oldImage = new File("src/main/resources"+oldImagePath);
-                    String imagePath="src/main/resources/images/"+product.getName().replace(" ", "")+oldExtension;
+                    String imagePath="src/main/resources/images/sneakers/"+product.getName().replace(" ", "")+oldExtension;
                     Files.copy(Paths.get(oldImage.getPath()), Paths.get(imagePath));
-                    product.setImage("/images/"+product.getName().replace(" ", "")+oldExtension);
+                    product.setImage("/images/sneakers/"+product.getName().replace(" ", "")+oldExtension);
 				} else {
 					product.setImage(oldProduct.getImage());
 				}
