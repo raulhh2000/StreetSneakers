@@ -3,11 +3,14 @@ Repositorio para la práctica de Desarrollo de Aplicaciones Distribuida (DAD) de
 
 ## Integrantes
 Alberto Martín Amengual:  
+:octocat: [Albertomartin21](https://github.com/Albertomartin21)  
 :envelope: a.martinam.2017@alumnos.urjc.es  
 Fátima Ezahra Smounat Mahidar:  
-    :envelope: fe.smounat.2018@alumnos.urjc.es  
+:octocat: [ezi2000](https://github.com/ezi2000)  
+:envelope: fe.smounat.2018@alumnos.urjc.es  
 Raúl Heredia Horcajo:  
-    :envelope: r.heredia.2018@alumnos.urjc.es
+:octocat: [raulhh2000](https://github.com/raulhh2000)  
+:envelope: r.heredia.2018@alumnos.urjc.es
 
 
 ## :open_book:Tabla de contenido
@@ -26,16 +29,17 @@ Raúl Heredia Horcajo:
 
 ### Funcionalidades
 ```
--Funcionalidades públicas: El usuario al acceder a la página sin registrarse va a poder ver todas las zapatillas
-en venta y además consultar las últimas novedades del mundo de las Sneakers.
+-Funcionalidades públicas: El usuario al acceder a la página sin registrarse va a poder ver todas las
+zapatillas en venta y además consultar las últimas novedades del mundo de las Sneakers.
 
--Funcionalidades privadas: El usuario una vez registrado tendrá acceso a realizar pedidos, consultar sus últimos pedidos,
-tener una lista de deseados, hacer reseñas de zapatillas y hablar por un chat compartido entre usuarios de la web.
+-Funcionalidades privadas: El usuario una vez registrado tendrá acceso a realizar pedidos, consultar sus
+últimos pedidos, tener una lista de deseados, hacer reseñas de zapatillas y hablar por un chat compartido
+entre usuarios de la web.
 ```
 ### Entidades
 ```
--Administrador: Representa a los administradores del sistema. Realizarán la gestión tanto de los productos como de las
-cuentas del sistema.
+-Administrador: Representa a los administradores del sistema. Realizarán la gestión tanto de los productos
+como de las cuentas del sistema.
 
 -Usuario: Representa a los clientes del sistema.
 
@@ -58,4 +62,4 @@ cuentas del sistema.
 -Chat entre todos los usuarios del sistema.
 ```
 ## Licencia
-Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE.md](LICENSE.md) para más detalles.
+Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
