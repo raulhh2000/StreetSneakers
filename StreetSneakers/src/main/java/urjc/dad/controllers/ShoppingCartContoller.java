@@ -78,7 +78,7 @@ public class ShoppingCartContoller {
             }
             List<LineItem> listLineItems= new ArrayList<>();
             for (Product product: shoppingCart.getListProducts()) {
-            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),product.getImage(),1));
+            	listLineItems.add(new LineItem(product.getName(),product.getDescription(),product.getPrice(),product.getSize(),product.getBrand(),product.getImage()));
             }
             shoppingCart.getListProducts().clear();
             shoppingCartRepository.save(shoppingCart);

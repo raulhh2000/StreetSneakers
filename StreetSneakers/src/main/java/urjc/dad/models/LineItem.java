@@ -17,13 +17,12 @@ public class LineItem {
 	private double size;
 	private String brand;
 	private String image;
-	private int quantity;
 	
 	public LineItem() {
 		
 	}
 
-	public LineItem(String name, String description, double price, double size, String brand,String image, int quantity) {
+	public LineItem(String name, String description, double price, double size, String brand,String image) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -31,7 +30,6 @@ public class LineItem {
 		this.size = size;
 		this.brand = brand;
 		this.image=image;
-		this.quantity = quantity;
 	}
 
 	public long getId() {
@@ -82,15 +80,6 @@ public class LineItem {
 		this.brand = brand;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	
 	public String getImage() {
 		return image;
 	}
@@ -102,7 +91,7 @@ public class LineItem {
 	@Override
 	public String toString() {
 		return "LineItem [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-				+ size + ", brand=" + brand + ", quantity=" + quantity + "]";
+				+ size + ", brand=" + brand + ", image=" + image + "]";
 	}
 	
 }
