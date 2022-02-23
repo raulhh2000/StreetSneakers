@@ -10,7 +10,7 @@ public class ImageConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		//registry.addResourceHandler("/images/**").addResourceLocations("file:D:/Proyectos/Proyectos SpringToolSuite4/DESARROLLO DE APLICACIONES DISTRIBUIDAS/StreetSneakers/StreetSneakers/src/main/resources/images/");
-		registry.addResourceHandler("/images/**").addResourceLocations("file:C:/Users/Alberto/Documents/StreetSneakers/StreetSneakers/src/main/resources/images/");
-		//registry.addResourceHandler("/images/**").addResourceLocations("file:D:/4 año/2 Desarrollo de app distribuidas/PROYECTO\\StreetSneakers/StreetSneakers/src/main/resources/images/");
+		//registry.addResourceHandler("/images/**").addResourceLocations("file:C:/Users/Alberto/Documents/StreetSneakers/StreetSneakers/src/main/resources/images/");
+		registry.addResourceHandler("/images/**").addResourceLocations("file:D:/4 año/2 Desarrollo de app distribuidas/PROYECTO\\StreetSneakers/StreetSneakers/src/main/resources/images/");
     }
 }

@@ -2,6 +2,7 @@ package urjc.dad.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -144,12 +145,11 @@ public class AdminController {
 			} else {
 				if (!product.getName().equals(oldProduct.getName())) {
 					String oldImagePath=oldProduct.getImage();
-					String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
-					File oldImage = new File(oldImagePath);
-					String imagePath="src/main/resources/images/"+product.getName().replace(" ", "")+oldExtension;
-					File image = new File(imagePath);
-					oldImage.renameTo(image);
-					product.setImage("/images/"+product.getName().replace(" ", "")+oldExtension);
+                    String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
+                    File oldImage = new File("src/main/resources"+oldImagePath);
+                    String imagePath="src/main/resources/images/"+product.getName().replace(" ", "")+oldExtension;
+                    Files.copy(Paths.get(oldImage.getPath()), Paths.get(imagePath));
+                    product.setImage("/images/"+product.getName().replace(" ", "")+oldExtension);
 				} else {
 					product.setImage(oldProduct.getImage());
 				}
