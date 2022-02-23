@@ -23,6 +23,9 @@ Raúl Heredia Horcajo:
 - [FASE 2](#fase-2)
     - [Capturas de pantalla](#capturas-de-pantalla)
     - [Diagrama de navegación](#diagrama-de-navegación)
+    - [Diagrama UML](#diagrama-uml)
+    - [Diagrama de clases](#diagrama-de-clases)
+    - [Diagrama de Entidad Relación](#diagrama-de-entidad-relacion)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -99,6 +102,15 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 
 ### Diagrama de navegación
 <img src="static/diagrams/navigation.png" width="800" height="400" />
+
+### Diagrama UML
+<img src="static/diagrams/UMLDiagram.png" width="300" height="400" />
+
+### Diagrama de clases
+<img src="static/diagrams/classesDiagram.png" width="800" height="400" />
+
+### Diagrama de Entidad Relación
+<img src="static/diagrams/ERDiagram.png" width="800" height="400" />
 
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
