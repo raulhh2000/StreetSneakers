@@ -88,7 +88,7 @@ public class ShoppingCartContoller {
 	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    
-	    @GetMapping("/shoppingcart/{idUser}remove/{idProduct}")
+	    @GetMapping("/shoppingcart/{idUser}/remove/{idProduct}")
 	    public String removeProductInShoppingCart(@PathVariable long idUser, @PathVariable long idProduct,  Model model, HttpSession sesion) {
 	        Optional<User> user = userRepository.findById(idUser);
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
