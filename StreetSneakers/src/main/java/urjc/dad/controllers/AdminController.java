@@ -89,7 +89,7 @@ public class AdminController {
 			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
 				Path imagePath = Paths.get("src/main/resources/images/sneakers").resolve(file.getOriginalFilename());
 				file.transferTo(imagePath);
-				product.setImage("/images/"+file.getOriginalFilename());
+				product.setImage("/images/sneakers/"+file.getOriginalFilename());
 				productRepository.save(product);
 				sesion.setAttribute("feedbackAdmin", "addedProductSuccess");
 			} else {
