@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +33,9 @@ public class User {
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	ShoppingCart shoppingCart;
-
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 	
 	public User() {
 		
@@ -42,6 +46,14 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public User(String name, String lastName, String email, String password, String... roles) {
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.roles = List.of(roles);
 	}
 	
 	public User(String name, String lastName, String email, String password, String phone, String address,
@@ -146,6 +158,14 @@ public class User {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 	
 }

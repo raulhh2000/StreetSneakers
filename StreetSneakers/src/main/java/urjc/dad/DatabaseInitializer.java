@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import urjc.dad.models.Admin;
@@ -37,21 +38,23 @@ public class DatabaseInitializer {
 	
 	@Autowired
     private ShoppingCartRepository shoppingCartRepository;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@PostConstruct
 	public void init() {
 		
-		Admin admin1= new Admin("Raul", "Heredia", "raulHeredia@gmail.com", "1234");
-		Admin admin2= new Admin("Alberto", "Martin", "albertoMartin@gmail.com", "4567");
-		Admin admin3= new Admin("Fatima", "Smounat ", "fatimaSmounat@gmail.com", "8901");
+		Admin admin1= new Admin("Raul", "Heredia", "raulHeredia@gmail.com", passwordEncoder.encode("1234"), "ROLE_ADMIN");
+		Admin admin2= new Admin("Alberto", "Martin", "albertoMartin@gmail.com", passwordEncoder.encode("4567"), "ROLE_ADMIN");
+		Admin admin3= new Admin("Fatima", "Smounat ", "fatimaSmounat@gmail.com", passwordEncoder.encode("8901"), "ROLE_ADMIN");
 		adminRepository.save(admin1);
 		adminRepository.save(admin2);
 		adminRepository.save(admin3);
 		
-		User user1= new User("Juanma", "Rodriguez", "juanmaRodriguez@gmail.com", "1234");
-		User user2= new User("Benja","Fernandez", "benjaFernandez@gmail.com", "4567");
-		User user3= new User("Adri","Espada","adriEspada@gmail.com", "8901");
+		User user1= new User("Juanma", "Rodriguez", "juanmaRodriguez@gmail.com", passwordEncoder.encode("1234"), "ROLE_USER");
+		User user2= new User("Benja","Fernandez", "benjaFernandez@gmail.com", passwordEncoder.encode("4567"), "ROLE_USER");
+		User user3= new User("Adri","Espada","adriEspada@gmail.com", passwordEncoder.encode("8901"), "ROLE_USER");
 		
 		ShoppingCart shoppingCartUser1= new ShoppingCart(user1);
 		user1.setShoppingCart(shoppingCartUser1);
