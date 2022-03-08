@@ -19,10 +19,11 @@
 			<div class="navbar">
 				<a href="/"><img src="../images/header-footer/logo.png" class="logo" alt="Main Logo"></a>
 				<ul>
-					<li><a href="/admin/1"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>
-					<li><a href="/user/4"><img id = "imagen" src="../images/header-footer/user.png" alt="" /></a></li>
-					<li><a href="/logout"><img id = "imagen" src="../images/header-footer/logout.png" alt="" /></a></li>
-					<li><a href="/shoppingcart/4"><img id = "imagen" src="../images/header-footer/cart.png" alt="" /></a></li>
+					{{#adminRole}}<li><a href="/admin/{{idAdmin}}"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
+					{{#userRole}}<li><a href="/user/{{idUser}}"><img id = "imagen" src="../images/header-footer/user.png" alt="" /></a></li>{{/userRole}}
+					{{^register}}<li><a href="/login"><img id = "imagen" src="../images/header-footer/login.png" alt="" /></a></li>{{/register}}
+					{{#register}}<li><a href="/logout"><img id = "imagen" src="../images/header-footer/logout.png" alt="" /></a></li>{{/register}}
+					{{#userRole}}<li><a href="/shoppingcart/{{idUser}}"><img id = "imagen" src="../images/header-footer/cart.png" alt="" /></a></li>{{/userRole}}
 				</ul>
 			</div>
 		</div>

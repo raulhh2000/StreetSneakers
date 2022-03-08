@@ -54,7 +54,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/user/update/{idUser}")
-	public String modifyUser(@PathVariable long idUser, User user, Model model, HttpSession sesion) {
+	public String modifyUser(@PathVariable long idUser, User user, Model model, HttpSession sesion){
 		Optional<User> isUser=userRepository.findByEmail(user.getEmail());
 		Optional<Admin> isAdmin=adminRepository.findByEmail(user.getEmail());
 		User oldUser = userRepository.findById(idUser).get();
@@ -63,6 +63,7 @@ public class UserController {
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
 			user.setShoppingCart(oldUser.getShoppingCart());
+			user.setRoles(oldUser.getRoles());
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "updatedUserSuccess");
 		} else {
