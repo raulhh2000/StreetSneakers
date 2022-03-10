@@ -20,6 +20,7 @@
 					<b>Cuenta bancaria:</b> <input type="text" name="bankAccount" placeholder="ESXX XXXX XXXX XX XXXXXXXXX" size="30" {{#find}} value="{{user.bankAccount}}" {{/find}} 7
 					required pattern="([A-Z]{2}[0-9]{2}) [0-9]{4} [0-9]{4} [0-9]{2} [0-9]{9}"/>
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Actualizar datos" />
 				{{#updatedUserSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedUserSuccess}}
 				{{#updatedUserFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedUserFailure}}

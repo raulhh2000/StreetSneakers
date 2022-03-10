@@ -12,6 +12,7 @@
 					<input id="email" name="email" type="hidden" value="{{admin.email}}">
 					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{admin.password}}" required />
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Actualizar datos" />
 				{{#updatedAdminSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedAdminSuccess}}
 				{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
@@ -30,6 +31,7 @@
 				<p>
 					<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required></textarea>
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Añadir producto" />
 				{{#addedProductSuccess}}<spam class="success">Producto añadido correctamente</spam>{{/addedProductSuccess}}
 				{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
@@ -44,6 +46,7 @@
 						{{/products}} 	
 					</select>
 				</div>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Borrar producto" />
 				{{#removedProductSuccess}}<spam class="success">Producto borrado correctamente</spam>{{/removedProductSuccess}}
 				{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
@@ -58,6 +61,7 @@
 						{{/products}} 	
 					</select>
 				</div>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Modificar producto" />
 				{{#modifiedProductSuccess}}<spam class="success">Producto modificado correctamente</spam>{{/modifiedProductSuccess}}
 				{{#modifiedProductFailure}}<spam class="failure">El producto no se ha podido modificar</spam>{{/modifiedProductFailure}}
@@ -78,6 +82,7 @@
 					<p>
 						<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required>{{product.description}}</textarea>
 					</p>
+					<input type="hidden" name="_csrf" value="{{token}}"/>
 					<input type="submit" value="Modificar producto" />
 				</form>
 			{{/modifyProduct}}	
@@ -92,6 +97,7 @@
 					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" required />
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Añadir Admin" />
 				{{#addedAdminSuccess}}<spam class="success">Administrador añadido correctamente</spam>{{/addedAdminSuccess}}
 				{{#addedAdminFailure}}<spam class="failure">El administrador no se ha podido añadir</spam>{{/addedAdminFailure}}
@@ -102,6 +108,7 @@
 				<p>
 					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Eliminar usuario" />
 				{{#removedAdminSuccess}}<spam class="success">Usuario eliminado correctamente</spam>{{/removedAdminSuccess}}
 				{{#removedAdminFailure}}<spam class="failure">El usuario no se ha podido eliminar</spam>{{/removedAdminFailure}}

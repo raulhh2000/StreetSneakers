@@ -46,6 +46,7 @@
 					{{totalPrice}} €
 				</div>
 		        <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
+		        	<input type="hidden" name="_csrf" value="{{token}}"/>
 		        	<input type="submit" value="RealizarCompra" />
 		        </form>
 	        {{/findShoppingCart}}

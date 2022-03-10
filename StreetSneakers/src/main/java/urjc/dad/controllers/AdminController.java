@@ -71,7 +71,7 @@ public class AdminController {
 		}
 	    return "admin";
 	}
-
+	
 	@PostMapping("/admin/update/{idAdmin}")
 	public String modifyAdmin(@PathVariable long idAdmin, Admin admin, Model model, HttpSession sesion) {
 		Optional<User> isUser=userRepository.findByEmail(admin.getEmail());
@@ -79,7 +79,9 @@ public class AdminController {
 		Admin oldAdmin = adminRepository.findById(idAdmin).get();
 		if(admin.getEmail().equals(oldAdmin.getEmail()) || (!isUser.isPresent() && !isAdmin.isPresent())) {
 			admin.setId(idAdmin);
-			admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+			if (!oldAdmin.getPassword().equals(admin.getPassword())) {
+				admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+			}
 			admin.setRoles(oldAdmin.getRoles());
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "updatedAdminSuccess");

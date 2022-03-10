@@ -68,7 +68,9 @@ public class UserController {
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
 			user.setShoppingCart(oldUser.getShoppingCart());
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			if (!oldUser.getPassword().equals(user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
 			user.setRoles(oldUser.getRoles());
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "updatedUserSuccess");
