@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,12 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
 	@Autowired
 	AdminRepository adminRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/user/{idUser}")
 	public String showUser(@PathVariable long idUser, Model model, HttpSession sesion) {
@@ -63,6 +68,7 @@ public class UserController {
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
 			user.setShoppingCart(oldUser.getShoppingCart());
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setRoles(oldUser.getRoles());
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "updatedUserSuccess");

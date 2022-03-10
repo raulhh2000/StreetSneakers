@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +52,9 @@ public class AdminController {
 	@Autowired
 	ShoppingCartRepository shoppingCartRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@RequestMapping("/admin/{idAdmin}")
 	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model, HttpSession sesion) {
 		Admin admin = adminRepository.findById(idAdmin).get();
@@ -74,6 +79,8 @@ public class AdminController {
 		Admin oldAdmin = adminRepository.findById(idAdmin).get();
 		if(admin.getEmail().equals(oldAdmin.getEmail()) || (!isUser.isPresent() && !isAdmin.isPresent())) {
 			admin.setId(idAdmin);
+			admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+			admin.setRoles(oldAdmin.getRoles());
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "updatedAdminSuccess");
 		} else {
@@ -163,10 +170,12 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/{idAdmin}/createAdmin")
-	public String createAdmin(@PathVariable long idAdmin,Admin admin, Model model, HttpSession sesion) {
+	public String createAdmin(@PathVariable long idAdmin, Admin admin, Model model, HttpSession sesion) {
 		Optional<User> isUser=userRepository.findByEmail(admin.getEmail());
 		Optional<Admin> isAdmin=adminRepository.findByEmail(admin.getEmail());
 		if(!isUser.isPresent() && !isAdmin.isPresent()) {
+			admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+			admin.setRoles(Arrays.asList("ROLE_ADMIN"));
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "addedAdminSuccess");
 		} else {

@@ -8,7 +8,8 @@
 					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
 				</p>
 				<p>
-					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{admin.email}}" required />
+					<b>Email:</b> <input type="email" name="email" value="{{admin.email}}" disabled />
+					<input id="email" name="email" type="hidden" value="{{admin.email}}">
 					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{admin.password}}" required />
 				</p>
 				<input type="submit" value="Actualizar datos" />
