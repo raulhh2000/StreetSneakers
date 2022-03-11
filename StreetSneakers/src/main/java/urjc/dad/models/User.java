@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -28,7 +29,7 @@ public class User {
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	private List<Purchase> purchases= new ArrayList<>();
 	
-	@OneToMany
+	@ManyToMany
 	private List<Product> wishList= new ArrayList<>();
 	
 	@OneToOne(cascade=CascadeType.ALL)
