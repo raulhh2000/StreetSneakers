@@ -19,7 +19,7 @@
 			<div class="navbar">
 				<a href="/"><img src="../images/header-footer/logo.png" class="logo" alt="Main Logo"></a>
 				<ul>
-					{{#adminRole}}<li><a href="/admin/{{idAdmin}}"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
+					{{#adminRole}}<li><a href="/admin"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
 					{{#userRole}}<li><a href="/user/{{idUser}}"><img id = "imagen" src="../images/header-footer/user.png" alt="" /></a></li>{{/userRole}}
 					{{^register}}<li><a href="/login"><img id = "imagen" src="../images/header-footer/login.png" alt="" /></a></li>{{/register}}
 					{{#register}}

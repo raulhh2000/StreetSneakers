@@ -2,7 +2,7 @@
 		<div class="wrap">
 			<h1 class="welcome">Hola, {{admin.name}}</h1>
 			<h2 class="normal">Datos personales</h2>
-			<form action="/admin/update/{{admin.id}}" method="POST">
+			<form action="/admin/update" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{admin.name}}" required />
 					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{admin.lastName}}" required />
@@ -18,7 +18,7 @@
 				{{#updatedAdminFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedAdminFailure}}
 			</form>
 			<h2 class="normal">Añadir Producto</h2>
-			<form action="/admin/{{admin.id}}/addProduct" method="POST" enctype="multipart/form-data">
+			<form action="/admin/addProduct" method="POST" enctype="multipart/form-data">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
 					<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" required />
@@ -37,7 +37,7 @@
 				{{#addedProductFailure}}<spam class="failure">El producto no se ha podido añadir</spam>{{/addedProductFailure}}
 			</form>
 			<h2 class="normal">Borrar Producto</h2>
-			<form action="/admin/{{admin.id}}/removeProduct" method="POST">
+			<form action="/admin/removeProduct" method="POST">
 				<div class="content-select">
 					<select name ="productId" required> 
 						<option value="">Seleccione un producto</option>
@@ -52,7 +52,7 @@
 				{{#removedProductFailure}}<spam class="failure">El producto no se ha podido borrar</spam>{{/removedProductFailure}}
 			</form>	
 			<h2 class="normal">Modificar Producto</h2>
-			<form action="/admin/{{admin.id}}" method="POST">
+			<form action="/admin" method="POST">
 				<div class="content-select">
 					<select name ="productId" required> 
 						<option value="">Seleccione un producto</option>
@@ -67,7 +67,7 @@
 				{{#modifiedProductFailure}}<spam class="failure">El producto no se ha podido modificar</spam>{{/modifiedProductFailure}}
 			</form>
 			{{#modifyProduct}}
-				<form action="/admin/{{admin.id}}/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
+				<form action="/admin/modifyProduct/{{product.id}}/" method="POST" enctype="multipart/form-data">
 					<p>
 						<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{product.name}}" required />
 						<b>Marca:</b> <input type="text" name="brand" placeholder="Marca" value="{{product.brand}}" required />
@@ -88,7 +88,7 @@
 			{{/modifyProduct}}	
 				
 			<h2 class="normal">Añadir Admin</h2>
-			<form action="/admin/{{admin.id}}/createAdmin" method="POST">
+			<form action="/admin/createAdmin" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" required />
 					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" required />
@@ -104,7 +104,7 @@
 			</form>	
 				
 			<h2 class="normal">Eliminar usuario</h2>
-			<form action="/admin/{{admin.id}}/removeUser" method="GET">
+			<form action="/admin/removeUser" method="GET">
 				<p>
 					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required />
 				</p>

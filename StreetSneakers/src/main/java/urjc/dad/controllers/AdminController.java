@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,9 @@ public class AdminController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@RequestMapping("/admin/{idAdmin}")
-	public String showAdmin(@PathVariable long idAdmin, @RequestParam(defaultValue = "0") long productId, Model model, HttpSession sesion) {
-		Admin admin = adminRepository.findById(idAdmin).get();
+	@RequestMapping("/admin")
+	public String showAdmin(@RequestParam(defaultValue = "0") long productId, Model model, HttpSession sesion, HttpServletRequest request) {
+		Admin admin = adminRepository.findByEmail(request.getUserPrincipal().getName()).get();
 		model.addAttribute("admin", admin);
 		model.addAttribute("products",productRepository.findAll());
 		String feedbackAdmin = (String)sesion.getAttribute("feedbackAdmin");
@@ -72,13 +73,13 @@ public class AdminController {
 	    return "admin";
 	}
 	
-	@PostMapping("/admin/update/{idAdmin}")
-	public String modifyAdmin(@PathVariable long idAdmin, Admin admin, Model model, HttpSession sesion) {
+	@PostMapping("/admin/update")
+	public String modifyAdmin(Admin admin, Model model, HttpSession sesion, HttpServletRequest request) {
 		Optional<User> isUser=userRepository.findByEmail(admin.getEmail());
 		Optional<Admin> isAdmin=adminRepository.findByEmail(admin.getEmail());
-		Admin oldAdmin = adminRepository.findById(idAdmin).get();
+		Admin oldAdmin = adminRepository.findByEmail(request.getUserPrincipal().getName()).get();
 		if(admin.getEmail().equals(oldAdmin.getEmail()) || (!isUser.isPresent() && !isAdmin.isPresent())) {
-			admin.setId(idAdmin);
+			admin.setId(oldAdmin.getId());
 			if (!oldAdmin.getPassword().equals(admin.getPassword())) {
 				admin.setPassword(passwordEncoder.encode(admin.getPassword()));
 			}
@@ -88,11 +89,11 @@ public class AdminController {
 		} else {
 			sesion.setAttribute("feedbackAdmin", "updatedAdminFailure");
 		}
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 	
-	@PostMapping("/admin/{idAdmin}/addProduct")
-	public String addProduct(@PathVariable long idAdmin, @RequestParam MultipartFile file, Product product, Model model, HttpSession sesion) throws IOException {
+	@PostMapping("/admin/addProduct")
+	public String addProduct(@RequestParam MultipartFile file, Product product, Model model, HttpSession sesion, HttpServletRequest request) throws IOException {
 		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		if (!isProduct.isPresent()) {
 			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
@@ -107,11 +108,11 @@ public class AdminController {
 		} else {
 			sesion.setAttribute("feedbackAdmin", "addedProductFailure");
 		}
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 	
-	@PostMapping("/admin/{idAdmin}/removeProduct")
-	public String removeProduct(@PathVariable long idAdmin,long productId, Model model, HttpSession sesion) {
+	@PostMapping("/admin/removeProduct")
+	public String removeProduct(long productId, Model model, HttpSession sesion, HttpServletRequest request) {
 		Optional<Product> product = productRepository.findById(productId);
 		if (product.isPresent()) {
 			List<User> users= userRepository.findAll();
@@ -130,12 +131,12 @@ public class AdminController {
 		} else {
 			sesion.setAttribute("feedbackAdmin", "removedProductFailure");
 		}
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 	
-	@PostMapping("/admin/{idAdmin}/modifyProduct/{idProduct}")
-	public String modifyProduct(@PathVariable long idAdmin, @PathVariable long idProduct, @RequestParam MultipartFile file,
-			Product product, Model model, HttpSession sesion) throws IOException {
+	@PostMapping("/admin/modifyProduct/{idProduct}")
+	public String modifyProduct(@PathVariable long idProduct, @RequestParam MultipartFile file,
+			Product product, Model model, HttpSession sesion, HttpServletRequest request) throws IOException {
 		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		Product oldProduct = productRepository.findById(idProduct).get();
 		if (product.getName().equals(oldProduct.getName()) || !isProduct.isPresent()) {	
@@ -168,11 +169,11 @@ public class AdminController {
 		} else {
 			sesion.setAttribute("feedbackAdmin", "modifiedProductFailure");
 		}
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 
-	@PostMapping("/admin/{idAdmin}/createAdmin")
-	public String createAdmin(@PathVariable long idAdmin, Admin admin, Model model, HttpSession sesion) {
+	@PostMapping("/admin/createAdmin")
+	public String createAdmin(Admin admin, Model model, HttpSession sesion, HttpServletRequest request) {
 		Optional<User> isUser=userRepository.findByEmail(admin.getEmail());
 		Optional<Admin> isAdmin=adminRepository.findByEmail(admin.getEmail());
 		if(!isUser.isPresent() && !isAdmin.isPresent()) {
@@ -183,11 +184,11 @@ public class AdminController {
 		} else {
 			sesion.setAttribute("feedbackAdmin", "addedAdminFailure");
 		}
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 	
-	@GetMapping("/admin/{idAdmin}/removeUser")
-	public String removeUser(@PathVariable long idAdmin,String email, Model model, HttpSession sesion) {
+	@GetMapping("/admin/removeUser")
+	public String removeUser(String email, Model model, HttpSession sesion, HttpServletRequest request) {
 		Optional<User> user=userRepository.findByEmail(email);
 		if(user.isPresent()) {
 			List<Review> list= reviewRepository.findByUser(user.get());
@@ -197,7 +198,8 @@ public class AdminController {
 		}
 		else{
 			Optional<Admin> admin=adminRepository.findByEmail(email);
-			if(admin.isPresent() && admin.get().getId()!=idAdmin) {
+			Admin currentAdmin = adminRepository.findByEmail(request.getUserPrincipal().getName()).get();
+			if(admin.isPresent() && admin.get().getId()!=currentAdmin.getId()) {
 				adminRepository.delete(admin.get());
 				sesion.setAttribute("feedbackAdmin", "removedAdminSuccess");
 			} else {
@@ -205,6 +207,6 @@ public class AdminController {
 			}
 		}
 		
-		return "redirect:/admin/{idAdmin}";
+		return "redirect:/admin";
 	}
 }
