@@ -24,7 +24,7 @@
 								</td>
 								<td class="price"><p>{{price}} €</p></td>
 								<td class="remove">
-									<a href="/shoppingcart/{{user.id}}/remove/{{id}}"><i class="fa-solid fa-xmark fa-xl"></i></a>
+									<a href="/shoppingcart/remove/{{id}}"><i class="fa-solid fa-xmark fa-xl"></i></a>
 								</td>
 							</tr>
 						{{/products}}
@@ -45,7 +45,7 @@
 					<p class ="total-summary">Total</p>
 					{{totalPrice}} €
 				</div>
-		        <form action="/shoppingcart/{{user.id}}/buyShoppingCart" method="POST">
+		        <form action="/shoppingcart/buyShoppingCart" method="POST">
 		        	<input type="hidden" name="_csrf" value="{{token}}"/>
 		        	<input type="submit" value="RealizarCompra" />
 		        </form>

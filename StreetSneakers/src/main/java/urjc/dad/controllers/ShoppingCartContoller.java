@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class ShoppingCartContoller {
 	    @Autowired
 	    ProductRepository productRepository;
 
-	    @GetMapping("/shoppingcart/{idUser}")
-	    public String showShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @GetMapping("/shoppingcart")
+	    public String showShoppingCart(Model model, HttpSession sesion,HttpServletRequest request) {
+	        Optional<User> user = userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        List<Product> listProducts = shoppingCart.getListProducts();
 	        boolean findShoppingCart = !listProducts.isEmpty();
@@ -63,9 +64,9 @@ public class ShoppingCartContoller {
 	        return "shoppingCart";
 	    }
 	    
-	    @PostMapping("/shoppingcart/{idUser}/buyShoppingCart")
-	    public String buyShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @PostMapping("/shoppingcart/buyShoppingCart")
+	    public String buyShoppingCart(Model model, HttpSession sesion, HttpServletRequest request) {
+	        Optional<User> user = userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        long idPurchase=-1;
 	        if(user.get().getPhone()==null) {
@@ -88,9 +89,9 @@ public class ShoppingCartContoller {
 	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    
-	    @GetMapping("/shoppingcart/{idUser}/remove/{idProduct}")
-	    public String removeProductInShoppingCart(@PathVariable long idUser, @PathVariable long idProduct,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @GetMapping("/shoppingcart/remove/{idProduct}")
+	    public String removeProductInShoppingCart(@PathVariable long idProduct,  Model model, HttpSession sesion, HttpServletRequest request) {
+	        Optional<User> user =  userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        Optional<Product> product = productRepository.findById(idProduct);
 	        if (product.isPresent()) {
@@ -98,7 +99,7 @@ public class ShoppingCartContoller {
 	            shoppingCartRepository.save(shoppingCart);
 	            sesion.setAttribute("feedbackShoppingCart", "removeProductSuccess");
 	        }
-	        return "redirect:/shoppingcart/{idUser}";
+	        return "redirect:/shoppingcart";
 	    }
 	
 }
