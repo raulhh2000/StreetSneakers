@@ -70,7 +70,7 @@ public class ShoppingCartContoller {
 	        long idPurchase=-1;
 	        if(user.get().getPhone()==null) {
 	        	sesion.setAttribute("feedbackUser", "mustUpdate");
-	        	return "redirect:/user/"+idUser;
+	        	return "redirect:/user";
 	        }
             double totalPrice=0;
             for(Product product : shoppingCart.getListProducts()) {

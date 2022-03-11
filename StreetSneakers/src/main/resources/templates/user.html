@@ -2,7 +2,7 @@
 		<div class="wrap">
 			<h1 class="welcome">Hola, {{user.name}}</h1>
 			<h2 class="normal">Datos personales</h2>
-			<form action="/user/update/{{user.id}}" method="POST">
+			<form action="/user/update" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{user.name}}" required />
 					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{user.lastName}}" required />
