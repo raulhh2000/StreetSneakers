@@ -1,5 +1,6 @@
 package urjc.dad.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,13 +41,16 @@ public class ProductController {
 	@GetMapping("/product/{idProduct}")
 	public String showProduct(@PathVariable long idProduct,  Model model,HttpSession sesion,HttpServletRequest request) {
 		Optional<Product> product=productRepository.findById(idProduct);
-		User user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
-		
-		model.addAttribute("favorite",user.getWishList().contains(product.get()));
 		boolean findProduct=product.isPresent();
-		ShoppingCart shoppingCart= user.getShoppingCart();
-        model.addAttribute("shoppigncart",shoppingCart.getListProducts().contains(product.get()));
 		if(findProduct) {
+			Principal currentEmail= request.getUserPrincipal();
+			if(currentEmail != null && request.isUserInRole("USER")) {
+				User user = userRepository.findByEmail(currentEmail.getName()).get();	
+				model.addAttribute("favorite",user.getWishList().contains(product.get()));
+			
+				ShoppingCart shoppingCart= user.getShoppingCart();
+				model.addAttribute("shoppigncart",shoppingCart.getListProducts().contains(product.get()));
+			}
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
 			boolean findReviews = !reviews.isEmpty();
@@ -122,8 +126,14 @@ public class ProductController {
 		Optional<Product> product=productRepository.findById(idProduct);
 		boolean findProduct=product.isPresent();
 		if(findProduct) {
-			User user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
-			model.addAttribute("favorite",user.getWishList().contains(product.get()));
+			Principal currentEmail = request.getUserPrincipal();
+			if (currentEmail != null && request.isUserInRole("USER")) {
+				User user = userRepository.findByEmail(currentEmail.getName()).get();
+				model.addAttribute("favorite",user.getWishList().contains(product.get()));
+				
+				ShoppingCart shoppingCart= user.getShoppingCart();
+				model.addAttribute("shoppigncart",shoppingCart.getListProducts().contains(product.get()));
+			}
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
 			boolean findReviews = !reviews.isEmpty();
