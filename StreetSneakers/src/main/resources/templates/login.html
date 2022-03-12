@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html>
-<body>
-	<form action="/login" method="POST">
-		<label>Email:</label><input type="email" name="email" /><br />
-		<label>Password:</label><input type="password" name="password" /><br/>
-		<input type="hidden" name="_csrf" value="{{token}}"/>
-		<input type="submit" value="Sign In" /><br />
-	</form>
-</body>
-</html>
+{{>header}}
+	<div class="wrap">
+		<div class= "login-wrapper">
+			<div class="column">
+				<h1 class="normal">Inicio de sesion</h1>
+				<form action="/login" method="POST">
+					<label>Email:</label><input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required/><br />
+					<label>Password:</label><input type="password" name="password" placeholder="******" required/><br />
+					<input type="hidden" name="_csrf" value="{{token}}"/>
+					<input type="submit" value="Iniciar Sesion" /><br />
+				</form>
+			</div>
+			<div class="column">
+				<h1 class="normal">Registro</h1>
+				<form action="/signIn" method="POST">
+					<label>Nombre:</label> <input type="text" name="name" placeholder="Nombre" required /><br />
+					<label>Apellido:</label> <input type="text" name="lastName" placeholder="Apellido" required /><br />
+					<label>Email:</label><input type="email" name="email" placeholder="xxxxx@xxxxx.xx" required/><br />
+					<label>Password:</label><input type="password" name="password" placeholder="******" required/><br />
+					<input type="hidden" name="_csrf" value="{{token}}"/>
+					<input type="submit" value="Registrarse" /><br />
+					{{#addedUserSuccess}}<spam class="success">Usuario registrado correctamente</spam>{{/addedUserSuccess}}
+					{{#addedUserFailure}}<spam class="failure">El usuario ya existe</spam>{{/addedUserFailure}}
+				</form>
+			</div>
+		</div>
+	</div>
+{{>footer}}

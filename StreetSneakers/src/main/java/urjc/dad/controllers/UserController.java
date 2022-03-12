@@ -79,14 +79,4 @@ public class UserController {
 		}
 	    return "redirect:/user";
 	}
-	
-	@GetMapping("/login")
-	 public String login() {
-		return "login";
-	 }
-
-	 @GetMapping("/loginerror")
-	 public String loginerror() {
-		 return "loginerror";
-	 }
 }
