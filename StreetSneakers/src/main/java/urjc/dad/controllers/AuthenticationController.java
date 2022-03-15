@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import urjc.dad.models.Admin;
+import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
 import urjc.dad.repositories.UserRepository;
@@ -51,6 +52,7 @@ public class AuthenticationController {
 		if(!isUser.isPresent() && !isAdmin.isPresent()) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setRoles(Arrays.asList("ROLE_USER"));
+			user.setShoppingCart(new ShoppingCart(user));
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "addedUserSuccess");
 		} else {
