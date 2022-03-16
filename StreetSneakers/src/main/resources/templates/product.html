@@ -34,7 +34,7 @@
 			{{/findProduct}}
 			<div class="reviews">
 				<h1>Reseñas de la zapatilla</h1>
-				{{^modifyReview}}
+				{{#insertReview}}
 					<form class="modifyReview" action="/product/{{product.id}}/review" method="POST">
 						<div class="bodyReview">
 							<p>
@@ -54,7 +54,7 @@
 					{{#reviewComplete}}<spam class="success">Se ha añadido correctamente la reseña</spam>{{/reviewComplete}}
 					{{#modifyComplete}}<spam class="success">Se ha modificado correctamente la reseña</spam>{{/modifyComplete}}
 					{{#modifyNoComplete}}<spam class="failure">No se ha podido modificar la reseña</spam>{{/modifyNoComplete}}
-				{{/modifyReview}}
+				{{/insertReview}}
 				{{#modifyReview}}
 					<form class="modifyReview"action="/product/{{product.id}}/review/{{review.id}}" method="POST">
 						<div class="bodyReview">

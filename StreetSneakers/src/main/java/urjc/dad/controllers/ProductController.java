@@ -51,6 +51,7 @@ public class ProductController {
 			
 				ShoppingCart shoppingCart= user.getShoppingCart();
 				model.addAttribute("shoppigncart",shoppingCart.getListProducts().contains(product.get()));
+				model.addAttribute("insertReview", true);
 			}
 			model.addAttribute("product", product.get());
 			List<Review> reviews=product.get().getReviews();
