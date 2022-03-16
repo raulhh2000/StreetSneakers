@@ -35,7 +35,7 @@
 			<div class="reviews">
 				<h1>Reseñas de la zapatilla</h1>
 				{{^modifyReview}}
-					<form class="modifyReview" action="/product/{{product.id}}/review/" method="POST">
+					<form class="modifyReview" action="/product/{{product.id}}/review" method="POST">
 						<div class="bodyReview">
 							<p>
 								<b>Titulo:</b>
@@ -56,7 +56,7 @@
 					{{#modifyNoComplete}}<spam class="failure">No se ha podido modificar la reseña</spam>{{/modifyNoComplete}}
 				{{/modifyReview}}
 				{{#modifyReview}}
-					<form class="modifyReview"action="/product/{{product.id}}/review/{{review.id}}/" method="POST">
+					<form class="modifyReview"action="/product/{{product.id}}/review/{{review.id}}" method="POST">
 						<div class="bodyReview">
 							<p>
 								<b>Titulo:</b>
@@ -80,7 +80,7 @@
 						<h3>Numero de reseñas: {{numReviews}}</h3>
 						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}
 						{{#removeNoComplete}}<spam class="failure">No se ha podido eliminar la reseña</spam>{{/removeNoComplete}}
-						{{#reviews}}
+						{{#ownReviews}}
 							<li class="review">
 								<div class="bodyReview">
 									<p>
@@ -90,11 +90,36 @@
 									<p class="comment">{{comment}}</p>
 								</div>
 								<div class="summitReview">
-									<a href="/product/{{product.id}}/review/{{id}}/">Modificar reseña</a>
-									<a href="/product/{{product.id}}/review/remove/{{id}}/">Borrar reseña</a>
+									<a href="/product/{{product.id}}/review/{{id}}">Modificar reseña</a>
+									<a href="/product/{{product.id}}/review/remove/{{id}}">Borrar reseña</a>
 								</div>
 							</li>
-						{{/reviews}}
+						{{/ownReviews}}
+						{{#otherReviews}}
+							<li class="review">
+								<div class="bodyReview">
+									<p>
+										<strong>{{title}}</strong> (Publicado por <strong>{{user}}</strong>)
+									</p>
+									<p><img src="/images/star/{{stars}}.png" alt=""></p>
+									<p class="comment">{{comment}}</p>
+								</div>
+							</li>
+						{{/otherReviews}}
+						{{#adminReviews}}
+							<li class="review">
+								<div class="bodyReview">
+									<p>
+										<strong>{{title}}</strong> (Publicado por <strong>{{user}}</strong>)
+									</p>
+									<p><img src="/images/star/{{stars}}.png" alt=""></p>
+									<p class="comment">{{comment}}</p>
+								</div>
+								<div class="summitReview">
+									<a href="/product/{{product.id}}/review/remove/{{id}}">Borrar reseña</a>
+								</div>
+							</li>
+						{{/adminReviews}}
 					{{/findReviews}}
 					{{^findReviews}}
 						{{#removeComplete}}<spam class="success">Se ha eliminado correctamente la reseña</spam>{{/removeComplete}}

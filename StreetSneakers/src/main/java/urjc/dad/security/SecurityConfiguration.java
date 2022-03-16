@@ -33,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		// Private pages (all other pages)
 		http.authorizeRequests().antMatchers("/user/**").hasAnyRole("USER");
+		http.authorizeRequests().antMatchers("/product/*/review/remove/**").hasAnyRole("USER","ADMIN");
 		http.authorizeRequests().antMatchers("/product/**").hasAnyRole("USER");
 		http.authorizeRequests().antMatchers("/purchase/**").hasAnyRole("USER");
 		http.authorizeRequests().antMatchers("/shoppingcart/**").hasAnyRole("USER");

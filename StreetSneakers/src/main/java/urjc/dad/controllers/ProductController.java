@@ -1,6 +1,7 @@
 package urjc.dad.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,26 @@ public class ProductController {
 			List<Review> reviews=product.get().getReviews();
 			boolean findReviews = !reviews.isEmpty();
 			if(findReviews) {
-				model.addAttribute("reviews", reviews);
+				List<Review> ownReviews =new ArrayList<>();
+				List<Review> otherReviews =new ArrayList<>();
+				List<Review> adminReviews =new ArrayList<>();
+				if (currentEmail == null) {
+					otherReviews.addAll(reviews);
+				} else if (request.isUserInRole("ADMIN")) {
+					adminReviews.addAll(reviews);
+				} else {
+					User user = userRepository.findByEmail(currentEmail.getName()).get();
+					for (Review review: reviews) {
+						if (user.equals(review.getUser())) {
+							ownReviews.add(review);
+						} else {
+							otherReviews.add(review);
+						}
+					}
+				}
+				model.addAttribute("ownReviews", ownReviews);
+				model.addAttribute("otherReviews", otherReviews);
+				model.addAttribute("adminReviews", adminReviews);
 			}
 			model.addAttribute("findReviews", findReviews);
 			model.addAttribute("numReviews", reviews.size());
@@ -138,13 +158,26 @@ public class ProductController {
 			List<Review> reviews=product.get().getReviews();
 			boolean findReviews = !reviews.isEmpty();
 			if(findReviews) {
-				model.addAttribute("reviews", reviews);
+				List<Review> ownReviews =new ArrayList<>();
+				List<Review> otherReviews =new ArrayList<>();
+				User user = userRepository.findByEmail(currentEmail.getName()).get();
+				for (Review review: reviews) {
+					if (user.equals(review.getUser())) {
+						if (review.getId() != idReview) {
+							ownReviews.add(review);
+						}
+					} else {
+						otherReviews.add(review);
+					}
+				}
+				model.addAttribute("ownReviews", ownReviews);
+				model.addAttribute("otherReviews", otherReviews);
 			}
 			model.addAttribute("findReviews", findReviews);
 			model.addAttribute("numReviews", reviews.size());
-			Optional<Review> review =reviewRepository.findById(idReview);
-			if(review.isPresent()) {
-				model.addAttribute("review", review.get());
+			Optional<Review> currentReview =reviewRepository.findById(idReview);
+			if(currentReview.isPresent()) {
+				model.addAttribute("review", currentReview.get());
 				model.addAttribute("modifyReview", true);
 			}
 			else {
