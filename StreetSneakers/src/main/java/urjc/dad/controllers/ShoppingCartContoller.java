@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.RestTemplate;
 
+import urjc.dad.models.Email;
 import urjc.dad.models.LineItem;
 import urjc.dad.models.Product;
 import urjc.dad.models.Purchase;
@@ -86,6 +88,15 @@ public class ShoppingCartContoller {
             Purchase purchase= new Purchase(user.get(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),totalPrice,listLineItems);
             purchaseRepository.save(purchase);
             idPurchase=purchase.getId();
+            RestTemplate restTemplate = new RestTemplate();
+			restTemplate.postForEntity("http://localhost:8080/email/send",
+					new Email(user.get().getEmail(),
+							"Datos del pedido " + purchase.getDate(),
+							"Hola " + user.get().getName() + " gracias por realizar una compra en StreetSneakers!!!!\n"
+									+ "En este correo te adjuntamos su factura de la compra.\n\n"
+									+ "Gracias por confiar en nosotros.\n\n"
+									+ "Equipo StreetSneakers."),
+					String.class);
 	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    

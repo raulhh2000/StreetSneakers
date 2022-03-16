@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import urjc.dad.models.Admin;
+import urjc.dad.models.Email;
 import urjc.dad.models.Product;
 import urjc.dad.models.Review;
 import urjc.dad.models.ShoppingCart;
@@ -181,6 +183,14 @@ public class AdminController {
 			admin.setRoles(Arrays.asList("ROLE_ADMIN"));
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "addedAdminSuccess");
+			RestTemplate restTemplate = new RestTemplate();
+			restTemplate.postForEntity("http://localhost:8080/email/send",
+					new Email(admin.getEmail(),
+							"Mensaje de bienvenida",
+							"Bienvenido " + admin.getName() + " a la familia StreetSneakers!!!!\n"
+									+ "Tiene una cuenta de tipo ADMINISTRADOR.\n\n"
+									+ "Equipo StreetSneakers."),
+					String.class);
 		} else {
 			sesion.setAttribute("feedbackAdmin", "addedAdminFailure");
 		}

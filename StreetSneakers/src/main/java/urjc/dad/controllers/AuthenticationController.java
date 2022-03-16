@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.RestTemplate;
 
 import urjc.dad.models.Admin;
+import urjc.dad.models.Email;
 import urjc.dad.models.ShoppingCart;
 import urjc.dad.models.User;
 import urjc.dad.repositories.AdminRepository;
@@ -55,6 +57,13 @@ public class AuthenticationController {
 			user.setShoppingCart(new ShoppingCart(user));
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "addedUserSuccess");
+			RestTemplate restTemplate = new RestTemplate();
+			restTemplate.postForEntity("http://localhost:8080/email/send",
+					new Email(user.getEmail(),
+							"Mensaje de bienvenida",
+							"Bienvenido " + user.getName() + " a la familia StreetSneakers!!!!\n\n"
+									+ "Equipo StreetSneakers."),
+					String.class);
 		} else {
 			sesion.setAttribute("feedbackUser", "addedUserFailure");
 		}
