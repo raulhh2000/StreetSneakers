@@ -7,6 +7,9 @@ public class Email {
 	private String content;
 	private DataPurchase dataPurchase;
 	
+	public Email() {
+	}
+	
 	public Email(String to, String subject, String content) {
 		super();
 		this.to = to;

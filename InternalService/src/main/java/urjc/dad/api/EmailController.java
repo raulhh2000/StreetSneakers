@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lowagie.text.Document;
 import urjc.dad.models.Email;
 import urjc.dad.service.EmailService;
 import urjc.dad.service.PDFService;
@@ -27,8 +26,8 @@ public class EmailController {
 	
 	@PostMapping("/email/sendPDF")
 	public ResponseEntity<String> sendPDF(@RequestBody(required=true)Email email){
-		Document document = pdfService.createPdf(email.getDataPurchase());
-		emailService.sendEmail(email.getTo(), email.getSubject(), email.getContent(), document);
+		String namePDF = pdfService.createPdf(email.getDataPurchase());
+		emailService.sendEmail(email.getTo(), email.getSubject(), email.getContent(), namePDF);
 		return ResponseEntity.ok("Se ha enviado el correo electronico");
 	}
 }
