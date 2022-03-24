@@ -18,20 +18,20 @@
 	<body>
 		<div class="wrap-nav">
 			<div class="navbar">
-				<a href="/"><img src="../images/header-footer/logo.png" class="logo" alt="Main Logo"></a>
+				<a href="/"><img src="/imgs/header-footer/logo.png" class="logo" alt="Main Logo"></a>
 				<ul>
-					{{#adminRole}}<li><a href="/admin"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
-					{{#userRole}}<li><a href="/user"><img id = "imagen" src="../images/header-footer/user.png" alt="" /></a></li>{{/userRole}}
-					{{^register}}<li><a href="/login"><img id = "imagen" src="../images/header-footer/login.png" alt="" /></a></li>{{/register}}
+					{{#adminRole}}<li><a href="/admin"><img id = "imagen" src="/imgs/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
+					{{#userRole}}<li><a href="/user"><img id = "imagen" src="/imgs/header-footer/user.png" alt="" /></a></li>{{/userRole}}
+					{{^register}}<li><a href="/login"><img id = "imagen" src="/imgs/header-footer/login.png" alt="" /></a></li>{{/register}}
 					{{#register}}
 						<li>
 							<form action="/logout" method="POST">
 								<input type="hidden" name="_csrf" value="{{token}}"/>
-								<input type="image" id="imagen" src="../images/header-footer/logout.png" alt="" />
+								<input type="image" id="imagen" src="/imgs/header-footer/logout.png" alt="" />
 							</form>
 						</li>
 					{{/register}}
-					{{#userRole}}<li><a href="/shoppingcart"><img id = "imagen" src="../images/header-footer/cart.png" alt="" /></a></li>{{/userRole}}
+					{{#userRole}}<li><a href="/shoppingcart"><img id = "imagen" src="/imgs/header-footer/cart.png" alt="" /></a></li>{{/userRole}}
 				</ul>
 			</div>
 		</div>
