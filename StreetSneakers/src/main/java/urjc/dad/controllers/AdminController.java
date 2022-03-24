@@ -2,16 +2,17 @@ package urjc.dad.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -98,15 +99,14 @@ public class AdminController {
 	public String addProduct(@RequestParam MultipartFile file, Product product, Model model, HttpSession sesion, HttpServletRequest request) throws IOException {
 		Optional<Product> isProduct = productRepository.findByNameIgnoreCase(product.getName());
 		if (!isProduct.isPresent()) {
-			if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
-				Path imagePath = Paths.get("src/main/resources/images/sneakers").resolve(file.getOriginalFilename());
-				file.transferTo(imagePath);
-				product.setImage("/images/sneakers/"+file.getOriginalFilename());
-				productRepository.save(product);
-				sesion.setAttribute("feedbackAdmin", "addedProductSuccess");
-			} else {
-				sesion.setAttribute("feedbackAdmin", "addedProductFailure");
-			}
+			Path tempPath = Paths.get(file.getOriginalFilename());
+		    file.transferTo(tempPath);
+		    File tempFile = tempPath.toFile();
+			byte[] fileContent = FileUtils.readFileToByteArray(tempFile);
+			product.setImage(Base64.getEncoder().encodeToString(fileContent));
+			tempFile.delete();
+			productRepository.save(product);
+			sesion.setAttribute("feedbackAdmin", "addedProductSuccess");
 		} else {
 			sesion.setAttribute("feedbackAdmin", "addedProductFailure");
 		}
@@ -145,26 +145,16 @@ public class AdminController {
 			product.setReviews(oldProduct.getReviews());
 			product.setId(idProduct);
 			if (!file.isEmpty()) {
-				if (file.getOriginalFilename().contains(product.getName().replace(" ", ""))) {
-					Path imagePath = Paths.get("src/main/resources/images/sneakers").resolve(file.getOriginalFilename());
-					file.transferTo(imagePath);
-					product.setImage("/images/sneakers/"+file.getOriginalFilename());
-					productRepository.save(product);
-					sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
-				} else {
-					sesion.setAttribute("feedbackAdmin", "modifiedProductFailure");
-				}
+				Path tempPath = Paths.get(file.getOriginalFilename());
+			    file.transferTo(tempPath);
+			    File tempFile = tempPath.toFile();
+				byte[] fileContent = FileUtils.readFileToByteArray(tempFile);
+				product.setImage(Base64.getEncoder().encodeToString(fileContent));
+				tempFile.delete();
+				productRepository.save(product);
+				sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
 			} else {
-				if (!product.getName().equals(oldProduct.getName())) {
-					String oldImagePath=oldProduct.getImage();
-                    String oldExtension = oldProduct.getImage().substring(oldProduct.getImage().length()-4);
-                    File oldImage = new File("src/main/resources"+oldImagePath);
-                    String imagePath="src/main/resources/images/sneakers/"+product.getName().replace(" ", "")+oldExtension;
-                    Files.copy(Paths.get(oldImage.getPath()), Paths.get(imagePath));
-                    product.setImage("/images/sneakers/"+product.getName().replace(" ", "")+oldExtension);
-				} else {
-					product.setImage(oldProduct.getImage());
-				}
+				product.setImage(oldProduct.getImage());
 				productRepository.save(product);
 				sesion.setAttribute("feedbackAdmin", "modifiedProductSuccess");
 			}		
