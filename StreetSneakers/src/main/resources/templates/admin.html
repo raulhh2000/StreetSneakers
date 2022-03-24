@@ -77,7 +77,7 @@
 						<b>Talla:</b> <input type="number" name="size" placeholder="Talla" value="{{product.size}}" required />
 					</p>
 					<div class="image-modify">
-						<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="{{product.image}}">
+						<b>Imágen:</b> <input type='file' name='file' accept=".jpg, .jpeg, .png" /><img src="data:image/png;base64,{{product.image}}">
 					</div>
 					<p>
 						<b>Descripción:</b><textarea name="description" placeholder="Descripción" maxlength="150" rows="5" required>{{product.description}}</textarea>
