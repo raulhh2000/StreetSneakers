@@ -5,6 +5,10 @@
 	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
 }
+html {
+	position: relative;
+	min-height: 100%;
+}
 body{
 	background: #E0E4E5;
 }
@@ -95,6 +99,7 @@ input[type=button]:hover, input[type=submit]:hover{
 	max-width: 1200px;
 	width: 100%;
 	margin: auto;
+	margin-bottom: 194px;
 }
 .wrap > h1.normal{
 	color: #494B4D;
