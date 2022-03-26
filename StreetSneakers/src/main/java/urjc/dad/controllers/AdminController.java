@@ -174,7 +174,7 @@ public class AdminController {
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "addedAdminSuccess");
 			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.postForEntity("http://localhost:8080/email/send",
+			restTemplate.postForEntity("http://localhost:8081/email/send",
 					new Email(admin.getEmail(),
 							"Mensaje de bienvenida",
 							"Bienvenido " + admin.getName() + " a la familia StreetSneakers!!!!\n"

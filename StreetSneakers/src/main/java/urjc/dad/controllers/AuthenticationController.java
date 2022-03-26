@@ -58,7 +58,7 @@ public class AuthenticationController {
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "addedUserSuccess");
 			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.postForEntity("http://localhost:8080/email/send",
+			restTemplate.postForEntity("http://localhost:8081/email/send",
 					new Email(user.getEmail(),
 							"Mensaje de bienvenida",
 							"Bienvenido " + user.getName() + " a la familia StreetSneakers!!!!\n\n"

@@ -100,7 +100,7 @@ public class ShoppingCartContoller {
 					purchase.getTotalPrice(),
 					purchase.getNumProducts(),
 					purchase.getLineItems());
-			restTemplate.postForEntity("http://localhost:8080/email/sendPDF",
+			restTemplate.postForEntity("http://localhost:8081/email/sendPDF",
 					new Email(user.get().getEmail(),
 							"Datos del pedido " + purchase.getDate(),
 							"Hola " + user.get().getName() + " gracias por realizar una compra en StreetSneakers!!!!\n"
