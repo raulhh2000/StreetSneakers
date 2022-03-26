@@ -1,0 +1,20 @@
+a.submitLoginError{
+  background-color: #2D3E50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin: 15px;
+  cursor: pointer;
+  font-size: 13.3px;
+  text-align: center;
+}
+a.submitLoginError:hover{
+  background-color: #253342;
+  color: white;
+}
+.loginError{
+	margin: 15px;
+	color: red;
+	font-weight: bold;
+}
