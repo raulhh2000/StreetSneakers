@@ -26,6 +26,8 @@ Raúl Heredia Horcajo:
     - [Diagrama UML](#diagrama-uml)
     - [Diagrama de clases](#diagrama-de-clases)
     - [Diagrama de Entidad Relación](#diagrama-de-entidad-relacion)
+- [FASE 3](#fase-3)
+    - [Diagrama de clases con templates](#diagrama-de-clases-con-templates)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -114,7 +116,7 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 
 ## FASE 3
 
-### Diagrama de clases
+### Diagrama de clases con templates
 
 <img src="static/diagrams/classesDiagramView.png" width="800" height="400" />
 
