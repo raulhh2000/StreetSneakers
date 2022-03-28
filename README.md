@@ -112,5 +112,11 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 ### Diagrama de Entidad Relación
 <img src="static/diagrams/ERDiagram.png" width="800" height="400" />
 
+## FASE 3
+
+### Diagrama de clases
+
+<img src="static/diagrams/classesDiagramView.png" width="800" height="400" />
+
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
