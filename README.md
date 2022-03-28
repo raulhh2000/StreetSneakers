@@ -101,7 +101,7 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 <br /><br />
 
 ### Diagrama de navegación
-<img src="static/diagrams/navigation.png" width="800" height="400" />
+<img src="static/diagrams/navigation.png" width="800" height="350" />
 
 ### Diagrama UML
 <img src="static/diagrams/UMLDiagram.png" width="300" height="400" />
