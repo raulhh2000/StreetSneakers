@@ -1,13 +1,16 @@
 package urjc.dad;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -45,7 +48,7 @@ public class DatabaseInitializer {
 	private PasswordEncoder passwordEncoder;
 
 	@PostConstruct
-	public void init() throws IOException {
+	public void init() throws IOException, URISyntaxException {
 		
 		Admin admin1= new Admin("Raul", "Heredia", "raulHeredia@gmail.com", passwordEncoder.encode("1234"), "ROLE_ADMIN");
 		Admin admin2= new Admin("Alberto", "Martin", "albertoMartin@gmail.com", passwordEncoder.encode("4567"), "ROLE_ADMIN");
@@ -67,31 +70,54 @@ public class DatabaseInitializer {
 		userRepository.save(user2);
 		userRepository.save(user3);
 		
-		FileInputStream fis = new FileInputStream("src/main/resources/static/sneakers/AirForce1.txt");
-		Product product1 = new Product("AirForce1", "Zapatilla grande", 123.4, 44, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Jordan Verde.txt");
-		Product product2 = new Product("Jordan Verde", "Zapatilla de baloncesto", 99.99, 42, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Ultraboost.txt");
-		Product product3 = new Product("Ultraboost", "Zapatilla comoda", 180, 41, "Adidas", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Yeezy Oreo.txt");
-		Product product4 = new Product("Yeezy Oreo", "Zapatilla bonita", 300.25, 40, "Adidas", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Regreso al futuro.txt");
-		Product product5 = new Product("Regreso al futuro", "Zapatilla futurista", 29000.99, 42, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Triple S.txt");
-		Product product6 = new Product("Triple S", "Zapatilla de lujo", 550, 41, "Balenciaga", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/VaporMax.txt");
-		Product product7 = new Product("VaporMax", "Zapatilla con suela de aire", 180.4, 39, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Yeezy 700 Wave.txt");
-		Product product8 = new Product("Yeezy 700 Wave", "Zapatilla de moda", 250.5, 42, "Adidas", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Alexander Mcqueen.txt");
-		Product product9 = new Product("Alexander Mcqueen", "Zapatillas de lujo", 525, 43, "Alexander Mcqueen", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Stan Smith.txt");
-		Product product10 = new Product("Stan Smith", "Zapatilla basica", 79.39, 40, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/Jordan X Off-White Roja.txt");
-		Product product11 = new Product("Jordan X Off-White Roja", "Zapatilla de colaboracion", 3000.2, 42, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis = new FileInputStream("src/main/resources/static/sneakers/AirForce1 X Off-White.txt");
-		Product product12 = new Product("AirForce1 X Off-White", "Zapatillas de colaboracion", 1500, 41, "Nike", IOUtils.toString(fis, "UTF-8"));
-		fis.close();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/HDQWNpL/Air-Force1.png"), new File("temp.png"));
+		File tempFile = new File("temp.png");
+		Product product1 = new Product("AirForce1", "Zapatilla grande", 123.4, 44, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/z47C1sb/Jordan-Verde.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product2 = new Product("Jordan Verde", "Zapatilla de baloncesto", 99.99, 42, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/SXrKjH6/Ultraboost.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product3 = new Product("Ultraboost", "Zapatilla comoda", 180, 41, "Adidas", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/y42rf48/Yeezy-Oreo.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product4 = new Product("Yeezy Oreo", "Zapatilla bonita", 300.25, 40, "Adidas", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/t2Sxvd4/Regresoalfuturo.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product5 = new Product("Regreso al futuro", "Zapatilla futurista", 29000.99, 42, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/WsfGnQV/TripleS.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product6 = new Product("Triple S", "Zapatilla de lujo", 550, 41, "Balenciaga", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/Jxt4YQJ/VaporMax.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product7 = new Product("VaporMax", "Zapatilla con suela de aire", 180.4, 39, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/CVGwM68/Yeezy700-Wave.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product8 = new Product("Yeezy 700 Wave", "Zapatilla de moda", 250.5, 42, "Adidas", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/2PY6nZt/Alexander-Mcqueen.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product9 = new Product("Alexander Mcqueen", "Zapatillas de lujo", 525, 43, "Alexander Mcqueen", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/3RFHB9N/Stan-Smith.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product10 = new Product("Stan Smith", "Zapatilla basica", 79.39, 40, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/xjL837s/Jordan-XOff-White-Roja.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product11 = new Product("Jordan X Off-White Roja", "Zapatilla de colaboracion", 3000.2, 42, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
+		FileUtils.copyURLToFile(new URL("https://i.ibb.co/T090sr0/Air-Force1-XOff-White.png"), new File("temp.png"));
+		tempFile = new File("temp.png");
+		Product product12 = new Product("AirForce1 X Off-White", "Zapatillas de colaboracion", 1500, 41, "Nike", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempFile)));
+		tempFile.delete();
 		
 		productRepository.save(product1);
 		productRepository.save(product2);
