@@ -196,16 +196,17 @@ Para descargar una copia local del proyecto se requiere tener en la máquina los
 </details>
 <details>
     <summary><h4>Instalación</h4></summary>
+	<hr>
   <details>
     <summary><h5>Ejecutar las aplicaciones sin fichero .jar</h5></summary>
     
   Clonar el repositorio:
   ```sh
-  git clone https://github.com/raulhh2000/StreetSneakers.git
+  $ git clone https://github.com/raulhh2000/StreetSneakers.git
   ```
   Desde la carpeta raíz del proyecto StreetSneakers y InternalService lanzar el siguiente comando <strong>en terminales diferentes</strong>:
   ```sh
-  mvn spring-boot:run
+  $ mvn spring-boot:run
   ```
   </details>
   <details>
@@ -213,18 +214,18 @@ Para descargar una copia local del proyecto se requiere tener en la máquina los
     
   Clonar el repositorio:
   ```sh
-  git clone https://github.com/raulhh2000/StreetSneakers.git
+  $ git clone https://github.com/raulhh2000/StreetSneakers.git
   ```
   Desde la carpeta raíz del proyecto StreetSneakers y InternalService, y lanzar el siguiente comando <strong>en terminales diferentes</strong>:
   ```sh
-  mvn package
+  $ mvn package
   ```
   Navegar a la carpeta target del proyecto StreetSneakers y InternalService, y lanzar el siguiente comando <strong>en terminales diferentes</strong>:
   ```sh
-  java -jar StreetSneakers-0.0.1-SNAPSHOT.jar
+  $ java -jar StreetSneakers-0.0.1-SNAPSHOT.jar
   ```
   ```sh
-  java -jar InternalService-0.0.1-SNAPSHOT.jar
+  $ java -jar InternalService-0.0.1-SNAPSHOT.jar
   ```
   </details>
 </details>
