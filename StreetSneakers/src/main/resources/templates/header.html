@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<!--<link rel="shortcut icon" href="img/icono.png"/>-->
+		<link rel="stylesheet" type="text/css" href="/css/loginerror.css" />
+		<link rel="stylesheet" type="text/css" href="/css/login.css" />
 		<link rel="stylesheet" type="text/css" href="/css/home.css" />
 		<link rel="stylesheet" type="text/css" href="/css/purchase.css" />
 		<link rel="stylesheet" type="text/css" href="/css/product.css" />
@@ -17,11 +19,20 @@
 	<body>
 		<div class="wrap-nav">
 			<div class="navbar">
-				<a href="/"><img src="../images/header-footer/logo.png" class="logo" alt="Main Logo"></a>
+				<a href="/"><img src="/imgs/header-footer/logo.png" class="logo" alt="Main Logo"></a>
 				<ul>
-					<li><a href="/admin/1"><img id = "imagen" src="../images/header-footer/admin.png" alt="" /></a></li>
-					<li><a href="/user/4"><img id = "imagen" src="../images/header-footer/user.png" alt="" /></a></li>
-					<li><a href="/shoppingcart/4"><img id = "imagen" src="../images/header-footer/cart.png" alt="" /></a></li>
+					{{#adminRole}}<li><a href="/admin"><img id = "imagen" src="/imgs/header-footer/admin.png" alt="" /></a></li>{{/adminRole}}
+					{{#userRole}}<li><a href="/user"><img id = "imagen" src="/imgs/header-footer/user.png" alt="" /></a></li>{{/userRole}}
+					{{^register}}<li><a href="/login"><img id = "imagen" src="/imgs/header-footer/login.png" alt="" /></a></li>{{/register}}
+					{{#register}}
+						<li>
+							<form action="/logout" method="POST">
+								<input type="hidden" name="_csrf" value="{{token}}"/>
+								<input type="image" id="imagen" src="/imgs/header-footer/logout.png" alt="" />
+							</form>
+						</li>
+					{{/register}}
+					{{#userRole}}<li><a href="/shoppingcart"><img id = "imagen" src="/imgs/header-footer/cart.png" alt="" /></a></li>{{/userRole}}
 				</ul>
 			</div>
 		</div>

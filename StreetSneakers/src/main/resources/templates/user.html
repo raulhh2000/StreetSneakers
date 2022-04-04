@@ -2,13 +2,14 @@
 		<div class="wrap">
 			<h1 class="welcome">Hola, {{user.name}}</h1>
 			<h2 class="normal">Datos personales</h2>
-			<form action="/user/update/{{user.id}}" method="POST">
+			<form action="/user/update" method="POST">
 				<p>
 					<b>Nombre:</b> <input type="text" name="name" placeholder="Nombre" value="{{user.name}}" required />
 					<b>Apellido:</b> <input type="text" name="lastName" placeholder="Apellido" value="{{user.lastName}}" required />
 				</p>
 				<p>
-					<b>Email:</b> <input type="email" name="email" placeholder="xxxxx@xxxxx.xx" value="{{user.email}}" required />
+					<b>Email:</b> <input type="email" name="email" value="{{user.email}}" disabled/>
+					<input id="email" name="email" type="hidden" value="{{user.email}}">
 					<b>Contraseña:</b> <input type="password" name="password" placeholder="******" value="{{user.password}}" required />
 				</p>
 				<p>
@@ -19,6 +20,7 @@
 					<b>Cuenta bancaria:</b> <input type="text" name="bankAccount" placeholder="ESXX XXXX XXXX XX XXXXXXXXX" size="30" {{#find}} value="{{user.bankAccount}}" {{/find}} 7
 					required pattern="([A-Z]{2}[0-9]{2}) [0-9]{4} [0-9]{4} [0-9]{2} [0-9]{9}"/>
 				</p>
+				<input type="hidden" name="_csrf" value="{{token}}"/>
 				<input type="submit" value="Actualizar datos" />
 				{{#updatedUserSuccess}}<spam class="success">Usuario actualizado correctamente</spam>{{/updatedUserSuccess}}
 				{{#updatedUserFailure}}<spam class="failure">El usuario no se ha podido actualizar</spam>{{/updatedUserFailure}}
@@ -49,7 +51,7 @@
 						<li class="product-item">
 							<div class="product-image">
 								<a href="/product/{{id}}">
-									<img src="{{image}}" alt="">
+									<img src="data:image/png;base64,{{image}}" alt="">
 								</a>
 							</div>
 							<a class="product-body" href="/product/{{id}}">

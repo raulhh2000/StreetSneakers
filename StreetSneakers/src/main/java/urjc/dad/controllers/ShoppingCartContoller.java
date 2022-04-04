@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.RestTemplate;
 
+import urjc.dad.models.DataPurchase;
+import urjc.dad.models.Email;
 import urjc.dad.models.LineItem;
 import urjc.dad.models.Product;
 import urjc.dad.models.Purchase;
@@ -39,9 +43,9 @@ public class ShoppingCartContoller {
 	    @Autowired
 	    ProductRepository productRepository;
 
-	    @GetMapping("/shoppingcart/{idUser}")
-	    public String showShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @GetMapping("/shoppingcart")
+	    public String showShoppingCart(Model model, HttpSession sesion,HttpServletRequest request) {
+	        Optional<User> user = userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        List<Product> listProducts = shoppingCart.getListProducts();
 	        boolean findShoppingCart = !listProducts.isEmpty();
@@ -63,14 +67,14 @@ public class ShoppingCartContoller {
 	        return "shoppingCart";
 	    }
 	    
-	    @PostMapping("/shoppingcart/{idUser}/buyShoppingCart")
-	    public String buyShoppingCart(@PathVariable long idUser,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @PostMapping("/shoppingcart/buyShoppingCart")
+	    public String buyShoppingCart(Model model, HttpSession sesion, HttpServletRequest request) {
+	        Optional<User> user = userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        long idPurchase=-1;
 	        if(user.get().getPhone()==null) {
 	        	sesion.setAttribute("feedbackUser", "mustUpdate");
-	        	return "redirect:/user/"+idUser;
+	        	return "redirect:/user";
 	        }
             double totalPrice=0;
             for(Product product : shoppingCart.getListProducts()) {
@@ -85,12 +89,32 @@ public class ShoppingCartContoller {
             Purchase purchase= new Purchase(user.get(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),totalPrice,listLineItems);
             purchaseRepository.save(purchase);
             idPurchase=purchase.getId();
+            RestTemplate restTemplate = new RestTemplate();
+            DataPurchase dataPurchase = new DataPurchase(purchase.getUser().getName(),
+					purchase.getUser().getLastName(),
+					purchase.getUser().getEmail(),
+					purchase.getUser().getPhone(), 
+					purchase.getUser().getAddress(),
+					purchase.getUser().getBankAccount(),
+					purchase.getDate(),
+					purchase.getTotalPrice(),
+					purchase.getNumProducts(),
+					purchase.getLineItems());
+			restTemplate.postForEntity("http://localhost:8081/email/sendPDF",
+					new Email(user.get().getEmail(),
+							"Datos del pedido " + purchase.getDate(),
+							"Hola " + user.get().getName() + " gracias por realizar una compra en StreetSneakers!!!!\n"
+									+ "En este correo te adjuntamos su factura de la compra.\n\n"
+									+ "Gracias por confiar en nosotros.\n\n"
+									+ "Equipo StreetSneakers.",
+							dataPurchase),
+					String.class);
 	        return "redirect:/purchase/"+idPurchase;
 	    }
 	    
-	    @GetMapping("/shoppingcart/{idUser}/remove/{idProduct}")
-	    public String removeProductInShoppingCart(@PathVariable long idUser, @PathVariable long idProduct,  Model model, HttpSession sesion) {
-	        Optional<User> user = userRepository.findById(idUser);
+	    @GetMapping("/shoppingcart/remove/{idProduct}")
+	    public String removeProductInShoppingCart(@PathVariable long idProduct,  Model model, HttpSession sesion, HttpServletRequest request) {
+	        Optional<User> user =  userRepository.findByEmail(request.getUserPrincipal().getName());
 	        ShoppingCart shoppingCart = user.get().getShoppingCart();
 	        Optional<Product> product = productRepository.findById(idProduct);
 	        if (product.isPresent()) {
@@ -98,7 +122,7 @@ public class ShoppingCartContoller {
 	            shoppingCartRepository.save(shoppingCart);
 	            sesion.setAttribute("feedbackShoppingCart", "removeProductSuccess");
 	        }
-	        return "redirect:/shoppingcart/{idUser}";
+	        return "redirect:/shoppingcart";
 	    }
 	
 }

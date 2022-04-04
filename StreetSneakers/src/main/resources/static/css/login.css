@@ -1,0 +1,31 @@
+.column{
+	width: 50%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	text-decoration: none;
+}
+
+.column > h1.normal{
+	color: #494B4D;
+	font-weight: 400;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin: 15px 0px;
+}
+.column > h1.normal:after{
+	content: '';
+	width: 100%;
+	height: 1px;
+	background: #C7C7C7;
+	margin: 20px 0;
+}
+
+.column > form {
+	padding-left: 150px;
+}
+.login-wrapper {
+    display: flex;
+}
+

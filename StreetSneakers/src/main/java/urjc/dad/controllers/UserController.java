@@ -3,13 +3,14 @@ package urjc.dad.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import urjc.dad.models.Admin;
@@ -24,12 +25,16 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
 	@Autowired
 	AdminRepository adminRepository;
 	
-	@GetMapping("/user/{idUser}")
-	public String showUser(@PathVariable long idUser, Model model, HttpSession sesion) {
-		User user = userRepository.findById(idUser).get();
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@GetMapping("/user")
+	public String showUser(Model model, HttpSession sesion, HttpServletRequest request) {
+		User user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
 		model.addAttribute("user", user);
 		model.addAttribute("find", user.getPhone() != null);
 		List<Purchase> list=user.getPurchases();
@@ -53,21 +58,25 @@ public class UserController {
 	    return "user";
 	}
 	
-	@PostMapping("/user/update/{idUser}")
-	public String modifyUser(@PathVariable long idUser, User user, Model model, HttpSession sesion) {
+	@PostMapping("/user/update")
+	public String modifyUser(User user, Model model, HttpSession sesion, HttpServletRequest request){
 		Optional<User> isUser=userRepository.findByEmail(user.getEmail());
 		Optional<Admin> isAdmin=adminRepository.findByEmail(user.getEmail());
-		User oldUser = userRepository.findById(idUser).get();
+		User oldUser = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
 		if(user.getEmail().equals(oldUser.getEmail()) || (!isUser.isPresent() && !isAdmin.isPresent())) {
-			user.setId(idUser);
+			user.setId(oldUser.getId());
 			user.setPurchases(oldUser.getPurchases());
 			user.setWishList(oldUser.getWishList());
 			user.setShoppingCart(oldUser.getShoppingCart());
+			if (!oldUser.getPassword().equals(user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
+			user.setRoles(oldUser.getRoles());
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "updatedUserSuccess");
 		} else {
 			sesion.setAttribute("feedbackUser", "updatedUserFailure");
 		}
-	    return "redirect:/user/{idUser}";
+	    return "redirect:/user";
 	}
 }

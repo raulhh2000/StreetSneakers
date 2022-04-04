@@ -25,7 +25,12 @@ Raúl Heredia Horcajo:
     - [Diagrama de navegación](#diagrama-de-navegación)
     - [Diagrama UML](#diagrama-uml)
     - [Diagrama de clases](#diagrama-de-clases)
-    - [Diagrama de Entidad Relación](#diagrama-de-entidad-relacion)
+    - [Diagrama de Entidad Relación](#diagrama-de-entidad-relación)
+- [FASE 3](#fase-3)
+    - [Diagrama de clases con templates](#diagrama-de-clases-con-templates)
+    - [Instrucciones de instalación](#instrucciones-de-instalación)
+    	- [Pre requisitios](#pre-requisitios)
+    	- [Instalación](#instalación)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -101,7 +106,7 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 <br /><br />
 
 ### Diagrama de navegación
-<img src="static/diagrams/navigation.png" width="800" height="400" />
+<img src="static/diagrams/navigation.png" width="800" height="350" />
 
 ### Diagrama UML
 <img src="static/diagrams/UMLDiagram.png" width="300" height="400" />
@@ -111,6 +116,119 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 
 ### Diagrama de Entidad Relación
 <img src="static/diagrams/ERDiagram.png" width="800" height="400" />
+
+## FASE 3
+### Diagrama de clases con templates
+<img src="static/diagrams/classesDiagramView.png" width="800" height="400" />
+
+### Instrucciones de instalación
+<details>
+    <summary><h4>Pre requisitios</h4></summary>
+<hr>
+
+Para descargar una copia local del proyecto se requiere tener en la máquina los siguientes programas:  
+* Se recomienda antes de instalar programas actualizar los repositorios de paquetes, ejecutando el siguiente comando:  
+	```sh
+	$ sudo apt update
+	```  
+* [Java JRE 11 o superior](https://www.oracle.com/es/java/technologies/javase/jdk11-archive-downloads.html) para instalarlo usar:
+	```sh
+	$ sudo apt install openjdk-11-jre-headless
+	```  
+* [Maven](https://maven.apache.org/) para instalarlo usar:
+	```sh
+	$ sudo apt install maven
+	```  
+* [MySQL server](https://www.mysql.com/) para instalarlo usar:
+    ```sh
+	$ sudo apt install mysql-server
+	```  
+	Añadimos una clave a root:  
+	```sh
+	$ sudo mysql
+	mysql> select user,authentication_string,plugin,host from mysql.user;
+	mysql> alter user 'root'@'localhost' identified with mysql_native_password by 'asdf';
+	```  
+	Recargamos los privilegios de las tablas:  
+	```sh
+	mysql> flush privileges;
+	mysql> select user,authentication_string,plugin,host from mysql.user;
+	```  
+	Crear un esquema:  
+	```sh
+	mysql> create schema streetSneakers;
+	```  
+	Si deseamos salir del terminal:  
+	```sh
+	mysql> exit;
+	```  
+	<details>
+        <summary><h5>Más información de interes</h5></summary>
+	
+	Si deseamos entrar otra vez a mysql:  
+	```sh
+	$ sudo mysql -u root -p
+	```  
+	Si deseamos consultar los schemas disponibles:  
+	```sh
+	mysql> show schemas;
+	```  
+	Si deseamos cambiar de schema:  
+	```sh
+	mysql> use nombre_schema;
+	```  
+	Si deseamos borrar un schema:  
+	```sh
+	mysql> drop schema nombre_schema;
+	```  
+	Si deseamos hacer una consulta:  
+	Si deseamos borrar un schema:  
+	```sh
+	mysql> select columnas from tabla;
+	```  
+	Para instalar mysql-workbench-community:  
+	```sh
+	$ sudo snap install mysql-workbench-community
+	$ snap connect mysql-workbench-community:password-manager-service
+	$ snap connect mysql-workbench-community:ssh-keys
+	```  
+	</details>
+</details>
+<details>
+    <summary><h4>Instalación</h4></summary>
+	<hr>
+  <details>
+    <summary><h5>Ejecutar las aplicaciones sin fichero .jar</h5></summary>
+    
+  Clonar el repositorio:
+  ```sh
+  $ git clone https://github.com/raulhh2000/StreetSneakers.git
+  ```
+  Desde la carpeta raíz del proyecto StreetSneakers y InternalService lanzar el siguiente comando <strong>en terminales diferentes</strong>:
+  ```sh
+  $ mvn spring-boot:run
+  ```
+  </details>
+  <details>
+    <summary><h5>Ejecutar las aplicaciones generando fichero .jar</h5></summary>
+    
+  Clonar el repositorio:
+  ```sh
+  $ git clone https://github.com/raulhh2000/StreetSneakers.git
+  ```
+  Desde la carpeta raíz del proyecto StreetSneakers y InternalService, y lanzar el siguiente comando <strong>en terminales diferentes</strong>:
+  ```sh
+  $ mvn package
+  ```
+  Navegar a la carpeta target del proyecto StreetSneakers y InternalService, y lanzar el siguiente comando <strong>en terminales diferentes</strong>:
+  ```sh
+  $ java -jar StreetSneakers-0.0.1-SNAPSHOT.jar
+  ```
+  ```sh
+  $ java -jar InternalService-0.0.1-SNAPSHOT.jar
+  ```
+  </details>
+</details>
 
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
