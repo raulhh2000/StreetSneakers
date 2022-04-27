@@ -1,5 +1,6 @@
 package urjc.dad.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -10,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Admin {
+public class Admin implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
