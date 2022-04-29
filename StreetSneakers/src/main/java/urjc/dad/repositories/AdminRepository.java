@@ -11,7 +11,7 @@ import urjc.dad.models.Admin;
 
 @CacheConfig(cacheNames="admins")
 public interface AdminRepository  extends JpaRepository<Admin, Long> {
-	@Cacheable
+	@Cacheable(unless = "#result == null")
 	Optional<Admin> findByEmail(String email);
 	@CacheEvict(cacheNames="admins", allEntries=true)
 	Admin save(Admin admin);
