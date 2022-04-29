@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,9 @@ import urjc.dad.repositories.UserRepository;
 
 @Controller
 public class ShoppingCartContoller {
-
+	@Value("${internalHost}")
+	String internalHost;
+	
 	 @Autowired
 	    ShoppingCartRepository shoppingCartRepository;
 
@@ -100,7 +103,7 @@ public class ShoppingCartContoller {
 					purchase.getTotalPrice(),
 					purchase.getNumProducts(),
 					purchase.getLineItems());
-			restTemplate.postForEntity("http://localhost:8081/email/sendPDF",
+			restTemplate.postForEntity("http://"+internalHost+":8081/email/sendPDF",
 					new Email(user.get().getEmail(),
 							"Datos del pedido " + purchase.getDate(),
 							"Hola " + user.get().getName() + " gracias por realizar una compra en StreetSneakers!!!!\n"

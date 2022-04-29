@@ -1,0 +1,20 @@
+version: "3"
+services:
+    app1:
+        build:
+            context: ./StreetSneakers
+            dockerfile: multistage.Dockerfile
+        container_name: 'app1'
+        restart: "on-failure"
+        environment: 
+            - internalHost=internal
+        ports: 
+            - "8443:8443"
+    internal:
+        build:
+            context: ./InternalService
+            dockerfile: multistage.Dockerfile
+        container_name: 'internal'
+        restart: "on-failure"
+        ports: 
+            - "8081:8081"

@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ import urjc.dad.repositories.UserRepository;
 
 @Controller
 public class AuthenticationController {
+	@Value("${internalHost}")
+	String internalHost;
 	
 	@Autowired
 	AdminRepository adminRepository;
@@ -58,7 +61,7 @@ public class AuthenticationController {
 			userRepository.save(user);
 			sesion.setAttribute("feedbackUser", "addedUserSuccess");
 			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.postForEntity("http://localhost:8081/email/send",
+			restTemplate.postForEntity("http://"+internalHost+":8081/email/send",
 					new Email(user.getEmail(),
 							"Mensaje de bienvenida",
 							"Bienvenido " + user.getName() + " a la familia StreetSneakers!!!!\n\n"
