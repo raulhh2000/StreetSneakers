@@ -1,5 +1,17 @@
 version: "3"
 services:
+    haproxy:
+        image: haproxy
+        container_name: 'haproxy'
+        ports: 
+            - "80:80"
+            - "443:443"
+            - "8404:8404"
+        volumes:
+            - ./HAProxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+        depends_on: 
+            - app1
+            - app2
     app1:
         build:
             context: ./StreetSneakers
@@ -7,14 +19,32 @@ services:
         container_name: 'app1'
         restart: "on-failure"
         environment: 
-            - internalHost=internal
-        ports: 
-            - "8443:8443"
-    internal:
+            - internalHost=haproxy
+        expose: 
+            - "8443"
+    app2:
+        build:
+            context: ./StreetSneakers
+            dockerfile: multistage.Dockerfile
+        container_name: 'app2'
+        restart: "on-failure"
+        environment: 
+            - internalHost=haproxy
+        expose: 
+            - "8443"
+    internal1:
         build:
             context: ./InternalService
             dockerfile: multistage.Dockerfile
-        container_name: 'internal'
+        container_name: 'internal1'
         restart: "on-failure"
-        ports: 
-            - "8081:8081"
+        expose: 
+            - "8081"
+    internal2:
+        build:
+            context: ./InternalService
+            dockerfile: multistage.Dockerfile
+        container_name: 'internal2'
+        restart: "on-failure"
+        expose: 
+            - "8081"
