@@ -31,6 +31,8 @@ Raúl Heredia Horcajo:
     - [Instrucciones de instalación](#instrucciones-de-instalación)
     	- [Pre requisitios](#pre-requisitios)
     	- [Instalación](#instalación)
+- [FASE 4](#fase-4)
+	- [Diagrama de infraestructura](#diagrama-de-infraestructura)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -229,6 +231,10 @@ Para descargar una copia local del proyecto se requiere tener en la máquina los
   ```
   </details>
 </details>
+
+## FASE 4
+### Diagrama de infraestructura
+<img src="static/diagrams/infrastructure.png" width="700" height="400" />
 
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
