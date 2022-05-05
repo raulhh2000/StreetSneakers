@@ -1,0 +1,59 @@
+name: dev-workflow
+on:
+  push:
+    branches:
+        - dev
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build Java application ${{matrix.application}}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        application: [StreetSneakers, InternalService]
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Build native with Maven
+      run: mvn -B package -DskipTests
+      working-directory: ./${{matrix.application}}
+    - name: Upload jar for next job
+      uses: actions/upload-artifact@v3
+      with:
+        name: target${{matrix.application}}
+        path: ./${{matrix.application}}/target
+        retention-days: 5
+
+  publish_in_dockerhub:
+    name: Publish in DockerHub ${{matrix.application}}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        application: [StreetSneakers, InternalService]
+    needs: [build]
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Download Jar from previous job
+        uses: actions/download-artifact@v3
+        with:
+          name: target${{matrix.application}}
+      - name: Generate repository and tag
+        run: echo ::set-output name=tag::dev-$(date +'%Y%m%d.%H%M%S')
+        id: tag
+      - name: Generate name repository
+        run: echo ::set-output name=repository::`echo ${{matrix.application}} | tr '[:upper:]' '[:lower:]'`
+        id: repository
+      - name: Login to DockerHub
+        run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}" 
+      - name: Build image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.repository.outputs.repository }}:${{ steps.tag.outputs.tag }} -f multistage.Dockerfile .
+        working-directory: ./${{matrix.application}}
+      - name: Push image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.repository.outputs.repository }}:${{ steps.tag.outputs.tag }}
