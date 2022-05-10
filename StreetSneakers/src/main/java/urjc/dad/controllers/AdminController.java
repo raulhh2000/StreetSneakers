@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,10 +40,11 @@ import urjc.dad.repositories.UserRepository;
 
 @Controller
 public class AdminController {
+	@Value("${internalHost}")
+	String internalHost;
 	
 	@Autowired
 	AdminRepository adminRepository;
-	
 
 	@Autowired
 	ProductRepository productRepository;
@@ -174,7 +176,7 @@ public class AdminController {
 			adminRepository.save(admin);
 			sesion.setAttribute("feedbackAdmin", "addedAdminSuccess");
 			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.postForEntity("http://localhost:8081/email/send",
+			restTemplate.postForEntity("http://"+internalHost+":8081/email/send",
 					new Email(admin.getEmail(),
 							"Mensaje de bienvenida",
 							"Bienvenido " + admin.getName() + " a la familia StreetSneakers!!!!\n"
