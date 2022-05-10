@@ -32,7 +32,9 @@ Raúl Heredia Horcajo:
     	- [Pre requisitios](#pre-requisitios)
     	- [Instalación](#instalación)
 - [FASE 4](#fase-4)
+	- [Vídeo explicativo del funcionamiento](#vídeo-explicativo-del-funcionamiento)
 	- [Diagrama de infraestructura](#diagrama-de-infraestructura)
+	- [Interfaz del servicio interno](#interfaz-del-servicio-interno)
 - [Licencia](#licencia)
 
 ## FASE 1
@@ -129,7 +131,7 @@ En esta pantalla aparece todos los datos del pedido que ha realizado un usuario.
 <hr>
 
 Para descargar una copia local del proyecto se requiere tener en la máquina los siguientes programas:  
-* Se recomienda antes de instalar programas actualizar los repositorios de paquetes, ejecutando el siguiente comando:  
+* Se recomienda antes de instalar programas actualizar los repositorios de paquetes, ejecutando el siguiente comando (`Si vamos a utilizar Docker no hace falta estos pre requisitos`):  
 	```sh
 	$ sudo apt update
 	```  
@@ -230,11 +232,39 @@ Para descargar una copia local del proyecto se requiere tener en la máquina los
   $ java -jar InternalService-0.0.1-SNAPSHOT.jar
   ```
   </details>
+  <details>
+    <summary><h5>Ejecutar las aplicaciones con Docker</h5></summary>
+
+  Instalar [Docker](https://www.docker.com/) y [Docker compose](https://docs.docker.com/compose/):
+  ```sh
+  $ sudo apt install docker.io
+  $ sudo apt install docker-compose
+  ```  
+  Clonar el repositorio:
+  ```sh
+  $ git clone https://github.com/raulhh2000/StreetSneakers.git
+  ```
+  Desde la carpeta raíz del repositorio lanzar el siguiente comando en la terminal:
+  ```sh
+  $ docker-compose up
+  ```
+  </details>
 </details>
 
 ## FASE 4
+### Vídeo explicativo del funcionamiento
+[Vídeo en Youtube](https://youtu.be/RNuXoVs3Dzs)
 ### Diagrama de infraestructura
 <img src="static/diagrams/infrastructure.png" width="700" height="400" />
 
+### Interfaz del servicio interno
+- `@POST`: /email/send:  
+	- Body: Email.  
+	- Description: Envias un mensaje a un correo electronico.  
+	- Return: String.
+- `@POST`: /email/sendPDF:  
+   	- Body: Email.  
+    - Description: Envias un mensaje con un archivo adjunto a un correo electronico.  
+    - Return: String.
 ## Licencia
 Este proyecto está bajo la licencia `Apache License 2.0`. Mira el archivo [LICENSE](LICENSE) para más detalles.
